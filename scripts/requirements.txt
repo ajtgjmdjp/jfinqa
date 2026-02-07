@@ -1,0 +1,5 @@
+# Pipeline dependencies (not part of jfinqa library)
+edinet-mcp
+loguru>=0.7
+click>=8.0
+tqdm>=4.0

@@ -1,0 +1,8 @@
+# Intermediate pipeline data (large, not tracked in git)
+raw/
+contexts/
+generated/
+
+# Final dataset IS tracked (small, versioned)
+!final/
+!final/jfinqa_v1.json
