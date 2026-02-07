@@ -24,9 +24,9 @@ from loguru import logger
 @click.command()
 @click.option(
     "--stage",
-    type=click.Choice(["1", "2", "4", "all"]),
+    type=click.Choice(["1", "2", "3", "4", "all"]),
     default="all",
-    help="Which stage to run. Stage 3 is done in Claude Code.",
+    help="Which stage to run.",
 )
 @click.option(
     "--data-dir",
@@ -65,13 +65,13 @@ def main(stage: str, data_dir: Path | None) -> None:
 
         run_s2()
 
-    if stage == "all":
+    if stage in ("3", "all"):
         logger.info("=" * 60)
-        logger.info("STAGE 3: QA generation (run in Claude Code)")
-        logger.info("  Skipping — this stage is done interactively.")
-        logger.info("  See: scripts/data/contexts/ for input files")
-        logger.info("  Save generated QAs to: scripts/data/generated/")
+        logger.info("STAGE 3: Generating QA pairs")
         logger.info("=" * 60)
+        from scripts.pipeline.s3_generate import run as run_s3
+
+        run_s3()
 
     if stage in ("4", "all"):
         logger.info("=" * 60)

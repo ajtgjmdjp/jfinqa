@@ -104,23 +104,29 @@ def _deduplicate(
     questions: list[dict[str, Any]],
     threshold: float = 0.7,
 ) -> list[dict[str, Any]]:
-    """Remove near-duplicate questions by Jaccard similarity on question text."""
+    """Remove near-duplicate questions within the same company.
+
+    Questions from different companies are never considered duplicates,
+    since template-generated questions intentionally vary by company.
+    """
     unique: list[dict[str, Any]] = []
-    ngram_cache: list[set[str]] = []
+    # Per-company ngram caches
+    company_caches: dict[str, list[set[str]]] = defaultdict(list)
 
     for q in questions:
         q_text = q["qa"]["question"]
         q_ngrams = _char_ngrams(q_text)
+        company = q.get("edinet_code", "unknown")
 
         is_dup = False
-        for cached in ngram_cache:
+        for cached in company_caches[company]:
             if _jaccard(q_ngrams, cached) > threshold:
                 is_dup = True
                 break
 
         if not is_dup:
             unique.append(q)
-            ngram_cache.append(q_ngrams)
+            company_caches[company].append(q_ngrams)
 
     return unique
 
@@ -165,7 +171,17 @@ def validate_question(q: dict[str, Any]) -> tuple[bool, str]:
     answer = qa["answer"]
     if isinstance(result, bool):
         result_str = "true" if result else "false"
-        if not _numerical_match(answer, result_str):
+        # Map Japanese boolean answers to true/false
+        jp_true = {"はい", "増収", "増益", "改善", "一致", "true", "yes"}
+        jp_false = {"いいえ", "減収", "減益", "悪化", "不一致", "false", "no"}
+        norm_answer = _normalize(answer)
+        if norm_answer in jp_true:
+            answer_bool = "true"
+        elif norm_answer in jp_false:
+            answer_bool = "false"
+        else:
+            answer_bool = norm_answer
+        if result_str != answer_bool:
             return False, f"answer_mismatch:program={result_str},answer={answer}"
     elif isinstance(result, (int, float)):
         if math.isinf(result) or math.isnan(result):

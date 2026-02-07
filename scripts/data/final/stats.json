@@ -1,0 +1,19 @@
+{
+  "total_questions": 400,
+  "total_rejected": 1,
+  "by_subtask": {
+    "numerical_reasoning": 250,
+    "consistency_checking": 75,
+    "temporal_reasoning": 75
+  },
+  "unique_companies": 31,
+  "by_accounting_standard": {
+    "J-GAAP": 215,
+    "IFRS": 146,
+    "US-GAAP": 39
+  },
+  "avg_program_steps": 2.535,
+  "rejection_reasons": {
+    "answer_mismatch": 1
+  }
+}
