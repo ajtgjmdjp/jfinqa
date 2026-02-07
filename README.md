@@ -138,6 +138,15 @@ uv run ruff check .
 uv run mypy src/
 ```
 
+## Data Attribution
+
+Source financial data is obtained from [EDINET](https://disclosure.edinet-fsa.go.jp/)
+(Electronic Disclosure for Investors' NETwork), operated by the
+Financial Services Agency of Japan (金融庁).
+EDINET data is provided under the [Public Data License 1.0](https://www.digital.go.jp/resources/open_data/).
+
+The data format is compatible with [FinQA](https://github.com/czyssrs/FinQA) (Chen et al., 2021).
+
 ## Related Projects
 
 - [FinQA](https://github.com/czyssrs/FinQA) — English financial QA benchmark (Chen et al., 2021)
@@ -147,4 +156,4 @@ uv run mypy src/
 
 ## License
 
-Apache-2.0
+Apache-2.0. See [NOTICE](NOTICE) for third-party attributions.

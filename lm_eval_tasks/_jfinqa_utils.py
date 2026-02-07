@@ -88,7 +88,7 @@ def _extract_answer(text: str) -> str:
     last non-empty line.
     """
     # Look for "Answer: ..." pattern
-    match = re.search(r"(?:Answer|answer|A)\s*[:：]\s*(.+)", text)
+    match = re.search(r"(?:Answer|answer|A)\s*[:\uff1a]\s*(.+)", text)
     if match:
         return match.group(1).strip()
 

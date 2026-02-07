@@ -1,0 +1,26 @@
+jfinqa
+Copyright 2025 ajtgjmdjp
+
+This benchmark contains questions derived from financial disclosure
+documents obtained via the EDINET API (Electronic Disclosure for
+Investors' NETwork) operated by the Financial Services Agency of Japan.
+
+EDINET source data is provided under the Public Data License 1.0 (PDL1.0):
+https://www.digital.go.jp/resources/open_data/
+
+Attribution: Financial Services Agency of Japan
+https://disclosure.edinet-fsa.go.jp/
+
+---
+
+The data format is compatible with FinQA (Chen et al., 2021):
+https://github.com/czyssrs/FinQA
+
+---
+
+This project uses the following open-source libraries:
+
+- datasets (Apache-2.0 License) - https://github.com/huggingface/datasets
+- Pydantic (MIT License) - https://github.com/pydantic/pydantic
+- Click (BSD License) - https://github.com/pallets/click
+- Loguru (MIT License) - https://github.com/Delgan/loguru
