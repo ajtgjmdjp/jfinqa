@@ -118,11 +118,23 @@ jfinqa evaluate -p predictions.json -d local_data.json -s numerical_reasoning
 
 ## lm-evaluation-harness
 
+[PR #3570](https://github.com/EleutherAI/lm-evaluation-harness/pull/3570) is pending. Once merged:
+
 ```bash
-lm_eval --model openai \
+lm-eval run --model openai-completions \
     --model_args model=gpt-4o \
-    --tasks jfinqa_numerical,jfinqa_consistency,jfinqa_temporal \
-    --include_path /path/to/jfinqa/lm_eval_tasks/
+    --tasks jfinqa \
+    --num_fewshot 0
+```
+
+Before merge, use `--include_path`:
+
+```bash
+lm-eval run --model openai-completions \
+    --model_args model=gpt-4o \
+    --tasks jfinqa \
+    --num_fewshot 0 \
+    --include_path lm_eval_tasks/
 ```
 
 ## Data Format

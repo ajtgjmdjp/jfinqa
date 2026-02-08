@@ -1,12 +1,12 @@
 task: jfinqa_numerical
-group: jfinqa
 dataset_path: ajtgjmdjp/jfinqa
 dataset_name: numerical_reasoning
 output_type: generate_until
 test_split: test
-doc_to_text: !function _jfinqa_utils.doc_to_text
-doc_to_target: "{{qa.answer}}"
-process_results: !function _jfinqa_utils.process_results
+num_fewshot: 0
+doc_to_text: !function utils.doc_to_text
+doc_to_target: "{{answer}}"
+process_results: !function utils.process_results
 metric_list:
   - metric: exact_match
     aggregation: mean
@@ -17,6 +17,10 @@ metric_list:
 generation_kwargs:
   max_gen_toks: 256
   temperature: 0.0
+  do_sample: false
+  until:
+    - "\n\n"
+    - "Question:"
 metadata:
-  version: 0.1.0
-  description: "Japanese financial numerical reasoning QA"
+  version: 0.1.1
+  description: "Japanese financial numerical reasoning QA — ratio and growth calculations"

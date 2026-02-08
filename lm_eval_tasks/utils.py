@@ -1,13 +1,6 @@
-"""Utility functions for lm-evaluation-harness integration.
+"""Utility functions for jfinqa lm-evaluation-harness integration.
 
-These functions are referenced by the YAML task configs via
-``!function _jfinqa_utils.<name>``.
-
-Usage with lm-evaluation-harness::
-
-    lm_eval --model openai \\
-        --tasks jfinqa_numerical \\
-        --include_path /path/to/jfinqa/lm_eval_tasks/
+Referenced by YAML task configs via ``!function utils.<name>``.
 """
 
 from __future__ import annotations
@@ -18,11 +11,7 @@ from typing import Any
 
 
 def doc_to_text(doc: dict[str, Any]) -> str:
-    """Format a dataset row as a prompt for the LLM.
-
-    Combines pre_text, table, post_text, and question into a
-    structured prompt.
-    """
+    """Format a dataset row as a prompt for the LLM."""
     parts: list[str] = []
 
     # Pre-text paragraphs
@@ -31,24 +20,13 @@ def doc_to_text(doc: dict[str, Any]) -> str:
         parts.append("\n".join(pre_text))
 
     # Table as markdown
-    table = doc.get("table", {})
-    if isinstance(table, dict):
-        headers = table.get("headers", [])
-        rows = table.get("rows", [])
-    elif isinstance(table, list) and table:
-        headers = table[0]
-        rows = table[1:]
-    else:
-        headers = []
-        rows = []
+    headers = doc.get("table_headers", [])
+    rows = doc.get("table_rows", [])
 
     if headers:
         header_line = "| " + " | ".join(str(h) for h in headers) + " |"
         sep_line = "| " + " | ".join("---" for _ in headers) + " |"
-        row_lines = [
-            "| " + " | ".join(str(c) for c in row) + " |"
-            for row in rows
-        ]
+        row_lines = ["| " + " | ".join(str(c) for c in row) + " |" for row in rows]
         parts.append("\n".join([header_line, sep_line, *row_lines]))
 
     # Post-text paragraphs
@@ -57,22 +35,16 @@ def doc_to_text(doc: dict[str, Any]) -> str:
         parts.append("\n".join(post_text))
 
     # Question
-    qa = doc.get("qa", {})
-    question = qa.get("question", "")
+    question = doc.get("question", "")
     parts.append(f"Question: {question}\nAnswer:")
 
     return "\n\n".join(parts)
 
 
 def process_results(doc: dict[str, Any], results: list[str]) -> dict[str, float]:
-    """Score a model response against the gold answer.
-
-    Returns metrics for both exact_match and numerical_match.
-    """
-    gold = doc.get("qa", {}).get("answer", "")
+    """Score a model response against the gold answer."""
+    gold = doc.get("answer", "")
     predicted = results[0] if results else ""
-
-    # Extract the final answer from the response
     predicted = _extract_answer(predicted)
 
     em = 1.0 if _normalize(predicted) == _normalize(gold) else 0.0
@@ -82,17 +54,10 @@ def process_results(doc: dict[str, Any], results: list[str]) -> dict[str, float]
 
 
 def _extract_answer(text: str) -> str:
-    """Extract the answer from model output.
-
-    Looks for patterns like "Answer: <value>" or just takes the
-    last non-empty line.
-    """
-    # Look for "Answer: ..." pattern
+    """Extract the answer from model output."""
     match = re.search(r"(?:Answer|answer|A)\s*[:\uff1a]\s*(.+)", text)
     if match:
         return match.group(1).strip()
-
-    # Fall back to last non-empty line
     lines = [line.strip() for line in text.strip().splitlines() if line.strip()]
     return lines[-1] if lines else ""
 
@@ -103,11 +68,61 @@ def _normalize(text: str) -> str:
     s = unicodedata.normalize("NFKC", s)
     s = re.sub(r"^[△▲]", "-", s)
     s = re.sub(r"(?<=\d),(?=\d)", "", s)
+    if s.endswith("しました"):
+        s = s.removesuffix("しました")
+    elif s.endswith("した"):
+        s = s.removesuffix("した")
     return s.lower().strip()
 
 
+_UNIT_SUFFIXES = (
+    "百万円",
+    "千円",
+    "億円",
+    "兆円",
+    "円",
+    "ドル",
+    "ポイント",
+    "pt",
+    "bps",
+)
+
+_KANJI_MULTIPLIERS: dict[str, int] = {
+    "千": 1_000,
+    "百万": 1_000_000,
+    "億": 100_000_000,
+    "兆": 1_000_000_000_000,
+}
+
+
+def _try_parse_number(text: str) -> float | None:
+    """Try to extract a number from text."""
+    s = _normalize(text)
+    for suffix in _UNIT_SUFFIXES:
+        s = s.removesuffix(suffix)
+
+    for kanji, multiplier in _KANJI_MULTIPLIERS.items():
+        if kanji in s:
+            num_part = s.replace(kanji, "").strip()
+            num_part = re.sub(r"[^\d.\-+]", "", num_part)
+            try:
+                return float(num_part) * multiplier
+            except ValueError:
+                return None
+
+    is_percent = s.endswith("%")
+    if is_percent:
+        s = s.removesuffix("%")
+
+    s = re.sub(r"[^\d.\-+]", "", s)
+    try:
+        return float(s)
+    except ValueError:
+        return None
+
+
 def _numerical_match(predicted: str, gold: str, tolerance: float = 0.01) -> bool:
-    """Check numerical equivalence with tolerance."""
+    """Check numerical equivalence with 1% tolerance."""
     pred_num = _try_parse_number(predicted)
     gold_num = _try_parse_number(gold)
 
@@ -118,16 +133,3 @@ def _numerical_match(predicted: str, gold: str, tolerance: float = 0.01) -> bool
         return pred_num == 0
 
     return abs(pred_num - gold_num) / abs(gold_num) <= tolerance
-
-
-def _try_parse_number(text: str) -> float | None:
-    """Try to extract a number from text."""
-    s = _normalize(text)
-    # Strip common suffixes
-    for suffix in ("円", "ドル", "%", "ポイント"):
-        s = s.removesuffix(suffix)
-    s = re.sub(r"[^\d.\-+]", "", s)
-    try:
-        return float(s)
-    except ValueError:
-        return None
