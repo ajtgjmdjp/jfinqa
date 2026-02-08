@@ -65,6 +65,13 @@ def normalize_answer(answer: str) -> str:
     # Remove commas in numbers (e.g., "1,234,567" → "1234567")
     s = re.sub(r"(?<=\d),(?=\d)", "", s)
 
+    # Normalize Japanese verb endings for categorical answers
+    # e.g., "改善した" → "改善", "悪化した" → "悪化"
+    if s.endswith("した"):
+        s = s.removesuffix("した")
+    elif s.endswith("しました"):
+        s = s.removesuffix("しました")
+
     # Lowercase for case-insensitive comparison
     s = s.lower().strip()
 

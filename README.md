@@ -18,6 +18,16 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 | **Consistency Checking** | Verify internal consistency of reported figures | "資産合計は流動資産と固定資産の合計と一致するか？" |
 | **Temporal Reasoning** | Analyze trends and changes across periods | "売上高が最も低かったのはどの年度か？" |
 
+### Baseline Results
+
+| Model | Overall | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
+|-------|---------|--------------------|--------------------|-------------------|
+| GPT-4o-mini | **70.2%** | **76.4%** | **85.3%** | 34.7% |
+| GPT-4o | 63.7% | 60.4% | 38.7% | **100.0%** |
+| Gemini 2.0 Flash | 60.8% | 54.8% | 80.0% | 61.3% |
+
+*400 questions, zero-shot, temperature=0. Evaluation uses numerical matching with 1% tolerance.*
+
 ### Key Features
 
 - **FinQA-compatible**: Same data format as [FinQA](https://github.com/czyssrs/FinQA) for cross-benchmark comparison

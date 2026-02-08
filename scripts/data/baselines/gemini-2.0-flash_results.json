@@ -1,0 +1,23 @@
+{
+  "model": "gemini-2.0-flash",
+  "overall_accuracy": 0.6075,
+  "correct": 243,
+  "total": 400,
+  "by_subtask": {
+    "consistency_checking": {
+      "accuracy": 0.8,
+      "correct": 60,
+      "total": 75
+    },
+    "numerical_reasoning": {
+      "accuracy": 0.548,
+      "correct": 137,
+      "total": 250
+    },
+    "temporal_reasoning": {
+      "accuracy": 0.6133333333333333,
+      "correct": 46,
+      "total": 75
+    }
+  }
+}

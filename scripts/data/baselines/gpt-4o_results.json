@@ -1,0 +1,23 @@
+{
+  "model": "gpt-4o",
+  "overall_accuracy": 0.6375,
+  "correct": 255,
+  "total": 400,
+  "by_subtask": {
+    "consistency_checking": {
+      "accuracy": 0.38666666666666666,
+      "correct": 29,
+      "total": 75
+    },
+    "numerical_reasoning": {
+      "accuracy": 0.604,
+      "correct": 151,
+      "total": 250
+    },
+    "temporal_reasoning": {
+      "accuracy": 1.0,
+      "correct": 75,
+      "total": 75
+    }
+  }
+}

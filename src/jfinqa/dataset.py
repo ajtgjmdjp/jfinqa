@@ -111,14 +111,37 @@ def load_from_file(path: str) -> list[Question]:
 
 
 def _row_to_question(row: Any, subtask: Subtask) -> Question:
-    """Convert a HuggingFace dataset row to a Question."""
+    """Convert a HuggingFace dataset row to a Question.
+
+    Supports both nested format (table/qa dicts) and flat format
+    (table_headers, table_rows, question, answer, etc.) used by
+    HuggingFace Hub uploads.
+    """
+    from jfinqa.models import QAPair, Table
+
+    # Detect flat format (HuggingFace Hub)
+    if "table_headers" in row:
+        table = Table(
+            headers=list(row["table_headers"]),
+            rows=[list(r) for r in row["table_rows"]],
+        )
+        qa = QAPair(
+            question=row["question"],
+            program=list(row.get("program", [])),
+            answer=row["answer"],
+            gold_evidence=list(row.get("gold_evidence", [])),
+        )
+    else:
+        table = _parse_table(row.get("table", {}))
+        qa = _parse_qa(row.get("qa", {}))
+
     return Question(
         id=row["id"],
         subtask=subtask,
-        pre_text=row.get("pre_text", []),
-        post_text=row.get("post_text", []),
-        table=_parse_table(row.get("table", {})),
-        qa=_parse_qa(row.get("qa", {})),
+        pre_text=list(row.get("pre_text", [])),
+        post_text=list(row.get("post_text", [])),
+        table=table,
+        qa=qa,
         edinet_code=row.get("edinet_code"),
         filing_year=row.get("filing_year"),
         accounting_standard=row.get("accounting_standard"),
