@@ -11,6 +11,11 @@ https://www.digital.go.jp/resources/open_data/
 Attribution: Financial Services Agency of Japan
 https://disclosure.edinet-fsa.go.jp/
 
+Modifications to source data: Financial statement values were extracted
+from XBRL filings via EDINET API, structured into table contexts, and
+used to generate question-answer pairs with DSL-verified gold programs.
+Original numerical values are preserved without modification.
+
 ---
 
 The data format is compatible with FinQA (Chen et al., 2021):

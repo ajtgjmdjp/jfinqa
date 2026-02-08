@@ -3,7 +3,10 @@ message: "If you use this benchmark, please cite it as below."
 title: "jfinqa: Japanese Financial Numerical Reasoning QA Benchmark"
 type: dataset
 authors:
-  - alias: ajtgjmdjp
+  - family-names: Ogawa
+    given-names: Saichi
+    alias: ajtgjmdjp
+date-released: "2025-02-08"
 url: "https://github.com/ajtgjmdjp/jfinqa"
 license: Apache-2.0
 keywords:
