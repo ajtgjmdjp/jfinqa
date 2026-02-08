@@ -35,4 +35,4 @@ __all__ = [
     "load_from_file",
 ]
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
