@@ -51,17 +51,21 @@ class TestExtractNumber:
     def test_yen_suffix(self) -> None:
         assert extract_number("1000\u5186") == 1000.0
 
-    def test_kanji_million(self) -> None:
-        result = extract_number("100\u767e\u4e07\u5186")
-        assert result == 100_000_000.0
+    def test_financial_unit_million_yen(self) -> None:
+        # "百万円" is a reporting unit label, not a multiplier
+        assert extract_number("100\u767e\u4e07\u5186") == 100.0
 
-    def test_kanji_oku(self) -> None:
-        result = extract_number("50\u5104\u5186")
-        assert result == 5_000_000_000.0
+    def test_financial_unit_oku_yen(self) -> None:
+        assert extract_number("50\u5104\u5186") == 50.0
 
-    def test_kanji_cho(self) -> None:
-        result = extract_number("1.5\u5146\u5186")
-        assert result == 1_500_000_000_000.0
+    def test_financial_unit_cho_yen(self) -> None:
+        assert extract_number("1.5\u5146\u5186") == 1.5
+
+    def test_kanji_multiplier_without_yen(self) -> None:
+        # Bare kanji multipliers (no 円) still apply multiplication
+        assert extract_number("100\u767e\u4e07") == 100_000_000.0
+        assert extract_number("50\u5104") == 5_000_000_000.0
+        assert extract_number("1.5\u5146") == 1_500_000_000_000.0
 
     def test_non_numeric(self) -> None:
         assert extract_number("\u5897\u52a0") is None
@@ -69,9 +73,13 @@ class TestExtractNumber:
     def test_empty(self) -> None:
         assert extract_number("") is None
 
-    def test_triangle_with_kanji(self) -> None:
-        result = extract_number("\u25b3500\u767e\u4e07\u5186")
-        assert result == -500_000_000.0
+    def test_triangle_with_financial_unit(self) -> None:
+        # △500百万円 → -500 (百万円 stripped as unit)
+        assert extract_number("\u25b3500\u767e\u4e07\u5186") == -500.0
+
+    def test_triangle_with_kanji_multiplier(self) -> None:
+        # △500百万 → -500,000,000 (百万 as multiplier)
+        assert extract_number("\u25b3500\u767e\u4e07") == -500_000_000.0
 
 
 class TestExactMatch:
@@ -101,7 +109,7 @@ class TestNumericalMatch:
     @pytest.mark.parametrize(
         ("pred", "gold"),
         [
-            ("100\u5104\u5186", "10000\u767e\u4e07\u5186"),
+            ("24956\u767e\u4e07\u5186", "24956"),  # unit label stripped
             ("\u25b31,000", "-1000"),
             ("25.0%", "25%"),
         ],

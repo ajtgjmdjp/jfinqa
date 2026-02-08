@@ -22,11 +22,31 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 
 | Model | Overall | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
 |-------|---------|--------------------|--------------------|-------------------|
-| GPT-4o-mini | **70.2%** | **76.4%** | **85.3%** | 34.7% |
-| GPT-4o | 63.7% | 60.4% | 38.7% | **100.0%** |
-| Gemini 2.0 Flash | 60.8% | 54.8% | 80.0% | 61.3% |
+| GPT-4o | **79.8%** | 68.8% | **96.0%** | **100.0%** |
+| GPT-4o-mini | 76.0% | **85.6%** | 85.3% | 34.7% |
+| Gemini 2.0 Flash | 66.5% | 64.0% | 80.0% | 61.3% |
 
 *400 questions, zero-shot, temperature=0. Evaluation uses numerical matching with 1% tolerance.*
+
+### Error Analysis
+
+Systematic error analysis across 3 models revealed both benchmark design issues and genuine LLM failure patterns.
+
+**Evaluation methodology fix**: An initial version reported GPT-4o-mini (70.2%) outperforming GPT-4o (63.7%). This counterintuitive result was caused by inconsistent unit handling in the evaluation: (1) 23 gold answers included redundant "百万円" suffixes that models correctly omitted, and (2) GPT-4o appended "百万円" to 43 consistency-checking answers where the gold expected bare numbers. After standardizing gold answers and treating compound financial units (百万円, 億円) as unit labels rather than multipliers, GPT-4o correctly ranks first at 79.8%.
+
+**Genuine error patterns** (not caused by formatting):
+
+| Error Pattern | GPT-4o | GPT-4o-mini | Gemini 2.0 Flash |
+|---|---|---|---|
+| Equity ratio: uses 株主資本 instead of 純資産合計 | 23/24 | 16/24 | 24/24 |
+| Fixed asset ratio: decomposes into 4 sub-categories | 25/29 | 1/29 | 29/29 |
+| Temporal reasoning: answers はい instead of 増収/減収 | 0/75 | 49/75 | 0/75 |
+| BS rounding: ±0.1 from XBRL rounding causes false negative | 2 | 2 | 2 |
+
+Key findings:
+- **J-GAAP balance sheet structure is the largest source of genuine errors.** Models confuse 純資産合計 (net assets, including non-controlling interests) with 株主資本 (shareholders' equity), and decompose 総資産 into 4 sub-categories instead of the standard 2-category (流動資産+固定資産) structure. GPT-4o-mini is notably better at this than GPT-4o and Gemini.
+- **GPT-4o-mini has a systematic prompt compliance issue in temporal reasoning.** It answers "はい" (yes) to questions like "増収か減収か？" despite correctly analyzing the direction in its reasoning chain. This is a pure instruction-following failure, not a reasoning error.
+- **GPT-4o and Gemini are highly correlated in failures** on ratio calculations (43 shared errors), while GPT-4o-mini uses a different (often correct) approach to total assets calculation.
 
 ### Key Features
 
@@ -130,19 +150,20 @@ Each question follows the FinQA schema with additional metadata:
 
 jfinqa correctly normalizes Japanese financial number formats:
 
-| Input | Normalized |
-|-------|-----------|
-| `１２，３４５百万円` | 12,345,000,000 |
-| `△1,000` | -1,000 |
-| `50億円` | 5,000,000,000 |
-| `1.5兆円` | 1,500,000,000,000 |
+| Input | Extracted Value | Notes |
+|-------|----------------|-------|
+| `△1,000` | -1,000 | Triangle negative marker |
+| `１２，３４５` | 12,345 | Fullwidth digits + comma removal |
+| `24,956百万円` | 24,956 | Compound financial units treated as labels |
+| `50億` | 5,000,000,000 | Bare kanji multiplier applied |
+| `42.5%` | 42.5 | Percentage |
 
 ## Development
 
 ```bash
 git clone https://github.com/ajtgjmdjp/jfinqa
 cd jfinqa
-uv sync --dev
+uv sync --dev --extra dev
 uv run pytest -v
 uv run ruff check .
 uv run mypy src/

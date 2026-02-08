@@ -291,10 +291,10 @@
     "id": "nr_033",
     "subtask": "numerical_reasoning",
     "question": "清水建設の売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "24,956百万円",
+    "gold": "24,956",
     "predicted": "24,956",
     "raw_response": "売上高の増加額は、2024年3月期の売上高から2023年3月期の売上高を差し引くことで求められます。\n\n増加額 = 2024年3月期売上高 - 2023年3月期売上高\n増加額 = 835,263百万円 - 810,307百万円\n増加額 = 24,956百万円\n\nAnswer: 24,956\n",
-    "correct": false
+    "correct": true
   },
   "nr_034": {
     "id": "nr_034",
@@ -561,10 +561,10 @@
     "id": "nr_063",
     "subtask": "numerical_reasoning",
     "question": "味の素の売上高は2023年3月期から2024年3月期にかけていくら減少したか。",
-    "gold": "39,327百万円",
+    "gold": "39,327",
     "predicted": "39,327",
     "raw_response": "売上高の減少額 = 2023年3月期売上高 - 2024年3月期売上高\n売上高の減少額 = 165,580 - 126,253 = 39,327\n\nAnswer: 39,327\n",
-    "correct": false
+    "correct": true
   },
   "nr_064": {
     "id": "nr_064",
@@ -588,28 +588,28 @@
     "id": "nr_066",
     "subtask": "numerical_reasoning",
     "question": "三菱商事の売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "13,019百万円",
+    "gold": "13,019",
     "predicted": "13,019",
     "raw_response": "売上高の増加額 = 2024年3月期の売上高 - 2023年3月期の売上高\n売上高の増加額 = 307,289 - 294,270 = 13,019\n\nAnswer: 13,019\n",
-    "correct": false
+    "correct": true
   },
   "nr_067": {
     "id": "nr_067",
     "subtask": "numerical_reasoning",
     "question": "住友不動産の売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "17,887百万円",
+    "gold": "17,887",
     "predicted": "17,887",
     "raw_response": "売上高の増加額は、2024年3月期の売上高から2023年3月期の売上高を差し引くことで求められます。\n\n増加額 = 2024年3月期売上高 - 2023年3月期売上高\n増加額 = 680,091百万円 - 662,204百万円\n増加額 = 17,887百万円\n\nAnswer: 17,887\n",
-    "correct": false
+    "correct": true
   },
   "nr_068": {
     "id": "nr_068",
     "subtask": "numerical_reasoning",
     "question": "JFEホールディングスの売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "1,067百万円",
+    "gold": "1,067",
     "predicted": "1,067.1",
     "raw_response": "売上高の増加額は、2024年3月期の売上高から2023年3月期の売上高を差し引くことで求められます。\n\n増加額 = 2024年3月期売上高 - 2023年3月期売上高\n増加額 = 12,598.6 - 11,531.5\n増加額 = 1,067.1\n\nAnswer: 1,067.1\n",
-    "correct": false
+    "correct": true
   },
   "nr_069": {
     "id": "nr_069",
@@ -624,136 +624,136 @@
     "id": "nr_070",
     "subtask": "numerical_reasoning",
     "question": "日清食品ホールディングスの売上高は2023年3月期から2024年3月期にかけていくら減少したか。",
-    "gold": "2,527百万円",
+    "gold": "2,527",
     "predicted": "2,527",
     "raw_response": "売上高の減少額 = 2023年3月期の売上高 - 2024年3月期の売上高\n売上高の減少額 = 42,406 - 39,879 = 2,527\n\nAnswer: 2,527\n",
-    "correct": false
+    "correct": true
   },
   "nr_071": {
     "id": "nr_071",
     "subtask": "numerical_reasoning",
     "question": "旭化成の売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "49,443百万円",
+    "gold": "49,443",
     "predicted": "49,443",
     "raw_response": "売上高の増加額 = 2024年3月期の売上高 - 2023年3月期の売上高\n売上高の増加額 = 615,529 - 566,086 = 49,443\n\nAnswer: 49,443\n",
-    "correct": false
+    "correct": true
   },
   "nr_072": {
     "id": "nr_072",
     "subtask": "numerical_reasoning",
     "question": "花王の売上高は2023年3月期から2024年3月期にかけていくら減少したか。",
-    "gold": "1,376百万円",
+    "gold": "1,376",
     "predicted": "1,376.4",
     "raw_response": "売上高の減少額 = 2023年3月期売上高 - 2024年3月期売上高\n売上高の減少額 = 16,340.7 - 14,964.3 = 1,376.4\n\nAnswer: 1,376.4\n",
-    "correct": false
+    "correct": true
   },
   "nr_073": {
     "id": "nr_073",
     "subtask": "numerical_reasoning",
     "question": "武田薬品工業の売上高は2023年3月期から2024年3月期にかけていくら減少したか。",
-    "gold": "96,987百万円",
+    "gold": "96,987",
     "predicted": "96,987",
     "raw_response": "売上高の減少額 = 2023年3月期売上高 - 2024年3月期売上高\n売上高の減少額 = 4,973,537 - 4,876,550 = 96,987\n\nAnswer: 96,987\n",
-    "correct": false
+    "correct": true
   },
   "nr_074": {
     "id": "nr_074",
     "subtask": "numerical_reasoning",
     "question": "日立製作所の売上高は2023年3月期から2024年3月期にかけていくら減少したか。",
-    "gold": "174百万円",
+    "gold": "174",
     "predicted": "173.6",
     "raw_response": "売上高の減少額 = 2023年3月期売上高 - 2024年3月期売上高\n売上高の減少額 = 6,331.4 - 6,157.8 = 173.6\n\nAnswer: 173.6\n",
-    "correct": false
+    "correct": true
   },
   "nr_075": {
     "id": "nr_075",
     "subtask": "numerical_reasoning",
     "question": "キヤノンの売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "6,984百万円",
+    "gold": "6,984",
     "predicted": "6,984.3",
     "raw_response": "売上高の増加額は、2024年3月期の売上高から2023年3月期の売上高を差し引くことで求められます。\n\n増加額 = 2024年3月期売上高 - 2023年3月期売上高\n増加額 = 31,923.9 - 24,939.6\n増加額 = 6,984.3\n\nAnswer: 6,984.3\n",
-    "correct": false
+    "correct": true
   },
   "nr_076": {
     "id": "nr_076",
     "subtask": "numerical_reasoning",
     "question": "ダイキン工業の売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "435百万円",
+    "gold": "435",
     "predicted": "435.2",
     "raw_response": "売上高の増加額は、2024年3月期の売上高から2023年3月期の売上高を差し引くことで求められます。\n\n増加額 = 2024年3月期売上高 - 2023年3月期売上高\n増加額 = 5,685.3 - 5,250.1\n増加額 = 435.2\n\nAnswer: 435.2\n",
-    "correct": false
+    "correct": true
   },
   "nr_077": {
     "id": "nr_077",
     "subtask": "numerical_reasoning",
     "question": "オムロンの売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "8,823百万円",
+    "gold": "8,823",
     "predicted": "8,823",
     "raw_response": "売上高の増加額は、2024年3月期の売上高から2023年3月期の売上高を差し引くことで求められます。\n\n176,334 - 167,511 = 8,823\n\nAnswer: 8,823\n",
-    "correct": false
+    "correct": true
   },
   "nr_078": {
     "id": "nr_078",
     "subtask": "numerical_reasoning",
     "question": "パナソニックホールディングスの売上収益は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "125,599百万円",
+    "gold": "125,599",
     "predicted": "125,599",
     "raw_response": "売上収益の増加額は、2024年3月期の売上収益から2023年3月期の売上収益を差し引くことで求められます。\n\n増加額 = 2024年3月期売上収益 - 2023年3月期売上収益\n増加額 = 1,756,937 - 1,631,338\n増加額 = 125,599\n\nAnswer: 125,599\n",
-    "correct": false
+    "correct": true
   },
   "nr_079": {
     "id": "nr_079",
     "subtask": "numerical_reasoning",
     "question": "キーエンスの売上高は2023年3月期から2024年3月期にかけていくら減少したか。",
-    "gold": "110,170百万円",
+    "gold": "110,170",
     "predicted": "110,170",
     "raw_response": "売上高の減少額 = 2023年3月期売上高 - 2024年3月期売上高\n売上高の減少額 = 369,498 - 259,328 = 110,170\n\nAnswer: 110,170\n",
-    "correct": false
+    "correct": true
   },
   "nr_080": {
     "id": "nr_080",
     "subtask": "numerical_reasoning",
     "question": "ソニーグループの売上高は2023年3月期から2024年3月期にかけていくら減少したか。",
-    "gold": "10,238百万円",
+    "gold": "10,238",
     "predicted": "10,238",
     "raw_response": "売上高の減少額 = 2023年3月期の売上高 - 2024年3月期の売上高\n売上高の減少額 = 168,964 - 158,726 = 10,238\n\nAnswer: 10,238\n",
-    "correct": false
+    "correct": true
   },
   "nr_081": {
     "id": "nr_081",
     "subtask": "numerical_reasoning",
     "question": "オリックスの売上高は2023年3月期から2024年3月期にかけていくら減少したか。",
-    "gold": "87,882百万円",
+    "gold": "87,882",
     "predicted": "87,882",
     "raw_response": "売上高の減少額 = 2023年3月期売上高 - 2024年3月期売上高\n売上高の減少額 = 482,576 - 394,694\n売上高の減少額 = 87,882\n\nAnswer: 87,882\n",
-    "correct": false
+    "correct": true
   },
   "nr_082": {
     "id": "nr_082",
     "subtask": "numerical_reasoning",
     "question": "本田技研工業の売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "946,609百万円",
+    "gold": "946,609",
     "predicted": "946,609",
     "raw_response": "売上高の増加額 = 2024年3月期の売上高 - 2023年3月期の売上高\n売上高の増加額 = 4,187,227 - 3,240,618 = 946,609\n\nAnswer: 946,609\n",
-    "correct": false
+    "correct": true
   },
   "nr_083": {
     "id": "nr_083",
     "subtask": "numerical_reasoning",
     "question": "トヨタ自動車の売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "3,498,637百万円",
+    "gold": "3,498,637",
     "predicted": "3,498,637",
     "raw_response": "売上高の増加額 = 2024年3月期の売上高 - 2023年3月期の売上高\n売上高の増加額 = 17,575,593 - 14,076,956 = 3,498,637\n\nAnswer: 3,498,637\n",
-    "correct": false
+    "correct": true
   },
   "nr_084": {
     "id": "nr_084",
     "subtask": "numerical_reasoning",
     "question": "スズキの売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "8,063百万円",
+    "gold": "8,063",
     "predicted": "8,063",
     "raw_response": "売上高の増加額は、2024年3月期の売上高から2023年3月期の売上高を差し引くことで求められます。\n\n増加額 = 2024年3月期売上高 - 2023年3月期売上高\n増加額 = 116,437 - 108,374\n増加額 = 8,063\n\nAnswer: 8,063\n",
-    "correct": false
+    "correct": true
   },
   "nr_085": {
     "id": "nr_085",
@@ -768,19 +768,19 @@
     "id": "nr_086",
     "subtask": "numerical_reasoning",
     "question": "リクルートホールディングスの売上収益は2023年3月期から2024年3月期にかけていくら減少したか。",
-    "gold": "177,950百万円",
+    "gold": "177,950",
     "predicted": "177,950",
     "raw_response": "売上収益の減少額 = 2023年3月期売上収益 - 2024年3月期売上収益\n売上収益の減少額 = 2,410,802 - 2,232,852 = 177,950\n\nAnswer: 177,950\n",
-    "correct": false
+    "correct": true
   },
   "nr_087": {
     "id": "nr_087",
     "subtask": "numerical_reasoning",
     "question": "ファーストリテイリングの売上高は2023年3月期から2024年3月期にかけていくら増加したか。",
-    "gold": "549百万円",
+    "gold": "549",
     "predicted": "549.1",
     "raw_response": "売上高の増加額は、2024年3月期の売上高から2023年3月期の売上高を差し引くことで求められます。\n\n増加額 = 2024年3月期売上高 - 2023年3月期売上高\n増加額 = 7,785.2 - 7,236.1\n増加額 = 549.1\n\nAnswer: 549.1\n",
-    "correct": false
+    "correct": true
   },
   "nr_088": {
     "id": "nr_088",
@@ -831,10 +831,10 @@
     "id": "nr_093",
     "subtask": "numerical_reasoning",
     "question": "NTTの売上高は2023年3月期から2024年3月期にかけていくら減少したか。",
-    "gold": "7,797百万円",
+    "gold": "7,797",
     "predicted": "7,797",
     "raw_response": "売上高の減少額 = 2023年3月期売上高 - 2024年3月期売上高\n売上高の減少額 = 244,513 - 236,716 = 7,797\n\nAnswer: 7,797\n",
-    "correct": false
+    "correct": true
   },
   "nr_094": {
     "id": "nr_094",

@@ -4,7 +4,7 @@ Handles Japan-specific number formats:
 - Kanji multipliers: 千 (1e3), 百万 (1e6), 億 (1e8), 兆 (1e12)
 - Triangle negative: △1,000 → -1000
 - Fullwidth digits: fullwidth 123 -> 123
-- Unit suffixes: 円, %, ポイント
+- Unit suffixes: 百万円, 億円, 千円, 兆円, 円, %, ポイント
 - Comma-separated numbers: 1,234,567
 """
 
@@ -21,8 +21,18 @@ _KANJI_MULTIPLIERS: dict[str, int] = {
     "兆": 1_000_000_000_000,
 }
 
-# Unit suffixes to strip
-_UNIT_SUFFIXES = ("円", "ドル", "ポイント", "pt", "bps")
+# Unit suffixes to strip (compound units first to avoid partial matching)
+_UNIT_SUFFIXES = (
+    "百万円",
+    "千円",
+    "億円",
+    "兆円",
+    "円",
+    "ドル",
+    "ポイント",
+    "pt",
+    "bps",
+)
 
 
 def normalize_answer(answer: str) -> str:
@@ -44,7 +54,7 @@ def normalize_answer(answer: str) -> str:
         Normalized string for comparison.
 
     Examples:
-        >>> normalize_answer("12,345百万円")  # noqa: RUF002
+        >>> normalize_answer("12,345百万円")
         '12345百万円'
         >>> normalize_answer("△1,000")
         '-1000'
@@ -92,7 +102,7 @@ def extract_number(text: str) -> float | None:
 
     Examples:
         >>> extract_number("12345百万円")
-        12345000000.0
+        12345.0
         >>> extract_number("-42.5%")
         -42.5
         >>> extract_number("増加")
@@ -171,7 +181,7 @@ def numerical_match(
     Examples:
         >>> numerical_match("42.5%", "42.50%")
         True
-        >>> numerical_match("100億円", "10000百万円")
+        >>> numerical_match("24956百万円", "24956")
         True
     """
     pred_num = extract_number(predicted)

@@ -1,7 +1,7 @@
 {
   "model": "gpt-4o-mini",
-  "overall_accuracy": 0.7025,
-  "correct": 281,
+  "overall_accuracy": 0.76,
+  "correct": 304,
   "total": 400,
   "by_subtask": {
     "consistency_checking": {
@@ -10,8 +10,8 @@
       "total": 75
     },
     "numerical_reasoning": {
-      "accuracy": 0.764,
-      "correct": 191,
+      "accuracy": 0.856,
+      "correct": 214,
       "total": 250
     },
     "temporal_reasoning": {
