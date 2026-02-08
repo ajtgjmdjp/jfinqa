@@ -6,3 +6,4 @@ generated/
 # Final dataset IS tracked (small, versioned)
 !final/
 !final/jfinqa_v1.json
+final/rejected.json
