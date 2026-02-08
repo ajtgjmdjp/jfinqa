@@ -1,0 +1,195 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{CJKutf8}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{xcolor}
+\usepackage{enumitem}
+
+\title{jfinqa: A Japanese Financial Numerical Reasoning QA Benchmark}
+\author{Saichi Ogawa \\
+  Hitotsubashi University \\
+  \texttt{https://github.com/ajtgjmdjp/jfinqa}}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We introduce \textbf{jfinqa}, a benchmark of 927 questions for evaluating large language models on numerical reasoning over Japanese corporate financial statements.
+Each question requires multi-step arithmetic (1--5 steps) over tables extracted from real EDINET\footnote{Electronic Disclosure for Investors' NETwork, operated by Japan's Financial Services Agency.} filings, spanning 68 companies across J-GAAP, IFRS, and US-GAAP.
+The benchmark comprises three subtasks: numerical reasoning (550), consistency checking (200), and temporal reasoning (177).
+Zero-shot evaluation of GPT-4o, GPT-4o-mini, and Gemini 2.0 Flash reveals that J-GAAP-specific balance sheet structures remain a systematic source of errors even for frontier models.
+The dataset, evaluation toolkit, and lm-evaluation-harness task configs are publicly available.\footnote{\url{https://github.com/ajtgjmdjp/jfinqa}}
+\end{abstract}
+
+\section{Introduction}
+
+Financial numerical reasoning---the ability to perform calculations over structured financial data---is a critical capability for LLM-based financial analysis systems.
+While English benchmarks such as FinQA \citep{chen2021finqa} and TAT-QA \citep{zhu2021tatqa} have established evaluation standards, no comparable benchmark exists for Japanese financial statements.
+
+This gap is significant for three reasons.
+First, Japanese corporate disclosures follow distinct accounting structures: J-GAAP uses a four-category balance sheet decomposition (\begin{CJK}{UTF8}{min}流動資産, 固定資産, 流動負債, 固定負債\end{CJK}) unlike IFRS's two-category split.
+Second, Japan's mixed accounting landscape---57\% J-GAAP, 39\% IFRS, 4\% US-GAAP among listed companies---requires models to adapt to heterogeneous terminology.
+Third, Japanese financial number formats (kanji multipliers, fullwidth digits, triangle negatives) create additional processing challenges.
+
+We present \textbf{jfinqa}, a benchmark that addresses this gap with 927 questions requiring multi-step arithmetic over real financial statement tables.
+Unlike existing Japanese financial NLP resources that focus on classification \citep{sakana2024edinetbench} or knowledge QA, jfinqa requires numerical computation with verifiable gold programs.
+
+\section{Dataset Construction}
+
+\subsection{Data Source}
+
+All source data comes from EDINET, Japan's electronic disclosure system.
+We target annual securities reports (\begin{CJK}{UTF8}{min}有価証券報告書\end{CJK}) for fiscal years ending March 2023 and March 2024, covering 68 companies from the TSE Prime market.
+Company selection balances sector diversity, market capitalization tiers, and accounting standard representation.
+
+Financial statements are extracted from XBRL filings using our companion library \texttt{edinet-mcp} \citep{edinetmcp2025}, which normalizes J-GAAP, IFRS, and US-GAAP taxonomies into canonical Japanese labels.
+
+\subsection{Question Generation}
+
+Questions are generated via a template-based pipeline with DSL-verified answers.
+The pipeline operates in four stages:
+
+\begin{enumerate}[nosep]
+  \item \textbf{Collection}: Download and cache XBRL filings from EDINET API.
+  \item \textbf{Context extraction}: Parse financial statements into structured table contexts (income statement, balance sheet, cash flow, cross-statement).
+  \item \textbf{QA generation}: Apply 16 question templates that instantiate company-specific questions with DSL programs.
+  \item \textbf{Validation}: Execute each DSL program, verify answer consistency, deduplicate, and sample to target subtask ratios.
+\end{enumerate}
+
+Each question includes a FinQA-compatible DSL program \citep{chen2021finqa} that computes the gold answer from table values.
+The DSL supports arithmetic operations (\texttt{add}, \texttt{subtract}, \texttt{multiply}, \texttt{divide}), comparisons (\texttt{greater}, \texttt{eq}), and reference chaining (\texttt{\#0}, \texttt{\#1}, etc.).
+Programs range from 1 to 5 steps (mean: 2.38).
+
+\subsection{Three Subtasks}
+
+\begin{description}[nosep]
+  \item[Numerical Reasoning (NR, 550 questions)] Calculate financial metrics: growth rates, margins, ratios (ROA, ROE, current ratio), and absolute changes. Requires 2--5 arithmetic steps.
+  \item[Consistency Checking (CC, 200 questions)] Verify internal consistency of reported figures: balance sheet identity, gross profit decomposition, and cross-statement ratio validation. Includes genuine 1-step additions (e.g., assets = current + fixed) and multi-step cross-checks.
+  \item[Temporal Reasoning (TR, 177 questions)] Determine direction of year-over-year changes: revenue growth/decline, profit improvement/deterioration, margin trends. Answers are categorical (\begin{CJK}{UTF8}{min}増収/減収, 増益/減益, 改善/悪化\end{CJK}).
+\end{description}
+
+\subsection{Dataset Statistics}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lrrr}
+\toprule
+ & NR & CC & TR \\
+\midrule
+Questions & 550 & 200 & 177 \\
+Avg.\ program steps & 2.44 & 2.00 & 2.62 \\
+Answer type: percentage & 451 & --- & --- \\
+Answer type: numeric & --- & 133 & --- \\
+Answer type: categorical & --- & --- & 177 \\
+Answer type: boolean & --- & 66 & --- \\
+\bottomrule
+\end{tabular}
+\caption{Subtask breakdown. Total: 927 questions from 68 companies (J-GAAP: 528, IFRS: 360, US-GAAP: 39).}
+\label{tab:stats}
+\end{table}
+
+\section{Evaluation}
+
+\subsection{Setup}
+
+We evaluate three frontier models in a zero-shot setting: GPT-4o, GPT-4o-mini (OpenAI), and Gemini 2.0 Flash (Google).
+All models receive a Japanese system prompt instructing financial analysis, the table context formatted as markdown, and the question.
+Models must output their answer in \texttt{Answer: value} format.
+Evaluation uses numerical matching with 1\% relative tolerance; categorical and boolean answers are matched exactly after normalization.
+
+\subsection{Results}
+
+\begin{table}[h]
+\centering
+\small
+\begin{tabular}{lcccc}
+\toprule
+Model & Overall & NR & CC & TR \\
+\midrule
+GPT-4o & \textbf{84.9\%} & 76.7\% & \textbf{94.0\%} & \textbf{100.0\%} \\
+GPT-4o-mini & 74.9\% & \textbf{83.5\%} & 88.0\% & 33.3\% \\
+Gemini 2.0 Flash & 74.5\% & 75.5\% & 82.5\% & 62.7\% \\
+\bottomrule
+\end{tabular}
+\caption{Zero-shot accuracy on jfinqa (927 questions, temperature=0).}
+\label{tab:results}
+\end{table}
+
+\subsection{Error Analysis}
+
+Systematic analysis reveals four recurring error patterns:
+
+\paragraph{J-GAAP balance sheet structure (47 shared errors).}
+All three models confuse \begin{CJK}{UTF8}{min}純資産合計\end{CJK} (net assets, including non-controlling interests) with \begin{CJK}{UTF8}{min}株主資本\end{CJK} (shareholders' equity) in J-GAAP equity ratio calculations.
+Additionally, models decompose \begin{CJK}{UTF8}{min}総資産\end{CJK} into four sub-categories instead of the standard two-category structure (\begin{CJK}{UTF8}{min}流動資産 + 固定資産\end{CJK}).
+Notably, GPT-4o-mini handles this better than GPT-4o (16/24 vs.\ 23/24 errors on equity ratio).
+
+\paragraph{Instruction following in temporal reasoning.}
+GPT-4o-mini answers \begin{CJK}{UTF8}{min}はい\end{CJK} (yes) to questions asking \begin{CJK}{UTF8}{min}増収か減収か\end{CJK} (increase or decrease), despite correctly analyzing the direction in its chain-of-thought.
+This accounts for 49/75 of its temporal reasoning errors and is a pure instruction-following failure, not a reasoning error.
+GPT-4o and Gemini do not exhibit this pattern.
+
+\paragraph{Model correlation.}
+GPT-4o and Gemini 2.0 Flash share 43 numerical reasoning errors, suggesting similar failure modes in ratio calculations over Japanese financial tables.
+GPT-4o-mini uses a different (often correct) approach to total assets calculation, resulting in lower error correlation with the other two models.
+
+\paragraph{Rounding at XBRL boundaries.}
+Two questions across all models produce answers differing by $\pm$0.1 from the gold due to XBRL decimal truncation.
+This is a data artifact rather than a model error.
+
+\section{Companion Tool: edinet-mcp}
+
+The financial data extraction underpinning jfinqa is provided by \texttt{edinet-mcp}, an open-source Python library and MCP (Model Context Protocol) server for EDINET data.
+It provides:
+\begin{itemize}[nosep]
+  \item XBRL/TSV parsing with J-GAAP, IFRS, and US-GAAP taxonomy normalization
+  \item Seven MCP tools for AI agent access to Japanese financial data
+  \item Financial metric computation (ROE, ROA, margins) and period comparison
+  \item Security hardening: ZIP Slip/bomb protection, XXE defense, async I/O
+\end{itemize}
+The library is available on PyPI (\texttt{pip install edinet-mcp}) and GitHub.\footnote{\url{https://github.com/ajtgjmdjp/edinet-mcp}}
+
+\section{Limitations}
+
+\begin{itemize}[nosep]
+  \item \textbf{Template-based generation}: Questions follow 16 templates, limiting reasoning diversity. True free-form financial reasoning (e.g., interpreting narrative disclosures) is not covered.
+  \item \textbf{No text-table cross-referencing}: All answers are computable from table data alone. Questions requiring joint reasoning over narrative text and tables remain future work.
+  \item \textbf{Binary temporal reasoning}: TR questions ask only ``increase or decrease,'' not multi-period trend analysis or magnitude estimation.
+  \item \textbf{Temporal scope}: Data covers FY2023--2024 only, excluding financial crises or other macroeconomic disruptions.
+  \item \textbf{Evaluation tolerance}: Numerical matching uses 1\% relative tolerance, which may mask small arithmetic errors.
+\end{itemize}
+
+\section{Related Work}
+
+\textbf{English financial QA.}
+FinQA \citep{chen2021finqa} introduced numerical reasoning over financial tables with DSL programs. TAT-QA \citep{zhu2021tatqa} extends this to mixed tabular-textual reasoning. ConvFinQA \citep{chen2022convfinqa} adds conversational multi-turn reasoning. Our work adapts this paradigm to Japanese financial data.
+
+\textbf{Japanese financial NLP.}
+EDINET-Bench \citep{sakana2024edinetbench} evaluates document classification over EDINET filings but does not include numerical reasoning.
+PolyFiQA provides multilingual financial knowledge QA with approximately 15 Japanese examples.
+Neither addresses the multi-step numerical computation that jfinqa targets.
+
+\textbf{MCP for financial data.}
+The Model Context Protocol \citep{anthropic2024mcp} enables AI agents to interact with external data sources.
+Our \texttt{edinet-mcp} is, to our knowledge, the first MCP server providing structured access to Japanese corporate financial data.
+
+\section{Conclusion}
+
+jfinqa provides the first dedicated benchmark for Japanese financial numerical reasoning.
+Our evaluation reveals that even frontier models struggle with Japan-specific accounting structures, particularly J-GAAP balance sheet decomposition.
+The benchmark, evaluation toolkit, and companion data extraction tool are publicly available to support further research in multilingual financial NLP.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}
