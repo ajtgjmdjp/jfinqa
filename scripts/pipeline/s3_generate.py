@@ -149,17 +149,10 @@ def _generate_from_pl_comparison(
         curr_val = rv[f"{revenue_key}_{year_curr}"]
         prev_val = rv[f"{revenue_key}_{year_prev}"]
         diff = curr_val - prev_val
-        if diff >= 0:
-            program = [
-                f"subtract({curr_val}, {prev_val})",
-                "divide(#0, 1)",  # identity to meet 2-step minimum
-            ]
-        else:
-            # For decrease: subtract in reverse order to get positive magnitude
-            program = [
-                f"subtract({prev_val}, {curr_val})",
-                "divide(#0, 1)",  # identity to meet 2-step minimum
-            ]
+        program = [
+            f"subtract({curr_val}, {prev_val})",
+            "abs(#0)",
+        ]
         result = execute_program(program)
         assert isinstance(result, (int, float))
         direction = "増加" if diff > 0 else "減少"
@@ -476,7 +469,6 @@ def _generate_from_pl_comparison(
         computed = rev - cogs
         program = [
             f"subtract({rev}, {cogs})",
-            "divide(#0, 1)",
         ]
         answer = f"{computed:,.0f}"
         questions.append(
@@ -503,7 +495,6 @@ def _generate_from_pl_comparison(
         computed = gross - sga
         program = [
             f"subtract({gross}, {sga})",
-            "divide(#0, 1)",
         ]
         answer = f"{computed:,.0f}"
         questions.append(
@@ -762,7 +753,6 @@ def _generate_from_bs_consistency(
                 answer=answer,
                 program=[
                     f"add({current_assets}, {fixed_assets})",
-                    "divide(#0, 1)",
                 ],
                 gold_evidence=["流動資産", fa_label],
             )
@@ -776,7 +766,6 @@ def _generate_from_bs_consistency(
         total_liab = current_liab + fixed_liab
         program = [
             f"add({current_liab}, {fixed_liab})",
-            "divide(#0, 1)",
         ]
         answer = f"{total_liab:,.0f}"
         questions.append(
@@ -848,7 +837,6 @@ def _generate_from_cf_summary(
     if ope_cf is not None and inv_cf is not None:
         program = [
             f"add({ope_cf}, {inv_cf})",
-            "divide(#0, 1)",  # identity for 2-step min
         ]
         result = execute_program(program)
         answer = f"{result:,.0f}{scale}"
@@ -1129,7 +1117,6 @@ def _generate_from_cross_statement(
     if total_liabilities and equity and total_assets:
         program = [
             f"add({total_liabilities}, {equity})",
-            "divide(#0, 1)",
         ]
         computed = total_liabilities + equity
         answer = f"{computed:,.0f}"

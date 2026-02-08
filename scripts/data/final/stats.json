@@ -12,7 +12,7 @@
     "IFRS": 360,
     "US-GAAP": 39
   },
-  "avg_program_steps": 2.5253505933117584,
+  "avg_program_steps": 2.381877022653722,
   "rejection_reasons": {
     "answer_mismatch": 10
   }

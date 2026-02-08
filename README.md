@@ -8,7 +8,7 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 
 ## What is this?
 
-**jfinqa** is a benchmark for evaluating LLMs on Japanese financial question answering. Unlike existing benchmarks that focus on classification or simple lookup, jfinqa requires **cross-referencing text and tables** to perform numerical reasoning over real Japanese corporate disclosures.
+**jfinqa** is a benchmark for evaluating LLMs on Japanese financial numerical reasoning. Unlike existing benchmarks that focus on classification or simple lookup, jfinqa requires **multi-step arithmetic over financial statement tables** extracted from real Japanese corporate disclosures (EDINET).
 
 ### Three Subtasks
 

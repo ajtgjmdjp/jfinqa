@@ -733,7 +733,7 @@ SUBTASK_TARGETS = {
 MAX_COMPANY_SHARE = 0.05
 
 # Minimum DSL program steps for a question to be accepted
-MIN_PROGRAM_STEPS = 2
+MIN_PROGRAM_STEPS = 1
 
 # Numerical match tolerance for answer verification (5% for rounding)
 ANSWER_TOLERANCE = 0.05

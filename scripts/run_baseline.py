@@ -55,7 +55,7 @@ def _extract_answer(response: str) -> str:
     if match:
         return match.group(1).strip()
     # Fallback: last line
-    lines = [l.strip() for l in response.strip().splitlines() if l.strip()]
+    lines = [line.strip() for line in response.strip().splitlines() if line.strip()]
     return lines[-1] if lines else ""
 
 
