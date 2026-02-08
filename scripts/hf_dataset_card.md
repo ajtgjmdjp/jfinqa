@@ -86,7 +86,7 @@ Unlike existing Japanese financial benchmarks that focus on classification or si
 | Total questions | 927 |
 | Companies | 68 |
 | Accounting standards | J-GAAP (528), IFRS (360), US-GAAP (39) |
-| Avg. program steps | 2.53 |
+| Avg. program steps | 2.38 |
 
 ### Subtasks
 
