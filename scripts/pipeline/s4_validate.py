@@ -172,8 +172,8 @@ def validate_question(q: dict[str, Any]) -> tuple[bool, str]:
     if isinstance(result, bool):
         result_str = "true" if result else "false"
         # Map Japanese boolean answers to true/false
-        jp_true = {"はい", "増収", "増益", "改善", "一致", "true", "yes"}
-        jp_false = {"いいえ", "減収", "減益", "悪化", "不一致", "false", "no"}
+        jp_true = {"はい", "増収", "増益", "改善", "一致", "増加", "true", "yes"}
+        jp_false = {"いいえ", "減収", "減益", "悪化", "不一致", "減少", "false", "no"}
         norm_answer = _normalize(answer)
         if norm_answer in jp_true:
             answer_bool = "true"

@@ -18,7 +18,15 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 | **Consistency Checking** | Verify internal consistency of reported figures | "資産合計は流動資産と固定資産の合計と一致するか？" |
 | **Temporal Reasoning** | Analyze trends and changes across periods | "売上高が最も低かったのはどの年度か？" |
 
-### Baseline Results
+### Dataset Statistics
+
+| | Total | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
+|---|---|---|---|---|
+| **Questions** | 927 | 550 | 200 | 177 |
+| **Companies** | 68 | — | — | — |
+| **Accounting Standards** | J-GAAP 57%, IFRS 39%, US-GAAP 4% | — | — | — |
+
+### Baseline Results (v0, 400-question subset)
 
 | Model | Overall | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
 |-------|---------|--------------------|--------------------|-------------------|
@@ -26,7 +34,7 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 | GPT-4o-mini | 76.0% | **85.6%** | 85.3% | 34.7% |
 | Gemini 2.0 Flash | 66.5% | 64.0% | 80.0% | 61.3% |
 
-*400 questions, zero-shot, temperature=0. Evaluation uses numerical matching with 1% tolerance.*
+*Evaluated on v0 (400 questions), zero-shot, temperature=0. Numerical matching with 1% tolerance. Re-evaluation on the full 927-question dataset is planned.*
 
 ### Error Analysis
 

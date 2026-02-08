@@ -76,6 +76,18 @@ def _generate_from_pl_comparison(
             sga_key = prefix
             break
 
+    net_income_key = None
+    for prefix in ("当期純利益", "親会社株主に帰属する当期純利益"):
+        if f"{prefix}_{year_curr}" in rv:
+            net_income_key = prefix
+            break
+
+    cogs_key = None
+    for prefix in ("売上原価",):
+        if f"{prefix}_{year_curr}" in rv:
+            cogs_key = prefix
+            break
+
     # Q1: Revenue growth rate (%)
     if revenue_key:
         curr_val = rv[f"{revenue_key}_{year_curr}"]
@@ -401,6 +413,149 @@ def _generate_from_pl_comparison(
                 ],
             )
         )
+
+    # Q12: Net income margin (%) — NR
+    if revenue_key and net_income_key:
+        rev = rv[f"{revenue_key}_{year_curr}"]
+        ni = rv[f"{net_income_key}_{year_curr}"]
+        if rev != 0:
+            program = [
+                f"divide({ni}, {rev})",
+                "multiply(#0, 100)",
+            ]
+            result = execute_program(program)
+            answer = f"{result:.1f}%"
+            questions.append(
+                _make_question(
+                    ctx,
+                    subtask="numerical_reasoning",
+                    question=(
+                        f"{company}の{period_curr}の当期純利益率は何%か。"
+                    ),
+                    answer=answer,
+                    program=program,
+                    gold_evidence=[
+                        f"{net_income_key}_{year_curr}",
+                        f"{revenue_key}_{year_curr}",
+                    ],
+                )
+            )
+
+    # Q13: Cost of sales ratio (%) — NR
+    if revenue_key and cogs_key:
+        rev = rv[f"{revenue_key}_{year_curr}"]
+        cogs = rv[f"{cogs_key}_{year_curr}"]
+        if rev != 0:
+            program = [
+                f"divide({cogs}, {rev})",
+                "multiply(#0, 100)",
+            ]
+            result = execute_program(program)
+            answer = f"{result:.1f}%"
+            questions.append(
+                _make_question(
+                    ctx,
+                    subtask="numerical_reasoning",
+                    question=(
+                        f"{company}の{period_curr}の売上原価率は何%か。"
+                    ),
+                    answer=answer,
+                    program=program,
+                    gold_evidence=[
+                        f"{cogs_key}_{year_curr}",
+                        f"{revenue_key}_{year_curr}",
+                    ],
+                )
+            )
+
+    # Q14: Gross profit = Revenue - COGS consistency — CC
+    if revenue_key and cogs_key and gross_key:
+        rev = rv[f"{revenue_key}_{year_curr}"]
+        cogs = rv[f"{cogs_key}_{year_curr}"]
+        gross = rv[f"{gross_key}_{year_curr}"]
+        computed = rev - cogs
+        program = [
+            f"subtract({rev}, {cogs})",
+            "divide(#0, 1)",
+        ]
+        answer = f"{computed:,.0f}"
+        questions.append(
+            _make_question(
+                ctx,
+                subtask="consistency_checking",
+                question=(
+                    f"{company}の{period_curr}の{revenue_key}から売上原価を"
+                    f"差し引いた額はいくらか。"
+                ),
+                answer=answer,
+                program=program,
+                gold_evidence=[
+                    f"{revenue_key}_{year_curr}",
+                    f"{cogs_key}_{year_curr}",
+                ],
+            )
+        )
+
+    # Q15: Operating income = Gross profit - SGA consistency — CC
+    if gross_key and sga_key and op_income_key:
+        gross = rv[f"{gross_key}_{year_curr}"]
+        sga = rv[f"{sga_key}_{year_curr}"]
+        computed = gross - sga
+        program = [
+            f"subtract({gross}, {sga})",
+            "divide(#0, 1)",
+        ]
+        answer = f"{computed:,.0f}"
+        questions.append(
+            _make_question(
+                ctx,
+                subtask="consistency_checking",
+                question=(
+                    f"{company}の{period_curr}の売上総利益から"
+                    f"販売費及び一般管理費を差し引いた額はいくらか。"
+                ),
+                answer=answer,
+                program=program,
+                gold_evidence=[
+                    f"{gross_key}_{year_curr}",
+                    f"{sga_key}_{year_curr}",
+                ],
+            )
+        )
+
+    # Q16: Gross margin improvement/deterioration — TR
+    if revenue_key and gross_key:
+        rev_c = rv[f"{revenue_key}_{year_curr}"]
+        rev_p = rv[f"{revenue_key}_{year_prev}"]
+        gross_c = rv[f"{gross_key}_{year_curr}"]
+        gross_p = rv.get(f"{gross_key}_{year_prev}")
+        if gross_p is not None and rev_c != 0 and rev_p != 0:
+            program = [
+                f"divide({gross_c}, {rev_c})",
+                f"divide({gross_p}, {rev_p})",
+                "subtract(#0, #1)",
+                "greater(#2, 0)",
+            ]
+            result = execute_program(program)
+            answer = "改善" if result else "悪化"
+            questions.append(
+                _make_question(
+                    ctx,
+                    subtask="temporal_reasoning",
+                    question=(
+                        f"{company}の売上総利益率は{period_prev}から"
+                        f"{period_curr}にかけて改善したか悪化したか。"
+                    ),
+                    answer=answer,
+                    program=program,
+                    gold_evidence=[
+                        f"{gross_key}_{year_curr}",
+                        f"{revenue_key}_{year_curr}",
+                        f"{gross_key}_{year_prev}",
+                        f"{revenue_key}_{year_prev}",
+                    ],
+                )
+            )
 
     return questions
 
@@ -766,11 +921,39 @@ def _generate_from_cf_summary(
             )
         )
 
-    # Q4: Temporal - FCF improvement (2-period CF)
+    # Prev year values for temporal questions
     year_prev = str(int(year_curr) - 1)
     period_prev = f"{year_prev}年3月期"
     ope_prev = rv.get(f"営業活動によるキャッシュ・フロー_{year_prev}")
     inv_prev = rv.get(f"投資活動によるキャッシュ・フロー_{year_prev}")
+
+    # Q4: Temporal - Operating CF direction
+    if ope_cf is not None and ope_prev is not None:
+        program = [
+            f"subtract({ope_cf}, {ope_prev})",
+            "greater(#0, 0)",
+        ]
+        result = execute_program(program)
+        answer = "増加" if result else "減少"
+        questions.append(
+            _make_question(
+                ctx,
+                subtask="temporal_reasoning",
+                question=(
+                    f"{company}の営業キャッシュフローは"
+                    f"{period_prev}から{period_curr}にかけて"
+                    f"増加したか減少したか。"
+                ),
+                answer=answer,
+                program=program,
+                gold_evidence=[
+                    f"営業活動によるキャッシュ・フロー_{year_curr}",
+                    f"営業活動によるキャッシュ・フロー_{year_prev}",
+                ],
+            )
+        )
+
+    # Q5: Temporal - FCF improvement/deterioration (2-period CF)
     if (
         ope_cf is not None
         and inv_cf is not None
@@ -932,6 +1115,60 @@ def _generate_from_cross_statement(
                 answer=answer,
                 program=program,
                 gold_evidence=[revenue[0], "資産合計"],
+            )
+        )
+
+    # Retrieve liability components for CC questions
+    total_liabilities = rv.get(f"負債合計{y}")
+    current_liab = rv.get(f"流動負債{y}")
+    fixed_liab = rv.get(f"固定負債{y}") or rv.get(f"非流動負債{y}")
+    if not total_liabilities and current_liab and fixed_liab:
+        total_liabilities = current_liab + fixed_liab
+
+    # Q5: Liabilities + Equity = Total Assets consistency — CC
+    if total_liabilities and equity and total_assets:
+        program = [
+            f"add({total_liabilities}, {equity})",
+            "divide(#0, 1)",
+        ]
+        computed = total_liabilities + equity
+        answer = f"{computed:,.0f}"
+        eq_label = (
+            "純資産合計" if f"純資産合計{y}" in rv else "株主資本合計"
+        )
+        questions.append(
+            _make_question(
+                ctx,
+                subtask="consistency_checking",
+                question=(
+                    f"{company}の{period}の負債合計と{eq_label}の"
+                    f"合計はいくらか。"
+                ),
+                answer=answer,
+                program=program,
+                gold_evidence=["負債合計", eq_label],
+            )
+        )
+
+    # Q6: ROA cross-statement consistency — CC
+    if ordinary and total_assets and total_assets != 0:
+        program = [
+            f"divide({ordinary}, {total_assets})",
+            "multiply(#0, 100)",
+        ]
+        result = execute_program(program)
+        answer = f"{result:.2f}%"
+        questions.append(
+            _make_question(
+                ctx,
+                subtask="consistency_checking",
+                question=(
+                    f"{company}の{period}の損益計算書の経常利益を"
+                    f"貸借対照表の総資産で割った値は何%か。"
+                ),
+                answer=answer,
+                program=program,
+                gold_evidence=["経常利益", "資産合計"],
             )
         )
 

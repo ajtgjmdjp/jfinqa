@@ -268,10 +268,410 @@ COMPANY_POOL: list[dict[str, str]] = [
         "industry": "電気機器",
         "gaap": "US-GAAP",
     },
+    # --- Expansion: Electric & Gas (電気・ガス業) ---
+    {
+        "edinet_code": "E04501",
+        "name": "東京電力ホールディングス",
+        "industry": "電気・ガス業",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E04502",
+        "name": "中部電力",
+        "industry": "電気・ガス業",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E04513",
+        "name": "東京ガス",
+        "industry": "電気・ガス業",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Land Transport (陸運業) ---
+    {
+        "edinet_code": "E04084",
+        "name": "東日本旅客鉄道",
+        "industry": "陸運業",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E04080",
+        "name": "東海旅客鉄道",
+        "industry": "陸運業",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Air Transport (空運業) ---
+    {
+        "edinet_code": "E04318",
+        "name": "ANAホールディングス",
+        "industry": "空運業",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E04306",
+        "name": "日本航空",
+        "industry": "空運業",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Textiles (繊維製品) ---
+    {
+        "edinet_code": "E00535",
+        "name": "東レ",
+        "industry": "繊維製品",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Oil & Coal (石油・石炭製品) ---
+    {
+        "edinet_code": "E00817",
+        "name": "ENEOSホールディングス",
+        "industry": "石油・石炭製品",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Rubber (ゴム製品) ---
+    {
+        "edinet_code": "E01094",
+        "name": "ブリヂストン",
+        "industry": "ゴム製品",
+        "gaap": "IFRS",
+    },
+    # --- Expansion: Glass & Ceramics (ガラス・土石製品) ---
+    {
+        "edinet_code": "E01139",
+        "name": "AGC",
+        "industry": "ガラス・土石製品",
+        "gaap": "IFRS",
+    },
+    # --- Expansion: Non-ferrous Metals (非鉄金属) ---
+    {
+        "edinet_code": "E01220",
+        "name": "住友電気工業",
+        "industry": "非鉄金属",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E01196",
+        "name": "三菱マテリアル",
+        "industry": "非鉄金属",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Steel (鉄鋼) ---
+    {
+        "edinet_code": "E00664",
+        "name": "日本製鉄",
+        "industry": "鉄鋼",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E00676",
+        "name": "神戸製鋼所",
+        "industry": "鉄鋼",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Pulp & Paper (パルプ・紙) ---
+    {
+        "edinet_code": "E00602",
+        "name": "王子ホールディングス",
+        "industry": "パルプ・紙",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Mining (鉱業) ---
+    {
+        "edinet_code": "E00062",
+        "name": "INPEX",
+        "industry": "鉱業",
+        "gaap": "IFRS",
+    },
+    # --- Expansion: Pharmaceuticals (医薬品) ---
+    {
+        "edinet_code": "E01476",
+        "name": "第一三共",
+        "industry": "医薬品",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01477",
+        "name": "エーザイ",
+        "industry": "医薬品",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01230",
+        "name": "アステラス製薬",
+        "industry": "医薬品",
+        "gaap": "IFRS",
+    },
+    # --- Expansion: Machinery (機械) ---
+    {
+        "edinet_code": "E02302",
+        "name": "クボタ",
+        "industry": "機械",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E01766",
+        "name": "ファナック",
+        "industry": "電気機器",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E02317",
+        "name": "小松製作所",
+        "industry": "機械",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E02730",
+        "name": "DMG森精機",
+        "industry": "機械",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01303",
+        "name": "SMC",
+        "industry": "機械",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E02375",
+        "name": "IHI",
+        "industry": "機械",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E02350",
+        "name": "川崎重工業",
+        "industry": "輸送用機器",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Electrical Equipment (電気機器) ---
+    {
+        "edinet_code": "E01781",
+        "name": "TDK",
+        "industry": "電気機器",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01846",
+        "name": "ローム",
+        "industry": "電気機器",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E01775",
+        "name": "富士通",
+        "industry": "電気機器",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01786",
+        "name": "日本電気",
+        "industry": "電気機器",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01811",
+        "name": "アドバンテスト",
+        "industry": "電気機器",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01825",
+        "name": "村田製作所",
+        "industry": "電気機器",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Chemicals (化学) ---
+    {
+        "edinet_code": "E01379",
+        "name": "富士フイルムホールディングス",
+        "industry": "化学",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01357",
+        "name": "資生堂",
+        "industry": "化学",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01332",
+        "name": "ユニ・チャーム",
+        "industry": "化学",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01164",
+        "name": "ライオン",
+        "industry": "化学",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Food (食料品) ---
+    {
+        "edinet_code": "E00045",
+        "name": "キリンホールディングス",
+        "industry": "食料品",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E00064",
+        "name": "日本ハム",
+        "industry": "食料品",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E02274",
+        "name": "日本たばこ産業",
+        "industry": "食料品",
+        "gaap": "IFRS",
+    },
+    # --- Expansion: Retail (小売業) ---
+    {
+        "edinet_code": "E03041",
+        "name": "ニトリホールディングス",
+        "industry": "小売業",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E03357",
+        "name": "良品計画",
+        "industry": "小売業",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Transport Equipment (輸送用機器) ---
+    {
+        "edinet_code": "E02178",
+        "name": "SUBARU",
+        "industry": "輸送用機器",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E02170",
+        "name": "マツダ",
+        "industry": "輸送用機器",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E02168",
+        "name": "三菱自動車工業",
+        "industry": "輸送用機器",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Construction (建設業) ---
+    {
+        "edinet_code": "E00252",
+        "name": "大林組",
+        "industry": "建設業",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E00248",
+        "name": "鹿島建設",
+        "industry": "建設業",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Real Estate (不動産業) ---
+    {
+        "edinet_code": "E01960",
+        "name": "三井不動産",
+        "industry": "不動産業",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E00464",
+        "name": "東急不動産ホールディングス",
+        "industry": "不動産業",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Services / IT ---
+    {
+        "edinet_code": "E05070",
+        "name": "エムスリー",
+        "industry": "サービス業",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E04146",
+        "name": "セコム",
+        "industry": "サービス業",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Logistics (陸運・倉庫) ---
+    {
+        "edinet_code": "E01903",
+        "name": "ヤマトホールディングス",
+        "industry": "陸運業",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E04208",
+        "name": "SGホールディングス",
+        "industry": "陸運業",
+        "gaap": "J-GAAP",
+    },
+    {
+        "edinet_code": "E04193",
+        "name": "三菱倉庫",
+        "industry": "倉庫・運輸関連業",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Precision (精密機器) ---
+    {
+        "edinet_code": "E02113",
+        "name": "オリンパス",
+        "industry": "精密機器",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01706",
+        "name": "シスメックス",
+        "industry": "電気機器",
+        "gaap": "IFRS",
+    },
+    {
+        "edinet_code": "E01792",
+        "name": "浜松ホトニクス",
+        "industry": "電気機器",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Trading (卸売業) ---
+    {
+        "edinet_code": "E00396",
+        "name": "丸紅",
+        "industry": "卸売業",
+        "gaap": "IFRS",
+    },
+    # --- Expansion: Rubber (ゴム製品) ---
+    {
+        "edinet_code": "E01098",
+        "name": "住友ゴム工業",
+        "industry": "ゴム製品",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Metal Products (金属製品) ---
+    {
+        "edinet_code": "E01294",
+        "name": "LIXIL",
+        "industry": "金属製品",
+        "gaap": "IFRS",
+    },
+    # --- Expansion: Real Estate (不動産業) ---
+    {
+        "edinet_code": "E00453",
+        "name": "野村不動産ホールディングス",
+        "industry": "不動産業",
+        "gaap": "J-GAAP",
+    },
+    # --- Expansion: Fishery (水産・農林業) ---
+    {
+        "edinet_code": "E00015",
+        "name": "マルハニチロ",
+        "industry": "水産・農林業",
+        "gaap": "J-GAAP",
+    },
 ]
 
-# Total: ~45 companies
-# IFRS: 12, J-GAAP: 30, US-GAAP: 3
+# Total: ~102 companies
+# IFRS: ~32, J-GAAP: ~65, US-GAAP: 3
 
 # ---------------------------------------------------------------------------
 # Table context templates
@@ -324,9 +724,9 @@ POST_TEXT_TEMPLATES: dict[str, list[str]] = {
 # ---------------------------------------------------------------------------
 
 SUBTASK_TARGETS = {
-    "numerical_reasoning": {"min": 200, "target": 250, "max": 300},
-    "consistency_checking": {"min": 50, "target": 75, "max": 100},
-    "temporal_reasoning": {"min": 50, "target": 75, "max": 100},
+    "numerical_reasoning": {"min": 450, "target": 550, "max": 650},
+    "consistency_checking": {"min": 150, "target": 200, "max": 250},
+    "temporal_reasoning": {"min": 200, "target": 250, "max": 300},
 }
 
 # Maximum questions from a single company (as fraction of total)
