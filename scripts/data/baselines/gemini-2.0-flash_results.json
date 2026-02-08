@@ -1,23 +1,23 @@
 {
   "model": "gemini-2.0-flash",
-  "overall_accuracy": 0.665,
-  "correct": 266,
-  "total": 400,
+  "overall_accuracy": 0.7454153182308522,
+  "correct": 691,
+  "total": 927,
   "by_subtask": {
     "consistency_checking": {
-      "accuracy": 0.8,
-      "correct": 60,
-      "total": 75
+      "accuracy": 0.825,
+      "correct": 165,
+      "total": 200
     },
     "numerical_reasoning": {
-      "accuracy": 0.64,
-      "correct": 160,
-      "total": 250
+      "accuracy": 0.7545454545454545,
+      "correct": 415,
+      "total": 550
     },
     "temporal_reasoning": {
-      "accuracy": 0.6133333333333333,
-      "correct": 46,
-      "total": 75
+      "accuracy": 0.6271186440677966,
+      "correct": 111,
+      "total": 177
     }
   }
 }

@@ -26,15 +26,15 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 | **Companies** | 68 | — | — | — |
 | **Accounting Standards** | J-GAAP 57%, IFRS 39%, US-GAAP 4% | — | — | — |
 
-### Baseline Results (v0, 400-question subset)
+### Baseline Results
 
 | Model | Overall | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
 |-------|---------|--------------------|--------------------|-------------------|
-| GPT-4o | **79.8%** | 68.8% | **96.0%** | **100.0%** |
-| GPT-4o-mini | 76.0% | **85.6%** | 85.3% | 34.7% |
-| Gemini 2.0 Flash | 66.5% | 64.0% | 80.0% | 61.3% |
+| GPT-4o | **84.9%** | 76.7% | **94.0%** | **100.0%** |
+| GPT-4o-mini | 74.9% | **83.5%** | 88.0% | 33.3% |
+| Gemini 2.0 Flash | 74.5% | 75.5% | 82.5% | 62.7% |
 
-*Evaluated on v0 (400 questions), zero-shot, temperature=0. Numerical matching with 1% tolerance. Re-evaluation on the full 927-question dataset is planned.*
+*927 questions, zero-shot, temperature=0. Evaluation uses numerical matching with 1% tolerance.*
 
 ### Error Analysis
 
