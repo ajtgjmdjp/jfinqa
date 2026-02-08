@@ -193,6 +193,20 @@ The data format is compatible with [FinQA](https://github.com/czyssrs/FinQA) (Ch
 - [edinet-mcp](https://github.com/ajtgjmdjp/edinet-mcp) — EDINET XBRL parser (companion project)
 - [EDINET-Bench](https://github.com/SakanaAI/EDINET-Bench) — Sakana AI's financial classification benchmark
 
+## Citation
+
+If you use jfinqa in your research, please cite it as follows:
+
+```bibtex
+@dataset{ogawa2025jfinqa,
+  title={jfinqa: Japanese Financial Numerical Reasoning QA Benchmark},
+  author={Ogawa, Saichi},
+  year={2025},
+  url={https://github.com/ajtgjmdjp/jfinqa},
+  license={Apache-2.0}
+}
+```
+
 ## License
 
 Apache-2.0. See [NOTICE](NOTICE) for third-party attributions.
