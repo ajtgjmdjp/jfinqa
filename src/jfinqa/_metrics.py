@@ -67,10 +67,11 @@ def normalize_answer(answer: str) -> str:
 
     # Normalize Japanese verb endings for categorical answers
     # e.g., "改善した" → "改善", "悪化した" → "悪化"
-    if s.endswith("した"):
-        s = s.removesuffix("した")
-    elif s.endswith("しました"):
+    # Check longer suffix first: "しました" endswith "した" is True
+    if s.endswith("しました"):
         s = s.removesuffix("しました")
+    elif s.endswith("した"):
+        s = s.removesuffix("した")
 
     # Lowercase for case-insensitive comparison
     s = s.lower().strip()
