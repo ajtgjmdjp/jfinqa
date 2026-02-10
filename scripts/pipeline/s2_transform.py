@@ -250,30 +250,65 @@ def build_pl_comparison(
 def build_bs_summary(
     company: dict[str, str],
     filings: dict[str, Any],
-    year: str,
 ) -> dict[str, Any] | None:
-    """Build a balance sheet summary context."""
-    if year not in filings:
+    """Build a 2-period balance sheet comparison context."""
+    years = sorted(filings.keys(), reverse=True)
+    if len(years) < 2:
         return None
 
-    items = _extract_items(
-        filings[year].get("balance_sheet"), BS_ELEMENTS, BS_DISPLAY_ORDER
+    year_curr, year_prev = years[0], years[1]
+    items_curr = _extract_items(
+        filings[year_curr].get("balance_sheet"), BS_ELEMENTS, BS_DISPLAY_ORDER
     )
-    if len(items) < 4:
+    items_prev = _extract_items(
+        filings[year_prev].get("balance_sheet"), BS_ELEMENTS, BS_DISPLAY_ORDER
+    )
+
+    if len(items_curr) < 4:
         return None
 
-    selected = items[:10]
-    all_values = [val for _, _, val in selected]
-    scale_label, divisor = _choose_scale(all_values)
+    # Find common items
+    curr_labels = {jp: (elem, val) for jp, elem, val in items_curr}
+    prev_labels = {jp: (elem, val) for jp, elem, val in items_prev}
+    common = [jp for jp in curr_labels if jp in prev_labels]
 
-    period = _build_period_label(year)
-    headers = ["", f"金額({scale_label})"]
-    rows = []
-    raw_values: dict[str, float] = {}
-
-    for jp_label, _elem, value in selected:
-        rows.append([jp_label, _format_number(value, divisor)])
-        raw_values[f"{jp_label}_{year}"] = value / divisor
+    if len(common) < 4:
+        # Fall back to current year only if no common items
+        selected = items_curr[:10]
+        all_values = [val for _, _, val in selected]
+        scale_label, divisor = _choose_scale(all_values)
+        period = _build_period_label(year_curr)
+        headers = ["", f"金額({scale_label})"]
+        rows = []
+        raw_values: dict[str, float] = {}
+        for jp_label, _elem, value in selected:
+            rows.append([jp_label, _format_number(value, divisor)])
+            raw_values[f"{jp_label}_{year_curr}"] = value / divisor
+    else:
+        # Build 2-period comparison
+        selected = common[:10]
+        all_values = [curr_labels[jp][1] for jp in selected] + [
+            prev_labels[jp][1] for jp in selected
+        ]
+        scale_label, divisor = _choose_scale(all_values)
+        period_curr = _build_period_label(year_curr)
+        period_prev = _build_period_label(year_prev)
+        period = period_curr
+        headers = ["", f"{period_curr}", f"{period_prev}"]
+        rows = []
+        raw_values: dict[str, float] = {}
+        for jp_label in selected:
+            val_curr = curr_labels[jp_label][1]
+            val_prev = prev_labels[jp_label][1]
+            rows.append(
+                [
+                    jp_label,
+                    _format_number(val_curr, divisor),
+                    _format_number(val_prev, divisor),
+                ]
+            )
+            raw_values[f"{jp_label}_{year_curr}"] = val_curr / divisor
+            raw_values[f"{jp_label}_{year_prev}"] = val_prev / divisor
 
     pre_text = _format_template(
         PRE_TEXT_TEMPLATES["bs_summary"][0],
@@ -282,14 +317,14 @@ def build_bs_summary(
     )
     post_text = _format_template(
         POST_TEXT_TEMPLATES["bs_summary"][0],
-        asset_direction="で増加した" if len(items) > 0 else "であった",
+        asset_direction="で増加した" if len(items_curr) > 0 else "であった",
     )
 
     return {
         "company_name": company["name"],
         "edinet_code": company["edinet_code"],
-        "source_doc_id": filings[year].get("filing", {}).get("doc_id", ""),
-        "filing_year": year,
+        "source_doc_id": filings[year_curr].get("filing", {}).get("doc_id", ""),
+        "filing_year": year_curr,
         "accounting_standard": company.get("gaap", "J-GAAP"),
         "context_type": "bs_summary",
         "pre_text": [pre_text],
@@ -539,11 +574,10 @@ def transform_company(raw_path: Path) -> list[dict[str, Any]]:
     if ctx:
         contexts.append(ctx)
 
-    # BS summary (latest year)
-    if years:
-        ctx = build_bs_summary(company, filings, years[0])
-        if ctx:
-            contexts.append(ctx)
+    # BS summary (2 periods)
+    ctx = build_bs_summary(company, filings)
+    if ctx:
+        contexts.append(ctx)
 
     # BS consistency (latest year)
     if years:

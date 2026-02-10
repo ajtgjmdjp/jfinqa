@@ -70,7 +70,7 @@ dataset_info:
     sequence: int64
   splits:
   - name: test
-    num_examples: 927
+    num_examples: 1000
 ---
 
 # jfinqa: Japanese Financial Numerical Reasoning QA Benchmark
@@ -83,10 +83,10 @@ Unlike existing Japanese financial benchmarks that focus on classification or si
 
 | | Count |
 |---|---|
-| Total questions | 927 |
+| Total questions | 1000 |
 | Companies | 68 |
-| Accounting standards | J-GAAP (528), IFRS (360), US-GAAP (39) |
-| Avg. program steps | 2.38 |
+| Accounting standards | J-GAAP (581), IFRS (378), US-GAAP (41) |
+| Avg. program steps | 2.40 |
 
 ### Subtasks
 
@@ -94,7 +94,7 @@ Unlike existing Japanese financial benchmarks that focus on classification or si
 |--------|-------------|-------|
 | `numerical_reasoning` | Calculate financial metrics from table data | 550 |
 | `consistency_checking` | Verify internal consistency of reported figures | 200 |
-| `temporal_reasoning` | Analyze trends and changes across periods | 177 |
+| `temporal_reasoning` | Analyze trends and changes across periods | 250 |
 
 ## Usage
 

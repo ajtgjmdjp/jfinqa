@@ -1,19 +1,20 @@
 {
-  "total_questions": 927,
-  "total_rejected": 10,
+  "total_questions": 1000,
+  "total_rejected": 77,
   "by_subtask": {
     "numerical_reasoning": 550,
     "consistency_checking": 200,
-    "temporal_reasoning": 177
+    "temporal_reasoning": 250
   },
   "unique_companies": 68,
   "by_accounting_standard": {
-    "J-GAAP": 528,
-    "IFRS": 360,
-    "US-GAAP": 39
+    "J-GAAP": 581,
+    "IFRS": 378,
+    "US-GAAP": 41
   },
-  "avg_program_steps": 2.381877022653722,
+  "avg_program_steps": 2.397,
   "rejection_reasons": {
-    "answer_mismatch": 10
+    "answer_mismatch": 10,
+    "no_gold_evidence": 67
   }
 }

@@ -548,6 +548,68 @@ def _generate_from_pl_comparison(
                 )
             )
 
+    # Q17: Net income direction — TR
+    if net_income_key:
+        curr_val = rv[f"{net_income_key}_{year_curr}"]
+        prev_val = rv.get(f"{net_income_key}_{year_prev}")
+        if prev_val is not None:
+            program = [
+                f"subtract({curr_val}, {prev_val})",
+                "greater(#0, 0)",
+            ]
+            result = execute_program(program)
+            answer = "増益" if result else "減益"
+            questions.append(
+                _make_question(
+                    ctx,
+                    subtask="temporal_reasoning",
+                    question=(
+                        f"{company}は{period_prev}から{period_curr}にかけて"
+                        f"当期純利益ベースで増益か減益か。"
+                    ),
+                    answer=answer,
+                    program=program,
+                    gold_evidence=[
+                        f"{net_income_key}_{year_curr}",
+                        f"{net_income_key}_{year_prev}",
+                    ],
+                )
+            )
+
+    # Q18: Ordinary margin improvement/deterioration — TR
+    if revenue_key and ordinary_key:
+        rev_c = rv[f"{revenue_key}_{year_curr}"]
+        rev_p = rv[f"{revenue_key}_{year_prev}"]
+        ord_c = rv[f"{ordinary_key}_{year_curr}"]
+        ord_p = rv.get(f"{ordinary_key}_{year_prev}")
+        if ord_p is not None and rev_c != 0 and rev_p != 0:
+            program = [
+                f"divide({ord_c}, {rev_c})",
+                f"divide({ord_p}, {rev_p})",
+                "subtract(#0, #1)",
+                "greater(#2, 0)",
+            ]
+            result = execute_program(program)
+            answer = "改善" if result else "悪化"
+            questions.append(
+                _make_question(
+                    ctx,
+                    subtask="temporal_reasoning",
+                    question=(
+                        f"{company}の経常利益率は{period_prev}から"
+                        f"{period_curr}にかけて改善したか悪化したか。"
+                    ),
+                    answer=answer,
+                    program=program,
+                    gold_evidence=[
+                        f"{ordinary_key}_{year_curr}",
+                        f"{revenue_key}_{year_curr}",
+                        f"{ordinary_key}_{year_prev}",
+                        f"{revenue_key}_{year_prev}",
+                    ],
+                )
+            )
+
     return questions
 
 
@@ -560,6 +622,7 @@ def _generate_from_bs_summary(
     company = ctx["company_name"]
     year = ctx["filing_year"]
     period = f"{year}年3月期"
+    period_curr = period
     y = f"_{year}"
 
     total_assets = rv.get(f"資産合計{y}")
@@ -576,6 +639,20 @@ def _generate_from_bs_summary(
         fixed_liab = rv.get(f"固定負債{y}") or rv.get(f"非流動負債{y}")
         if fixed_liab:
             total_liabilities = current_liab + fixed_liab
+
+    # Prior year data for temporal questions
+    year_prev = str(int(year) - 1)
+    period_prev = f"{year_prev}年3月期"
+    y_prev = f"_{year_prev}"
+    total_assets_prev = rv.get(f"資産合計{y_prev}")
+    equity_prev = rv.get(f"純資産合計{y_prev}") or rv.get(f"株主資本合計{y_prev}")
+
+    # Calculate prev total_assets from components if not directly available
+    if not total_assets_prev:
+        ca_prev = rv.get(f"流動資産{y_prev}")
+        fa_prev = rv.get(f"固定資産{y_prev}") or rv.get(f"非流動資産{y_prev}")
+        if ca_prev and fa_prev:
+            total_assets_prev = ca_prev + fa_prev
 
     # Q1: Current ratio
     if current_assets and current_liab and current_liab != 0:
@@ -672,6 +749,70 @@ def _generate_from_bs_summary(
                 answer=answer,
                 program=program,
                 gold_evidence=evidence,
+            )
+        )
+
+    # Q4: Total assets direction — TR
+    if total_assets is not None and total_assets_prev is not None:
+        program = [
+            f"subtract({total_assets}, {total_assets_prev})",
+            "greater(#0, 0)",
+        ]
+        result = execute_program(program)
+        answer = "増加" if result else "減少"
+        questions.append(
+            _make_question(
+                ctx,
+                subtask="temporal_reasoning",
+                question=(
+                    f"{company}の総資産は{period_prev}から"
+                    f"{period_curr}にかけて増加したか減少したか。"
+                ),
+                answer=answer,
+                program=program,
+                gold_evidence=[
+                    f"資産合計_{year}",
+                    f"資産合計_{year_prev}",
+                ],
+            )
+        )
+
+    # Q5: Equity ratio improvement/deterioration — TR
+    if (
+        total_assets is not None
+        and equity is not None
+        and total_assets_prev is not None
+        and equity_prev is not None
+        and total_assets != 0
+        and total_assets_prev != 0
+    ):
+        program = [
+            f"divide({equity}, {total_assets})",
+            f"divide({equity_prev}, {total_assets_prev})",
+            "subtract(#0, #1)",
+            "greater(#2, 0)",
+        ]
+        result = execute_program(program)
+        answer = "改善" if result else "悪化"
+        eq_label = (
+            "純資産合計" if f"純資産合計{y}" in rv else "株主資本合計"
+        )
+        questions.append(
+            _make_question(
+                ctx,
+                subtask="temporal_reasoning",
+                question=(
+                    f"{company}の自己資本比率は{period_prev}から"
+                    f"{period_curr}にかけて改善したか悪化したか。"
+                ),
+                answer=answer,
+                program=program,
+                gold_evidence=[
+                    f"{eq_label}_{year}",
+                    f"資産合計_{year}",
+                    f"{eq_label}_{year_prev}",
+                    f"資産合計_{year_prev}",
+                ],
             )
         )
 
@@ -972,6 +1113,60 @@ def _generate_from_cf_summary(
                     f"投資活動によるキャッシュ・フロー_{year_curr}",
                     f"営業活動によるキャッシュ・フロー_{year_prev}",
                     f"投資活動によるキャッシュ・フロー_{year_prev}",
+                ],
+            )
+        )
+
+    # Q6: Temporal - Investing CF direction
+    if inv_cf is not None and inv_prev is not None:
+        program = [
+            f"subtract({inv_cf}, {inv_prev})",
+            "greater(#0, 0)",
+        ]
+        result = execute_program(program)
+        answer = "増加" if result else "減少"
+        questions.append(
+            _make_question(
+                ctx,
+                subtask="temporal_reasoning",
+                question=(
+                    f"{company}の投資活動によるキャッシュ・フローは"
+                    f"{period_prev}から{period_curr}にかけて"
+                    f"増加したか減少したか。"
+                ),
+                answer=answer,
+                program=program,
+                gold_evidence=[
+                    f"投資活動によるキャッシュ・フロー_{year_curr}",
+                    f"投資活動によるキャッシュ・フロー_{year_prev}",
+                ],
+            )
+        )
+
+    # Q7: Temporal - Financing CF direction
+    fin_cf = rv.get(f"財務活動によるキャッシュ・フロー_{year_curr}")
+    fin_prev = rv.get(f"財務活動によるキャッシュ・フロー_{year_prev}")
+    if fin_cf is not None and fin_prev is not None:
+        program = [
+            f"subtract({fin_cf}, {fin_prev})",
+            "greater(#0, 0)",
+        ]
+        result = execute_program(program)
+        answer = "増加" if result else "減少"
+        questions.append(
+            _make_question(
+                ctx,
+                subtask="temporal_reasoning",
+                question=(
+                    f"{company}の財務活動によるキャッシュ・フローは"
+                    f"{period_prev}から{period_curr}にかけて"
+                    f"増加したか減少したか。"
+                ),
+                answer=answer,
+                program=program,
+                gold_evidence=[
+                    f"財務活動によるキャッシュ・フロー_{year_curr}",
+                    f"財務活動によるキャッシュ・フロー_{year_prev}",
                 ],
             )
         )

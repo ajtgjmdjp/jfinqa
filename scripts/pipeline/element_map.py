@@ -100,6 +100,10 @@ CF_ELEMENTS: dict[str, str] = {
     "CashFlowsFromOperatingActivities": "営業活動によるキャッシュ・フロー",
     "CashFlowsFromInvestingActivities": "投資活動によるキャッシュ・フロー",
     "CashFlowsFromFinancingActivities": "財務活動によるキャッシュ・フロー",
+    # J-GAAP summary of business results variants
+    "NetCashProvidedByUsedInOperatingActivitiesSummaryOfBusinessResults": "営業活動によるキャッシュ・フロー",
+    "NetCashProvidedByUsedInInvestingActivitiesSummaryOfBusinessResults": "投資活動によるキャッシュ・フロー",
+    "NetCashProvidedByUsedInFinancingActivitiesSummaryOfBusinessResults": "財務活動によるキャッシュ・フロー",
     "EffectOfExchangeRateChangeOnCashAndCashEquivalents": (
         "現金及び現金同等物に係る換算差額"
     ),
