@@ -85,8 +85,10 @@ Unlike existing Japanese financial benchmarks that focus on classification or si
 |---|---|
 | Total questions | 1000 |
 | Companies | 68 |
-| Accounting standards | J-GAAP (581), IFRS (378), US-GAAP (41) |
-| Avg. program steps | 2.40 |
+| Accounting standards | J-GAAP (582), IFRS (377), US-GAAP (41) |
+| Avg. program steps | 2.59 |
+| Avg. table rows | 13.3 |
+| Max program steps | 6 (DuPont decomposition) |
 
 ### Subtasks
 
