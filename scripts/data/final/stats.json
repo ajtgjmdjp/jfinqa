@@ -1,6 +1,6 @@
 {
   "total_questions": 1000,
-  "total_rejected": 77,
+  "total_rejected": 30,
   "by_subtask": {
     "numerical_reasoning": 550,
     "consistency_checking": 200,
@@ -8,13 +8,12 @@
   },
   "unique_companies": 68,
   "by_accounting_standard": {
-    "J-GAAP": 581,
-    "IFRS": 378,
+    "J-GAAP": 582,
+    "IFRS": 377,
     "US-GAAP": 41
   },
-  "avg_program_steps": 2.397,
+  "avg_program_steps": 2.594,
   "rejection_reasons": {
-    "answer_mismatch": 10,
-    "no_gold_evidence": 67
+    "answer_mismatch": 30
   }
 }

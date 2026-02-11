@@ -183,8 +183,8 @@ def build_pl_comparison(
     if len(common) < 3:
         return None
 
-    # Select up to 8 items
-    selected = common[:8]
+    # Select up to 16 items
+    selected = common[:16]
 
     # Determine scale
     all_values = [curr_labels[jp][1] for jp in selected] + [
@@ -274,7 +274,7 @@ def build_bs_summary(
 
     if len(common) < 4:
         # Fall back to current year only if no common items
-        selected = items_curr[:10]
+        selected = items_curr[:18]
         all_values = [val for _, _, val in selected]
         scale_label, divisor = _choose_scale(all_values)
         period = _build_period_label(year_curr)
@@ -286,7 +286,7 @@ def build_bs_summary(
             raw_values[f"{jp_label}_{year_curr}"] = value / divisor
     else:
         # Build 2-period comparison
-        selected = common[:10]
+        selected = common[:18]
         all_values = [curr_labels[jp][1] for jp in selected] + [
             prev_labels[jp][1] for jp in selected
         ]
@@ -356,7 +356,7 @@ def build_bs_consistency(
     if not has_total:
         return None
 
-    selected = items[:12]
+    selected = items[:18]
     all_values = [val for _, _, val in selected]
     scale_label, divisor = _choose_scale(all_values)
 
@@ -419,7 +419,7 @@ def build_cf_summary(
         common = [jp for jp in curr_labels if jp in prev_labels]
 
         if len(common) >= 3:
-            selected = common[:6]
+            selected = common[:10]
             all_values = [curr_labels[jp][1] for jp in selected] + [
                 prev_labels[jp][1] for jp in selected
             ]
@@ -480,6 +480,44 @@ def build_cf_summary(
     return None
 
 
+def _select_with_required(
+    items: list[tuple[str, str, int | float]],
+    required_labels: list[str],
+    max_items: int,
+) -> list[tuple[str, str, int | float]]:
+    """Select items ensuring required labels are included.
+
+    1. Take leading items from display order
+    2. Append any required labels not yet selected
+    3. Fill remaining slots from display order
+    """
+    selected: list[tuple[str, str, int | float]] = []
+    seen: set[str] = set()
+    label_map = {jp: (jp, elem, val) for jp, elem, val in items}
+
+    # Phase 1: take first 4 in order
+    for item in items[:4]:
+        if item[0] not in seen:
+            selected.append(item)
+            seen.add(item[0])
+
+    # Phase 2: ensure required labels present
+    for label in required_labels:
+        if label not in seen and label in label_map:
+            selected.append(label_map[label])
+            seen.add(label)
+
+    # Phase 3: fill remaining from display order
+    for item in items:
+        if len(selected) >= max_items:
+            break
+        if item[0] not in seen:
+            selected.append(item)
+            seen.add(item[0])
+
+    return selected[:max_items]
+
+
 def build_cross_statement(
     company: dict[str, str],
     filings: dict[str, Any],
@@ -499,9 +537,12 @@ def build_cross_statement(
     if len(pl_items) < 2 or len(bs_items) < 2:
         return None
 
-    # Select key items for ratio calculations
-    pl_selected = pl_items[:4]
-    bs_selected = bs_items[:4]
+    # Select key items ensuring DuPont-required labels are present
+    pl_required = ["売上高", "売上収益", "営業利益", "当期純利益",
+                   "親会社株主に帰属する当期純利益", "経常利益"]
+    bs_required = ["資産合計", "純資産合計", "株主資本合計", "負債合計"]
+    pl_selected = _select_with_required(pl_items, pl_required, 7)
+    bs_selected = _select_with_required(bs_items, bs_required, 7)
     all_items = pl_selected + bs_selected
 
     all_values = [val for _, _, val in all_items]

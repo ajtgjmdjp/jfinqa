@@ -1354,6 +1354,108 @@ def _generate_from_cross_statement(
             )
         )
 
+    # --- DuPont decomposition templates (D1-D4) ---
+    # Requires: net_income, revenue, total_assets, equity
+    if revenue and net_income and total_assets and equity:
+        rev_label, rev_val = revenue
+        if rev_val != 0 and total_assets != 0 and equity != 0:
+            ni_label = (
+                "当期純利益"
+                if f"当期純利益{y}" in rv
+                else "親会社株主に帰属する当期純利益"
+            )
+            eq_label = (
+                "純資産合計" if f"純資産合計{y}" in rv else "株主資本合計"
+            )
+
+            # D1: Full DuPont ROE decomposition (6 steps)
+            program = [
+                f"divide({net_income}, {rev_val})",       # #0: net profit margin
+                f"divide({rev_val}, {total_assets})",      # #1: asset turnover
+                f"divide({total_assets}, {equity})",       # #2: financial leverage
+                "multiply(#0, #1)",                        # #3: margin * turnover
+                "multiply(#3, #2)",                        # #4: ROE (decimal)
+                "multiply(#4, 100)",                       # #5: ROE (%)
+            ]
+            result = execute_program(program)
+            answer = f"{result:.2f}%"
+            questions.append(
+                _make_question(
+                    ctx,
+                    subtask="numerical_reasoning",
+                    question=(
+                        f"{company}の{period}のROEをDuPont分解"
+                        f"(純利益率\u00d7総資産回転率\u00d7財務レバレッジ)で"
+                        f"求めると何%か。"
+                    ),
+                    answer=answer,
+                    program=program,
+                    gold_evidence=[ni_label, rev_label, "資産合計", eq_label],
+                )
+            )
+
+            # D2: Net profit margin (2 steps)
+            program = [
+                f"divide({net_income}, {rev_val})",
+                "multiply(#0, 100)",
+            ]
+            result = execute_program(program)
+            answer = f"{result:.2f}%"
+            questions.append(
+                _make_question(
+                    ctx,
+                    subtask="numerical_reasoning",
+                    question=(
+                        f"{company}の{period}の売上高純利益率は何%か。"
+                    ),
+                    answer=answer,
+                    program=program,
+                    gold_evidence=[ni_label, rev_label],
+                )
+            )
+
+            # D3: Total asset turnover (2 steps)
+            program = [
+                f"divide({rev_val}, {total_assets})",
+                "round(#0, 2)",
+            ]
+            result = execute_program(program)
+            answer = f"{result:.2f}倍"
+            questions.append(
+                _make_question(
+                    ctx,
+                    subtask="numerical_reasoning",
+                    question=(
+                        f"{company}の{period}の総資産回転率"
+                        f"({rev_label}/総資産)は何倍か。"
+                    ),
+                    answer=answer,
+                    program=program,
+                    gold_evidence=[rev_label, "資産合計"],
+                )
+            )
+
+            # D4: Financial leverage (2 steps)
+            program = [
+                f"divide({total_assets}, {equity})",
+                "round(#0, 2)",
+            ]
+            result = execute_program(program)
+            answer = f"{result:.2f}倍"
+            questions.append(
+                _make_question(
+                    ctx,
+                    subtask="numerical_reasoning",
+                    question=(
+                        f"{company}の{period}の財務レバレッジ"
+                        f"(総資産/{eq_label})は何倍か。"
+                    ),
+                    answer=answer,
+                    program=program,
+                    gold_evidence=["資産合計", eq_label],
+                )
+            )
+
     return questions
 
 

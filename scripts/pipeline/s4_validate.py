@@ -53,7 +53,7 @@ def _extract_number(s: str) -> float | None:
 
     s = _normalize(s)
     # Remove common suffixes
-    for suffix in ["%", "円", "百万円", "千円", "億円", "兆円"]:
+    for suffix in ["%", "円", "百万円", "千円", "億円", "兆円", "倍", "ポイント"]:
         s = s.replace(suffix, "")
     s = s.strip()
 
@@ -189,7 +189,9 @@ def validate_question(q: dict[str, Any]) -> tuple[bool, str]:
 
         # Format result to match answer format
         if "%" in answer:
-            result_str = f"{result:.1f}%"
+            result_str = f"{result:.2f}%"
+        elif "倍" in answer:
+            result_str = f"{result:.2f}倍"
         else:
             result_str = str(result)
 
@@ -217,8 +219,15 @@ def _sample_diverse(
     questions: list[dict[str, Any]],
     target: int,
     total_questions: int,
+    *,
+    prefer_complex: bool = False,
 ) -> list[dict[str, Any]]:
-    """Sample questions for maximum diversity across companies."""
+    """Sample questions for maximum diversity across companies.
+
+    When *prefer_complex* is True, questions within each company are
+    sorted by program step count (descending) so that more complex
+    questions are picked first during round-robin.
+    """
     if len(questions) <= target:
         return questions
 
@@ -229,6 +238,14 @@ def _sample_diverse(
     for q in questions:
         code = q.get("edinet_code", "unknown")
         by_company[code].append(q)
+
+    # Sort by step count descending when prefer_complex
+    if prefer_complex:
+        for code in by_company:
+            by_company[code].sort(
+                key=lambda q: len(q.get("qa", {}).get("program", [])),
+                reverse=True,
+            )
 
     # Round-robin sampling
     result: list[dict[str, Any]] = []
@@ -313,7 +330,12 @@ def run(generated_dir: Path | None = None, output_dir: Path | None = None) -> No
     for subtask, targets in SUBTASK_TARGETS.items():
         available = by_subtask.get(subtask, [])
         target = targets["target"]
-        sampled = _sample_diverse(available, target, total_target)
+        sampled = _sample_diverse(
+            available,
+            target,
+            total_target,
+            prefer_complex=(subtask == "numerical_reasoning"),
+        )
         n_avail = len(available)
         n_sel = len(sampled)
         logger.info(

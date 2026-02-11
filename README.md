@@ -8,7 +8,7 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 
 ## What is this?
 
-**jfinqa** is a benchmark for evaluating LLMs on Japanese financial numerical reasoning. Unlike existing benchmarks that focus on classification or simple lookup, jfinqa requires **multi-step arithmetic over financial statement tables** extracted from real Japanese corporate disclosures (EDINET).
+**jfinqa** is a benchmark for evaluating LLMs on Japanese financial numerical reasoning. Unlike existing benchmarks that focus on classification or simple lookup, jfinqa requires **multi-step arithmetic over financial statement tables** extracted from real Japanese corporate disclosures (EDINET). Questions include DuPont decomposition (6-step), growth rate calculations, and cross-statement ratio analysis.
 
 ### Three Subtasks
 
@@ -25,6 +25,9 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 | **Questions** | 1000 | 550 | 200 | 250 |
 | **Companies** | 68 | — | — | — |
 | **Accounting Standards** | J-GAAP 58%, IFRS 38%, US-GAAP 4% | — | — | — |
+| **Avg. program steps** | 2.59 | 2.84 | 2.00 | 2.54 |
+| **Avg. table rows** | 13.3 | — | — | — |
+| **Max program steps** | 6 (DuPont) | — | — | — |
 
 ### Baseline Results
 

@@ -67,6 +67,10 @@ BS_ELEMENTS: dict[str, str] = {
     "InvestmentsAndOtherAssets": "投資その他の資産",
     "InvestmentSecurities": "投資有価証券",
     "TotalAssets": "資産合計",
+    # SummaryOfBusinessResults variants (EDINET appends this suffix)
+    "TotalAssetsSummaryOfBusinessResults": "資産合計",
+    "TotalAssetsIFRSSummaryOfBusinessResults": "資産合計",
+    "TotalAssetsUSGAAPSummaryOfBusinessResults": "資産合計",
     # Liabilities
     "CurrentLiabilities": "流動負債",
     "ShortTermLoansPayable": "短期借入金",
@@ -79,6 +83,7 @@ BS_ELEMENTS: dict[str, str] = {
     "TotalLiabilities": "負債合計",
     # Net assets / Equity
     "NetAssets": "純資産合計",
+    "NetAssetsSummaryOfBusinessResults": "純資産合計",
     "ShareholdersEquity": "株主資本",
     "CapitalStock": "資本金",
     "CapitalSurplus": "資本剰余金",

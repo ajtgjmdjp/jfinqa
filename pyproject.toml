@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "jfinqa"
-version = "0.2.0"
+version = "0.3.0"
 description = "Japanese Financial Numerical Reasoning QA Benchmark"
 readme = "README.md"
 license = "Apache-2.0"
