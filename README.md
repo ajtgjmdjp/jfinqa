@@ -30,9 +30,9 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 
 | Model | Overall | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
 |-------|---------|--------------------|--------------------|-------------------|
-| GPT-4o | **84.9%** | 76.7% | **94.0%** | **100.0%** |
-| GPT-4o-mini | 74.9% | **83.5%** | 88.0% | 33.3% |
-| Gemini 2.0 Flash | 74.5% | 75.5% | 82.5% | 62.7% |
+| GPT-4o | **86.8%** | 79.6% | **93.5%** | **97.2%** |
+| Gemini 2.0 Flash | 77.3% | 78.7% | 82.5% | 70.0% |
+| GPT-4o-mini | 69.0% | **83.6%** | 86.0% | 23.2% |
 
 *1000 questions, zero-shot, temperature=0. Evaluation uses numerical matching with 1% tolerance.*
 
@@ -46,15 +46,14 @@ Systematic error analysis across 3 models revealed both benchmark design issues 
 
 | Error Pattern | GPT-4o | GPT-4o-mini | Gemini 2.0 Flash |
 |---|---|---|---|
-| Equity ratio: uses 株主資本 instead of 純資産合計 | 23/24 | 16/24 | 24/24 |
-| Fixed asset ratio: decomposes into 4 sub-categories | 25/29 | 1/29 | 29/29 |
-| Temporal reasoning: answers はい instead of 増収/減収 | 0/75 | 49/75 | 0/75 |
-| BS rounding: ±0.1 from XBRL rounding causes false negative | 2 | 2 | 2 |
+| Equity ratio: uses 株主資本 instead of 純資産合計 | 30/43 | 37/43 | 27/43 |
+| Fixed asset ratio: decomposes into 4 sub-categories | 20/23 | 3/23 | 21/23 |
+| Temporal reasoning: answers はい instead of 増収/減収 | 0/250 | 192/250 | 0/250 |
 
 Key findings:
-- **J-GAAP balance sheet structure is the largest source of genuine errors.** Models confuse 純資産合計 (net assets, including non-controlling interests) with 株主資本 (shareholders' equity), and decompose 総資産 into 4 sub-categories instead of the standard 2-category (流動資産+固定資産) structure. GPT-4o-mini is notably better at this than GPT-4o and Gemini.
-- **GPT-4o-mini has a systematic prompt compliance issue in temporal reasoning.** It answers "はい" (yes) to questions like "増収か減収か？" despite correctly analyzing the direction in its reasoning chain. This is a pure instruction-following failure, not a reasoning error.
-- **GPT-4o and Gemini are highly correlated in failures** on ratio calculations (43 shared errors), while GPT-4o-mini uses a different (often correct) approach to total assets calculation.
+- **J-GAAP balance sheet structure is the largest source of genuine errors.** Models confuse 純資産合計 (net assets, including non-controlling interests) with 株主資本 (shareholders' equity), and decompose 総資産 into 4 sub-categories instead of the standard 2-category (流動資産+固定資産) structure.
+- **GPT-4o-mini has a systematic prompt compliance issue in temporal reasoning.** It answers "はい" (yes) to questions like "増収か減収か？" despite correctly analyzing the direction in its reasoning chain. All 192 of its temporal reasoning errors follow this pattern—a pure instruction-following failure, not a reasoning error.
+- **GPT-4o and Gemini are highly correlated in failures** on ratio calculations (108 shared NR errors). All three models share 81 NR errors, of which 46 originate from J-GAAP-specific questions.
 
 ### Key Features
 
