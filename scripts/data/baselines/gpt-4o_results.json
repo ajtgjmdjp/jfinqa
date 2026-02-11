@@ -1,23 +1,23 @@
 {
   "model": "gpt-4o",
-  "overall_accuracy": 0.8489751887810141,
-  "correct": 787,
-  "total": 927,
+  "overall_accuracy": 0.868,
+  "correct": 868,
+  "total": 1000,
   "by_subtask": {
     "consistency_checking": {
-      "accuracy": 0.94,
-      "correct": 188,
+      "accuracy": 0.935,
+      "correct": 187,
       "total": 200
     },
     "numerical_reasoning": {
-      "accuracy": 0.7672727272727272,
-      "correct": 422,
+      "accuracy": 0.7963636363636364,
+      "correct": 438,
       "total": 550
     },
     "temporal_reasoning": {
-      "accuracy": 1.0,
-      "correct": 177,
-      "total": 177
+      "accuracy": 0.972,
+      "correct": 243,
+      "total": 250
     }
   }
 }
