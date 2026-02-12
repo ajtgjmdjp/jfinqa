@@ -106,6 +106,59 @@ def call_gemini(model: str, question: str, context: str) -> str:
     return resp.text or ""
 
 
+# ---------------------------------------------------------------------------
+# MLX local model adapter (Apple Silicon)
+# ---------------------------------------------------------------------------
+
+_mlx_model_cache: dict[str, tuple] = {}
+
+# HuggingFace repo for each local model name
+MLX_MODEL_MAP: dict[str, str] = {
+    "qwen2.5-3b-instruct": "mlx-community/Qwen2.5-3B-Instruct-4bit",
+    "qwen2.5-7b-instruct": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+}
+
+
+def _get_mlx_model(model: str):
+    """Load and cache an MLX model."""
+    if model not in _mlx_model_cache:
+        from mlx_lm import load
+
+        hf_repo = MLX_MODEL_MAP[model]
+        print(f"Loading MLX model: {hf_repo} ...")
+        loaded_model, tokenizer = load(hf_repo)
+        _mlx_model_cache[model] = (loaded_model, tokenizer)
+        print("Model loaded.")
+    return _mlx_model_cache[model]
+
+
+def call_mlx(model: str, question: str, context: str) -> str:
+    import mlx.core as mx
+    from mlx_lm import generate
+
+    loaded_model, tokenizer = _get_mlx_model(model)
+
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": _build_prompt(question, context)},
+    ]
+    prompt = tokenizer.apply_chat_template(
+        messages, tokenize=False, add_generation_prompt=True
+    )
+
+    def _greedy(logits: mx.array) -> mx.array:
+        return mx.argmax(logits, axis=-1)
+
+    return generate(
+        loaded_model,
+        tokenizer,
+        prompt=prompt,
+        max_tokens=512,
+        sampler=_greedy,
+        verbose=False,
+    )
+
+
 # Model name -> (call function, provider)
 MODEL_REGISTRY: dict[str, tuple] = {
     # OpenAI
@@ -119,6 +172,9 @@ MODEL_REGISTRY: dict[str, tuple] = {
     # Google
     "gemini-2.0-flash": (call_gemini, "google"),
     "gemini-2.5-flash-preview-04-17": (call_gemini, "google"),
+    # Local (MLX on Apple Silicon)
+    "qwen2.5-3b-instruct": (call_mlx, "local"),
+    "qwen2.5-7b-instruct": (call_mlx, "local"),
 }
 
 
@@ -142,17 +198,18 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    # Check API key
+    # Check API key (not needed for local models)
     call_fn, provider = MODEL_REGISTRY[args.model]
     env_keys = {
         "openai": "OPENAI_API_KEY",
         "anthropic": "ANTHROPIC_API_KEY",
         "google": "GOOGLE_API_KEY",
     }
-    key_name = env_keys[provider]
-    if not os.environ.get(key_name):
-        print(f"Error: {key_name} environment variable is required")
-        sys.exit(1)
+    if provider != "local":
+        key_name = env_keys[provider]
+        if not os.environ.get(key_name):
+            print(f"Error: {key_name} environment variable is required")
+            sys.exit(1)
 
     # Load data
     with open(args.data, encoding="utf-8") as f:
@@ -243,8 +300,9 @@ def main() -> None:
             with open(pred_path, "w", encoding="utf-8") as f:
                 json.dump(predictions, f, ensure_ascii=False, indent=2)
 
-        # Rate limit
-        time.sleep(0.3)
+        # Rate limit (skip for local models)
+        if provider != "local":
+            time.sleep(0.3)
 
     # Final save
     with open(pred_path, "w", encoding="utf-8") as f:

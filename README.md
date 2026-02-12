@@ -33,30 +33,22 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 
 | Model | Overall | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
 |-------|---------|--------------------|--------------------|-------------------|
-| GPT-4o | **86.8%** | 79.6% | **93.5%** | **97.2%** |
-| Gemini 2.0 Flash | 77.3% | 78.7% | 82.5% | 70.0% |
-| GPT-4o-mini | 69.0% | **83.6%** | 86.0% | 23.2% |
+| GPT-4o | **87.0%** | **80.2%** | **90.5%** | **99.2%** |
+| GPT-4o-mini | 67.7% | 79.3% | 83.5% | 29.6% |
+| Qwen2.5-3B-Instruct | 39.6% | 46.4% | 51.0% | 15.6% |
 
-*1000 questions, zero-shot, temperature=0. Evaluation uses numerical matching with 1% tolerance.*
+*1000 questions, zero-shot, temperature=0. Evaluation uses numerical matching with 1% tolerance. Qwen2.5-3B-Instruct run locally with MLX (4-bit quantization).*
 
 ### Error Analysis
 
-Systematic error analysis across 3 models revealed both benchmark design issues and genuine LLM failure patterns.
-
-**Evaluation methodology fix**: An initial version reported GPT-4o-mini (70.2%) outperforming GPT-4o (63.7%). This counterintuitive result was caused by inconsistent unit handling in the evaluation: (1) 23 gold answers included redundant "百万円" suffixes that models correctly omitted, and (2) GPT-4o appended "百万円" to 43 consistency-checking answers where the gold expected bare numbers. After standardizing gold answers and treating compound financial units (百万円, 億円) as unit labels rather than multipliers, GPT-4o correctly ranks first at 79.8%.
-
-**Genuine error patterns** (not caused by formatting):
-
-| Error Pattern | GPT-4o | GPT-4o-mini | Gemini 2.0 Flash |
-|---|---|---|---|
-| Equity ratio: uses 株主資本 instead of 純資産合計 | 30/43 | 37/43 | 27/43 |
-| Fixed asset ratio: decomposes into 4 sub-categories | 20/23 | 3/23 | 21/23 |
-| Temporal reasoning: answers はい instead of 増収/減収 | 0/250 | 192/250 | 0/250 |
+Systematic error analysis revealed both benchmark design issues and genuine LLM failure patterns.
 
 Key findings:
-- **J-GAAP balance sheet structure is the largest source of genuine errors.** Models confuse 純資産合計 (net assets, including non-controlling interests) with 株主資本 (shareholders' equity), and decompose 総資産 into 4 sub-categories instead of the standard 2-category (流動資産+固定資産) structure.
-- **GPT-4o-mini has a systematic prompt compliance issue in temporal reasoning.** It answers "はい" (yes) to questions like "増収か減収か？" despite correctly analyzing the direction in its reasoning chain. All 192 of its temporal reasoning errors follow this pattern—a pure instruction-following failure, not a reasoning error.
-- **GPT-4o and Gemini are highly correlated in failures** on ratio calculations (108 shared NR errors). All three models share 81 NR errors, of which 46 originate from J-GAAP-specific questions.
+- **Clear capability gradient**: GPT-4o (87%) >> GPT-4o-mini (68%) >> Qwen2.5-3B (40%), validating the benchmark discriminates across model sizes and capabilities.
+- **DuPont decomposition is the hardest subtask**: 6-step ROE decomposition questions (56 questions) see significant accuracy drops even for frontier models, while 3B models rarely solve them correctly.
+- **GPT-4o-mini has a systematic prompt compliance issue in temporal reasoning.** It answers "はい" (yes) to questions like "増収か減収か？" despite correctly analyzing the direction in its reasoning chain (122 of 176 TR errors follow this pattern).
+- **J-GAAP balance sheet structure is a major error source.** Models confuse 純資産合計 (net assets) with 株主資本 (shareholders' equity), and decompose 総資産 into 4 sub-categories instead of the standard 2.
+- **Qwen2.5-3B-Instruct** struggles most with temporal reasoning (15.6%) and consistency checking (51.0%), suggesting that smaller models have difficulty with instruction-following and multi-step verification tasks in Japanese.
 
 ### Key Features
 

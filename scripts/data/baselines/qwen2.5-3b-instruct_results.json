@@ -1,0 +1,23 @@
+{
+  "model": "qwen2.5-3b-instruct",
+  "overall_accuracy": 0.396,
+  "correct": 396,
+  "total": 1000,
+  "by_subtask": {
+    "consistency_checking": {
+      "accuracy": 0.51,
+      "correct": 102,
+      "total": 200
+    },
+    "numerical_reasoning": {
+      "accuracy": 0.4636363636363636,
+      "correct": 255,
+      "total": 550
+    },
+    "temporal_reasoning": {
+      "accuracy": 0.156,
+      "correct": 39,
+      "total": 250
+    }
+  }
+}
