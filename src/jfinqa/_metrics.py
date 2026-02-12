@@ -6,6 +6,10 @@ Handles Japan-specific number formats:
 - Fullwidth digits: fullwidth 123 -> 123
 - Unit suffixes: 百万円, 億円, 千円, 兆円, 円, %, ポイント
 - Comma-separated numbers: 1,234,567
+
+NOTE: A self-contained copy of this logic lives in the lm-evaluation-harness
+integration at ``lm_eval/tasks/jfinqa/utils.py``. When updating scoring logic,
+keep both copies in sync.
 """
 
 from __future__ import annotations
