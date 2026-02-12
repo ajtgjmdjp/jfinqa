@@ -33,7 +33,8 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 
 | Model | Overall | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
 |-------|---------|--------------------|--------------------|-------------------|
-| GPT-4o | **87.0%** | **80.2%** | **90.5%** | **99.2%** |
+| GPT-4o | **87.0%** | 80.2% | **90.5%** | **99.2%** |
+| Gemini 2.0 Flash | 80.4% | **86.2%** | 83.5% | 65.2% |
 | GPT-4o-mini | 67.7% | 79.3% | 83.5% | 29.6% |
 | Qwen2.5-3B-Instruct | 39.6% | 46.4% | 51.0% | 15.6% |
 
@@ -44,7 +45,9 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 Systematic error analysis revealed both benchmark design issues and genuine LLM failure patterns.
 
 Key findings:
-- **Clear capability gradient**: GPT-4o (87%) >> GPT-4o-mini (68%) >> Qwen2.5-3B (40%), validating the benchmark discriminates across model sizes and capabilities.
+- **Clear capability gradient**: GPT-4o (87%) > Gemini 2.0 Flash (80%) > GPT-4o-mini (68%) >> Qwen2.5-3B (40%), validating the benchmark discriminates across model sizes and capabilities.
+- **Temporal reasoning separates frontier models**: GPT-4o achieves 99.2% on TR, while Gemini drops to 65.2% and GPT-4o-mini to 29.6%. This subtask requires strict output format compliance ("増収"/"減収" rather than "はい"/"いいえ"), which strongly differentiates models.
+- **Gemini 2.0 Flash leads on numerical reasoning** (86.2% vs GPT-4o's 80.2%), suggesting strong arithmetic capabilities, but falls behind on consistency checking and temporal reasoning where format compliance matters more.
 - **DuPont decomposition is the hardest subtask**: 6-step ROE decomposition questions (56 questions) see significant accuracy drops even for frontier models, while 3B models rarely solve them correctly.
 - **GPT-4o-mini has a systematic prompt compliance issue in temporal reasoning.** It answers "はい" (yes) to questions like "増収か減収か？" despite correctly analyzing the direction in its reasoning chain (122 of 176 TR errors follow this pattern).
 - **J-GAAP balance sheet structure is a major error source.** Models confuse 純資産合計 (net assets) with 株主資本 (shareholders' equity), and decompose 総資産 into 4 sub-categories instead of the standard 2.
