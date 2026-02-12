@@ -68,16 +68,14 @@ def load_dataset(
         ds = hf_datasets.load_dataset(hf_repo, name=config_name, split=split)
         return [_row_to_question(row, resolved_subtask) for row in ds]
 
-    # Load all subtasks
+    # Load all subtasks — fail immediately if any subtask is missing
+    # to prevent silent evaluation on partial data.
     all_questions: list[Question] = []
     for st in Subtask.all():
-        try:
-            ds = hf_datasets.load_dataset(hf_repo, name=st.value, split=split)
-            questions = [_row_to_question(row, st) for row in ds]
-            all_questions.extend(questions)
-            logger.info(f"Loaded {len(questions)} from {st.value}/{split}")
-        except Exception as e:
-            logger.warning(f"Could not load {st.value}: {e}")
+        ds = hf_datasets.load_dataset(hf_repo, name=st.value, split=split)
+        questions = [_row_to_question(row, st) for row in ds]
+        all_questions.extend(questions)
+        logger.info(f"Loaded {len(questions)} from {st.value}/{split}")
 
     return all_questions
 

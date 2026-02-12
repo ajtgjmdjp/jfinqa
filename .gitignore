@@ -17,5 +17,9 @@ htmlcov/
 *.so
 .DS_Store
 
+# Backups
+backup_*/
+scripts/data/baselines/v*_backup/
+
 # Paper (arXiv only)
 paper/
