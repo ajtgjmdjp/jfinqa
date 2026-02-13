@@ -4,6 +4,9 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 
 [![PyPI](https://img.shields.io/pypi/v/jfinqa)](https://pypi.org/project/jfinqa/)
 [![Python](https://img.shields.io/pypi/pyversions/jfinqa)](https://pypi.org/project/jfinqa/)
+[![CI](https://github.com/ajtgjmdjp/jfinqa/actions/workflows/ci.yml/badge.svg)](https://github.com/ajtgjmdjp/jfinqa/actions/workflows/ci.yml)
+[![Downloads](https://img.shields.io/pypi/dm/jfinqa)](https://pypi.org/project/jfinqa/)
+[![HuggingFace](https://img.shields.io/badge/HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/ajtgjmdjp/jfinqa)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
 
 ## What is this?
