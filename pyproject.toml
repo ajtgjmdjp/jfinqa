@@ -52,6 +52,9 @@ jfinqa = "jfinqa.cli:cli"
 Homepage = "https://github.com/ajtgjmdjp/jfinqa"
 Repository = "https://github.com/ajtgjmdjp/jfinqa"
 
+[tool.hatch.build.targets.sdist]
+exclude = [".env", ".env.*", ".mcpregistry_*", ".claude/"]
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/jfinqa"]
 
