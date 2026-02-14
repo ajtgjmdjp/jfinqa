@@ -8,6 +8,7 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 [![Downloads](https://img.shields.io/pypi/dm/jfinqa)](https://pypi.org/project/jfinqa/)
 [![HuggingFace](https://img.shields.io/badge/HuggingFace-Dataset-yellow)](https://huggingface.co/datasets/ajtgjmdjp/jfinqa)
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue)](LICENSE)
+[![Leaderboard](https://img.shields.io/badge/Leaderboard-Live-brightgreen)](https://ajtgjmdjp.github.io/jfinqa-leaderboard/)
 
 ## What is this?
 
@@ -42,6 +43,8 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 | Qwen2.5-3B-Instruct | 39.6% | 46.4% | 51.0% | 15.6% |
 
 *1000 questions, zero-shot, temperature=0. Evaluation uses numerical matching with 1% tolerance. Qwen2.5-3B-Instruct run locally with MLX (4-bit quantization).*
+
+**[View full leaderboard →](https://ajtgjmdjp.github.io/jfinqa-leaderboard/)**
 
 ### Error Analysis
 
