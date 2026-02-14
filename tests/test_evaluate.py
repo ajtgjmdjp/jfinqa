@@ -74,6 +74,40 @@ class TestEvaluate:
         assert "100.0%" in summary
         assert "jfinqa" in summary
 
+    def test_summary_overall_accuracy_format(self, sample_questions_list: list[Question]) -> None:
+        """Test that summary includes overall accuracy with correct/total counts."""
+        preds = {q.id: q.qa.answer for q in sample_questions_list}
+        result = evaluate(sample_questions_list, predictions=preds)
+        summary = result.summary()
+        assert "Overall:" in summary
+        assert f"({result.correct}/{result.total})" in summary
+        assert f"{result.accuracy:.1%}" in summary
+
+    def test_summary_subtask_breakdown(self, sample_questions_list: list[Question]) -> None:
+        """Test that summary includes per-subtask accuracy and counts."""
+        preds = {q.id: q.qa.answer for q in sample_questions_list}
+        result = evaluate(sample_questions_list, predictions=preds)
+        summary = result.summary()
+        for name, sub in result.by_subtask.items():
+            assert name in summary
+            assert f"{sub.accuracy:.1%}" in summary
+            assert f"({sub.correct}/{sub.total})" in summary
+
+    def test_summary_with_wrong_predictions(self, sample_questions_list: list[Question]) -> None:
+        """Test summary format when accuracy is not 100%."""
+        # Create mixed predictions (half correct, half wrong)
+        preds = {}
+        for i, q in enumerate(sample_questions_list):
+            if i == 0:
+                preds[q.id] = q.qa.answer  # correct
+            else:
+                preds[q.id] = "WRONG_ANSWER"  # wrong
+        result = evaluate(sample_questions_list, predictions=preds)
+        summary = result.summary()
+        assert "Overall:" in summary
+        assert f"({result.correct}/{result.total})" in summary
+        assert f"{result.accuracy:.1%}" in summary
+
 
 class TestEvaluateEmpty:
     def test_empty_questions(self) -> None:
