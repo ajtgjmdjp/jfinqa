@@ -213,9 +213,9 @@ The data format is compatible with [FinQA](https://github.com/czyssrs/FinQA) (Ch
 If you use jfinqa in your research, please cite it as follows:
 
 ```bibtex
-@dataset{ogawa2025jfinqa,
+@dataset{jfinqa2025,
   title={jfinqa: Japanese Financial Numerical Reasoning QA Benchmark},
-  author={Ogawa, Saichi},
+  author={ajtgjmdjp},
   year={2025},
   url={https://github.com/ajtgjmdjp/jfinqa},
   license={Apache-2.0}
