@@ -9,8 +9,12 @@ from __future__ import annotations
 
 import json
 import sys
+from typing import TYPE_CHECKING
 
 import click
+
+if TYPE_CHECKING:
+    from jfinqa.models import Question
 from loguru import logger
 
 
@@ -25,6 +29,26 @@ def cli(verbose: bool) -> None:
         level=level,
         format="{time:HH:mm:ss} | {level:<7} | {message}",
     )
+
+
+def _load_questions(
+    data: str | None, subtask: str | None
+) -> list[Question]:
+    """Load questions from a local file or HuggingFace.
+
+    Optionally filters by subtask.
+    """
+    from jfinqa.dataset import load_dataset, load_from_file
+
+    if data:
+        questions = load_from_file(data)
+    else:
+        questions = load_dataset(subtask)
+
+    if subtask and data:
+        questions = [q for q in questions if q.subtask.value == subtask]
+
+    return questions
 
 
 @cli.command()
@@ -80,7 +104,6 @@ def evaluate(
 
         jfinqa evaluate -s numerical_reasoning -p preds.json -d local.json
     """
-    from jfinqa.dataset import load_dataset, load_from_file
     from jfinqa.evaluate import evaluate as run_eval
 
     # Load predictions
@@ -88,13 +111,7 @@ def evaluate(
         preds: dict[str, str] = json.load(f)
 
     # Load questions
-    if data:
-        questions = load_from_file(data)
-    else:
-        questions = load_dataset(subtask)
-
-    if subtask and data:
-        questions = [q for q in questions if q.subtask.value == subtask]
+    questions = _load_questions(data, subtask)
 
     if not questions:
         click.echo("No questions found.", err=True)
@@ -164,17 +181,7 @@ def inspect(
 
         jfinqa inspect -d local_data.json --json
     """
-    from jfinqa.dataset import load_dataset, load_from_file
-
-    if data:
-        questions = load_from_file(data)
-    else:
-        questions = load_dataset(subtask)
-
-    if subtask and data:
-        questions = [q for q in questions if q.subtask.value == subtask]
-
-    questions = questions[:limit]
+    questions = _load_questions(data, subtask)[:limit]
 
     if as_json:
         click.echo(
