@@ -31,9 +31,7 @@ def cli(verbose: bool) -> None:
     )
 
 
-def _load_questions(
-    data: str | None, subtask: str | None
-) -> list[Question]:
+def _load_questions(data: str | None, subtask: str | None) -> list[Question]:
     """Load questions from a local file or HuggingFace.
 
     Optionally filters by subtask.
