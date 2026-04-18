@@ -121,7 +121,9 @@ jfinqa evaluate -p predictions.json -d local_data.json -s numerical_reasoning
 
 ## lm-evaluation-harness
 
-[PR #3570](https://github.com/EleutherAI/lm-evaluation-harness/pull/3570) is pending. Once merged:
+jfinqa is merged into lm-eval via
+[PR #3570](https://github.com/EleutherAI/lm-evaluation-harness/pull/3570)
+(2026-03-18). With a current lm-eval install you can run the task directly:
 
 ```bash
 lm-eval run --model openai-completions \
@@ -130,7 +132,10 @@ lm-eval run --model openai-completions \
     --num_fewshot 0
 ```
 
-Before merge, use `--include_path`:
+This repository also ships a commit-pinned mirror of the task in
+[`lm_eval_tasks/`](lm_eval_tasks/README.md) for reproducibility. To use
+the in-repo copy instead of whatever ships with lm-eval, clone the repo
+and pass `--include_path`:
 
 ```bash
 lm-eval run --model openai-completions \
@@ -139,6 +144,11 @@ lm-eval run --model openai-completions \
     --num_fewshot 0 \
     --include_path lm_eval_tasks/
 ```
+
+The mirror is not packaged into the published wheel; it is only
+available from a git checkout. Run
+[`scripts/sync_lm_eval.py`](scripts/sync_lm_eval.py) to diff the mirror
+against upstream.
 
 ## Data Format
 
