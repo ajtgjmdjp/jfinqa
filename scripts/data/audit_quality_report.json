@@ -1,0 +1,1063 @@
+{
+  "totals": {
+    "rows": 1000
+  },
+  "findings": {
+    "impossible_cogs": [],
+    "gross_profit_mismatch": [],
+    "op_income_mismatch": [
+      {
+        "id": "nr_006",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "nr_016",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_020",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_030",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "nr_032",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_038",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_056",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_067",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "nr_077",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_081",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_091",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "nr_093",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_099",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_117",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_128",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "nr_138",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_142",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_152",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "nr_154",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_160",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_178",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_189",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "nr_199",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_203",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_213",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "nr_215",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_221",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_238",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_249",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "nr_259",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_263",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_273",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "nr_275",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_281",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_295",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_306",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "nr_316",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_320",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_330",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "nr_332",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_338",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_351",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_361",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "nr_371",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_375",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_385",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "nr_387",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_393",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_404",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_414",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "nr_424",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_428",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_438",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "nr_440",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_446",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_456",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_465",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "nr_475",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_479",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_489",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "nr_491",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_497",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_507",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "cc_006",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "cc_016",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "cc_020",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "cc_030",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "cc_032",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "cc_038",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "cc_056",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "cc_067",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "cc_077",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "cc_081",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "cc_091",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "cc_093",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "cc_099",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "cc_114",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "tr_006",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "tr_016",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "tr_020",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "tr_030",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "tr_032",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "tr_038",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "tr_055",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "tr_066",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "tr_076",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "tr_080",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "tr_090",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "tr_092",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "tr_098",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "tr_115",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "tr_126",
+        "company": "伊藤忠商事",
+        "expected": 263681.0,
+        "reported": 244999.0
+      },
+      {
+        "id": "tr_136",
+        "company": "旭化成",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "tr_140",
+        "company": "武田薬品工業",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "tr_150",
+        "company": "オムロン",
+        "expected": 15800.0,
+        "reported": 17376.0
+      },
+      {
+        "id": "tr_152",
+        "company": "ファナック",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "tr_158",
+        "company": "オリックス",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "tr_175",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      }
+    ],
+    "ni_decomposition_mismatch": [],
+    "asset_total_mismatch": [],
+    "balance_sheet_mismatch": [],
+    "roe_convention_ambiguity": [
+      {
+        "id": "nr_001",
+        "company": "マルハニチロ",
+        "net_income": 24722.0,
+        "parent_ni": 20853.0,
+        "question": "マルハニチロの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_002",
+        "company": "味の素",
+        "net_income": 1898.0,
+        "parent_ni": 1898.0,
+        "question": "味の素の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_003",
+        "company": "日本ハム",
+        "net_income": 1161.0,
+        "parent_ni": 1161.0,
+        "question": "日本ハムの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_004",
+        "company": "大林組",
+        "net_income": 1064.2,
+        "parent_ni": 1064.4,
+        "question": "大林組の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_005",
+        "company": "清水建設",
+        "net_income": 29448.0,
+        "parent_ni": 28078.0,
+        "question": "清水建設の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_006",
+        "company": "伊藤忠商事",
+        "net_income": 166031.0,
+        "parent_ni": 164073.0,
+        "question": "伊藤忠商事の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_007",
+        "company": "丸紅",
+        "net_income": 17766.0,
+        "parent_ni": 16176.0,
+        "question": "丸紅の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_008",
+        "company": "三菱商事",
+        "net_income": 102032.0,
+        "parent_ni": 87121.0,
+        "question": "三菱商事の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_009",
+        "company": "住友不動産",
+        "net_income": 25904.0,
+        "parent_ni": 24495.0,
+        "question": "住友不動産の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_010",
+        "company": "野村不動産ホールディングス",
+        "net_income": 471.5,
+        "parent_ni": 471.5,
+        "question": "野村不動産ホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_011",
+        "company": "日本製鉄",
+        "net_income": 494.1,
+        "parent_ni": 439.3,
+        "question": "日本製鉄の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_012",
+        "company": "JFEホールディングス",
+        "net_income": 674.8,
+        "parent_ni": 674.8,
+        "question": "JFEホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_013",
+        "company": "日清食品ホールディングス",
+        "net_income": 1396.0,
+        "parent_ni": 1274.0,
+        "question": "日清食品ホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_014",
+        "company": "ブリヂストン",
+        "net_income": 3252.3,
+        "parent_ni": 3252.3,
+        "question": "ブリヂストンの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_015",
+        "company": "住友ゴム工業",
+        "net_income": 7102.0,
+        "parent_ni": 7102.0,
+        "question": "住友ゴム工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_016",
+        "company": "旭化成",
+        "net_income": 38506.0,
+        "parent_ni": 37048.0,
+        "question": "旭化成の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_017",
+        "company": "AGC",
+        "net_income": 11523.0,
+        "parent_ni": 11480.0,
+        "question": "AGCの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_018",
+        "company": "ライオン",
+        "net_income": 4950.0,
+        "parent_ni": 4909.0,
+        "question": "ライオンの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_019",
+        "company": "花王",
+        "net_income": 603.6,
+        "parent_ni": 603.6,
+        "question": "花王の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_020",
+        "company": "武田薬品工業",
+        "net_income": 587898.0,
+        "parent_ni": 549372.0,
+        "question": "武田薬品工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_021",
+        "company": "アステラス製薬",
+        "net_income": 4818.0,
+        "parent_ni": 4676.0,
+        "question": "アステラス製薬の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_022",
+        "company": "LIXIL",
+        "net_income": 280.5,
+        "parent_ni": 280.5,
+        "question": "LIXILの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_023",
+        "company": "SMC",
+        "net_income": -7699.0,
+        "parent_ni": -7699.0,
+        "question": "SMCの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_024",
+        "company": "ユニ・チャーム",
+        "net_income": 8476.0,
+        "parent_ni": 6508.0,
+        "question": "ユニ・チャームの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_025",
+        "company": "富士フイルムホールディングス",
+        "net_income": 10695.0,
+        "parent_ni": 10115.0,
+        "question": "富士フイルムホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_026",
+        "company": "エーザイ",
+        "net_income": 5154.1,
+        "parent_ni": 5149.9,
+        "question": "エーザイの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_027",
+        "company": "キヤノン",
+        "net_income": 2129.3,
+        "parent_ni": 2058.6,
+        "question": "キヤノンの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_028",
+        "company": "ダイキン工業",
+        "net_income": 383.9,
+        "parent_ni": 375.2,
+        "question": "ダイキン工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_029",
+        "company": "シスメックス",
+        "net_income": 765.0,
+        "parent_ni": 765.0,
+        "question": "シスメックスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_030",
+        "company": "オムロン",
+        "net_income": 16430.0,
+        "parent_ni": 14554.0,
+        "question": "オムロンの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_031",
+        "company": "パナソニックホールディングス",
+        "net_income": 626748.0,
+        "parent_ni": 589896.0,
+        "question": "パナソニックホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_032",
+        "company": "ファナック",
+        "net_income": 266680.0,
+        "parent_ni": 254478.0,
+        "question": "ファナックの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_033",
+        "company": "富士通",
+        "net_income": 4499.0,
+        "parent_ni": 3067.0,
+        "question": "富士通の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_034",
+        "company": "ソニーグループ",
+        "net_income": 980494.0,
+        "parent_ni": 970573.0,
+        "question": "ソニーグループの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_035",
+        "company": "日本電気",
+        "net_income": 2242.0,
+        "parent_ni": 2240.0,
+        "question": "日本電気の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_036",
+        "company": "アドバンテスト",
+        "net_income": 962.2,
+        "parent_ni": 962.2,
+        "question": "アドバンテストの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_037",
+        "company": "ヤマトホールディングス",
+        "net_income": 17026.0,
+        "parent_ni": 17026.0,
+        "question": "ヤマトホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_038",
+        "company": "オリックス",
+        "net_income": 62290.0,
+        "parent_ni": 62290.0,
+        "question": "オリックスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_039",
+        "company": "三井不動産",
+        "net_income": 3825.0,
+        "parent_ni": 3822.0,
+        "question": "三井不動産の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_040",
+        "company": "本田技研工業",
+        "net_income": 449552.0,
+        "parent_ni": 426649.0,
+        "question": "本田技研工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_042",
+        "company": "三菱自動車工業",
+        "net_income": 178470.0,
+        "parent_ni": 164119.0,
+        "question": "三菱自動車工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_043",
+        "company": "マツダ",
+        "net_income": 3626.0,
+        "parent_ni": 3501.0,
+        "question": "マツダの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_044",
+        "company": "SUBARU",
+        "net_income": 17015.0,
+        "parent_ni": 16974.0,
+        "question": "SUBARUの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_045",
+        "company": "スズキ",
+        "net_income": 7389.0,
+        "parent_ni": 5256.0,
+        "question": "スズキの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_046",
+        "company": "クボタ",
+        "net_income": 8172.9,
+        "parent_ni": 8175.5,
+        "question": "クボタの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_047",
+        "company": "川崎重工業",
+        "net_income": 2413.1,
+        "parent_ni": 2356.8,
+        "question": "川崎重工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_054",
+        "company": "東日本旅客鉄道",
+        "net_income": 9564.0,
+        "parent_ni": 9564.0,
+        "question": "東日本旅客鉄道の2023年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_055",
+        "company": "SGホールディングス",
+        "net_income": 4620.0,
+        "parent_ni": 4546.0,
+        "question": "SGホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_056",
+        "company": "KDDI",
+        "net_income": 656104.0,
+        "parent_ni": 637874.0,
+        "question": "KDDIの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_060",
+        "company": "NTT",
+        "net_income": 11142.0,
+        "parent_ni": 10097.0,
+        "question": "NTTの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_061",
+        "company": "エムスリー",
+        "net_income": 60.6,
+        "parent_ni": 60.6,
+        "question": "エムスリーの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_115",
+        "company": "東日本旅客鉄道",
+        "net_income": 9564.0,
+        "parent_ni": 9564.0,
+        "question": "東日本旅客鉄道の2023年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_172",
+        "company": "ニトリホールディングス",
+        "net_income": 73285.0,
+        "parent_ni": 72987.0,
+        "question": "ニトリホールディングスの2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_231",
+        "company": "ソフトバンクグループ",
+        "net_income": 1080479.0,
+        "parent_ni": 1063684.0,
+        "question": "ソフトバンクグループの2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_232",
+        "company": "リクルートホールディングス",
+        "net_income": 1024858.0,
+        "parent_ni": 964034.0,
+        "question": "リクルートホールディングスの2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_235",
+        "company": "野村ホールディングス",
+        "net_income": 61953.0,
+        "parent_ni": 60822.0,
+        "question": "野村ホールディングスの2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_284",
+        "company": "トヨタ自動車",
+        "net_income": 5071421.0,
+        "parent_ni": 4944933.0,
+        "question": "トヨタ自動車の2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_291",
+        "company": "三菱UFJフィナンシャル・グループ",
+        "net_income": 1571761.0,
+        "parent_ni": 1490781.0,
+        "question": "三菱UFJフィナンシャル・グループの2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_292",
+        "company": "三井住友フィナンシャルグループ",
+        "net_income": 23292.0,
+        "parent_ni": 23048.0,
+        "question": "三井住友フィナンシャルグループの2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_296",
+        "company": "セブン&アイ・ホールディングス",
+        "net_income": 1345119.0,
+        "parent_ni": 1279521.0,
+        "question": "セブン&アイ・ホールディングスの2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_352",
+        "company": "東京電力ホールディングス",
+        "net_income": 230438.0,
+        "parent_ni": 226102.0,
+        "question": "東京電力ホールディングスの2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_439",
+        "company": "パナソニックホールディングス",
+        "net_income": 626748.0,
+        "parent_ni": 589896.0,
+        "question": "パナソニックホールディングスの2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_457",
+        "company": "中部電力",
+        "net_income": 411146.0,
+        "parent_ni": 403140.0,
+        "question": "中部電力の2024年3月期のROE(当期純利益/純資産)は何%か。"
+      },
+      {
+        "id": "nr_515",
+        "company": "清水建設",
+        "net_income": 29448.0,
+        "parent_ni": 28078.0,
+        "question": "清水建設の2024年3月期のROE(当期純利益/純資産)は何%か。"
+      }
+    ],
+    "rounding_pedantry": []
+  },
+  "counts": {
+    "impossible_cogs": 0,
+    "gross_profit_mismatch": 0,
+    "op_income_mismatch": 98,
+    "ni_decomposition_mismatch": 0,
+    "asset_total_mismatch": 0,
+    "balance_sheet_mismatch": 0,
+    "roe_convention_ambiguity": 64,
+    "rounding_pedantry": 0
+  }
+}

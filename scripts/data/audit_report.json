@@ -1,0 +1,52 @@
+{
+  "total": 1000,
+  "distribution": {
+    "total": 1000,
+    "subtask": {
+      "numerical_reasoning": 550,
+      "consistency_checking": 200,
+      "temporal_reasoning": 250
+    },
+    "accounting_standard": {
+      "J-GAAP": 624,
+      "IFRS": 332,
+      "US-GAAP": 44
+    },
+    "filing_year": {
+      "2024": 990,
+      "2023": 10
+    },
+    "unique_companies": 61,
+    "top_companies": {
+      "マルハニチロ": 19,
+      "味の素": 19,
+      "日本ハム": 19,
+      "大林組": 19,
+      "丸紅": 19,
+      "住友不動産": 19,
+      "野村不動産ホールディングス": 19,
+      "日本製鉄": 19,
+      "JFEホールディングス": 19,
+      "日清食品ホールディングス": 19,
+      "ブリヂストン": 19,
+      "住友ゴム工業": 19,
+      "AGC": 19,
+      "ライオン": 19,
+      "花王": 19
+    }
+  },
+  "findings_count": {
+    "schema_missing": 0,
+    "dsl_unparsable": 0,
+    "dsl_mismatch": 0,
+    "exact_duplicates": 0,
+    "near_duplicates": 0
+  },
+  "findings": {
+    "schema_missing": [],
+    "dsl_unparsable": [],
+    "dsl_mismatch": [],
+    "exact_duplicates": [],
+    "near_duplicates": []
+  }
+}
