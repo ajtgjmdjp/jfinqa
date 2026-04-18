@@ -151,16 +151,24 @@ The data format is compatible with [FinQA](https://github.com/czyssrs/FinQA) (Ch
 
 ```json
 {
-  "id": "nr_001",
-  "subtask": "numerical_reasoning",
+  "id": "tr_010",
+  "subtask": "temporal_reasoning",
   "company_name": "味の素",
-  "question": "味の素の2024年3月期の売上高は前期比で何%増減したか。",
-  "answer": "-23.8%",
-  "program": ["subtract(126253.0, 165580.0)", "divide(#0, 165580.0)", "multiply(#1, 100)"],
+  "accounting_standard": "IFRS",
+  "question": "味の素は2023年3月期から2024年3月期にかけて増収か減収か。",
+  "answer": "増収",
+  "program": ["subtract(1439231.0, 1359115.0)", "greater(#0, 0)"],
   "table_headers": ["", "2024年3月期", "2023年3月期"],
-  "table_rows": [["売上高", "126,253", "165,580"], ["営業利益", "3,557", "△1,191"]]
+  "table_rows": [
+    ["売上高", "1,439,231", "1,359,115"],
+    ["売上原価", "927,783", "888,727"],
+    ["売上総利益", "511,448", "470,387"]
+  ]
 }
 ```
+
+Values are reported in million yen (百万円) and correspond to the
+company's consolidated filings retrieved from EDINET.
 
 ## Japanese-Specific Features
 
