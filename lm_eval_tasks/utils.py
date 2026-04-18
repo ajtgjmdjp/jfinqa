@@ -1,6 +1,12 @@
 """Utility functions for jfinqa lm-evaluation-harness integration.
 
 Referenced by YAML task configs via ``!function utils.<name>``.
+
+NOTE: The normalization and scoring logic below (_normalize,
+_try_parse_number, _numerical_match) mirrors ``jfinqa._metrics``
+from the canonical jfinqa package (https://github.com/ajtgjmdjp/jfinqa).
+It is duplicated here so the lm-eval task remains self-contained.
+When updating scoring logic, keep both copies in sync.
 """
 
 from __future__ import annotations
@@ -8,6 +14,12 @@ from __future__ import annotations
 import re
 import unicodedata
 from typing import Any
+
+# Relative tolerance for numerical matching.  Two numbers are considered
+# equivalent when ``|pred - gold| / |gold| <= NUMERICAL_TOLERANCE``.
+# 1 % is chosen because gold answers are rounded to 1 decimal place,
+# so a prediction of 10.05 % should match a gold of 10.0 %.
+NUMERICAL_TOLERANCE: float = 0.01
 
 
 def doc_to_text(doc: dict[str, Any]) -> str:
@@ -55,7 +67,7 @@ def process_results(doc: dict[str, Any], results: list[str]) -> dict[str, float]
 
 def _extract_answer(text: str) -> str:
     """Extract the answer from model output."""
-    match = re.search(r"(?:Answer|answer|A)\s*[:\uff1a]\s*(.+)", text)
+    match = re.search(r"(?:Answer|answer|A|回答)\s*[:\uff1a]\s*(.+)", text)
     if match:
         return match.group(1).strip()
     lines = [line.strip() for line in text.strip().splitlines() if line.strip()]
@@ -121,8 +133,10 @@ def _try_parse_number(text: str) -> float | None:
         return None
 
 
-def _numerical_match(predicted: str, gold: str, tolerance: float = 0.01) -> bool:
-    """Check numerical equivalence with 1% tolerance."""
+def _numerical_match(
+    predicted: str, gold: str, tolerance: float = NUMERICAL_TOLERANCE
+) -> bool:
+    """Check numerical equivalence within *tolerance* (relative)."""
     pred_num = _try_parse_number(predicted)
     gold_num = _try_parse_number(gold)
 
