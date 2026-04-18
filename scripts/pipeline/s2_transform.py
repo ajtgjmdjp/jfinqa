@@ -60,6 +60,45 @@ def _choose_scale(values: list[int | float]) -> tuple[str, int]:
     return ("円", 1)
 
 
+def _describe_direction(
+    curr: int | float | None,
+    prev: int | float | None,
+    *,
+    flat_threshold: float = 0.005,
+) -> str:
+    """Return a Japanese fragment describing YoY direction.
+
+    Used for ``bs_summary`` post_text. Result is one of:
+
+    * ``"で増加した"`` — current is materially larger than prior year
+    * ``"で減少した"`` — current is materially smaller
+    * ``"でほぼ横ばいであった"`` — change is within ``flat_threshold``
+      (default 0.5%) relative to the prior-year value
+    * ``"であった"`` — either value missing; neutral fallback so we
+      don't assert a direction we can't verify
+
+    Notes
+    -----
+    The thresholding happens on the prior-year magnitude; if the prior
+    value is zero the comparison degenerates and we treat any non-zero
+    current value as a movement, any zero as 横ばい.
+    """
+    if curr is None or prev is None:
+        return "であった"
+
+    if prev == 0:
+        if curr == 0:
+            return "でほぼ横ばいであった"
+        return "で増加した" if curr > 0 else "で減少した"
+
+    rel_diff = (curr - prev) / abs(prev)
+    if abs(rel_diff) < flat_threshold:
+        return "でほぼ横ばいであった"
+    if rel_diff > 0:
+        return "で増加した"
+    return "で減少した"
+
+
 def _format_number(value: int | float, divisor: int) -> str:
     """Format a numeric value for table display."""
     if not isinstance(value, (int, float)):
@@ -124,18 +163,41 @@ def _extract_items(
 
     Returns list of (japanese_label, element_name, raw_value).
 
-    Only elements reported in a canonical consolidated current-period
-    XBRL context are returned (see :func:`_is_canonical_context`). This
-    prevents the table from silently mixing 連結 and 単体 values, which
-    was the root cause of cross-element accounting-identity violations
-    in the v1 dataset.
+    Supports two formats:
+
+    1. **edinet-mcp >= 0.4.x (native-async) format**:
+       ``{"科目": "売上高", "前期": 1000, "当期": 1200}``
+       The library already reconciles 連結 / 単体 / context issues and
+       hands us a clean, Japanese-labelled table. We take the ``当期``
+       value directly.
+
+    2. **Legacy XBRL-element format** (v0.3.x):
+       ``{"element": "NetSales", "value": 1200, "context": "CurrentYearDuration"}``
+       Needed for backwards compatibility with older raw/*.json files.
+       Applies context filtering (see :func:`_is_canonical_context`).
     """
     if not raw_items:
         return []
 
-    # Build lookup: element_name -> value, restricted to canonical
-    # contexts. If the same element is reported multiple times in the
-    # same context, the last one wins (legacy behaviour).
+    # Detect format by the presence of "科目" in the first item.
+    is_new_format = any("科目" in item for item in raw_items if isinstance(item, dict))
+
+    if is_new_format:
+        result: list[tuple[str, str, int | float]] = []
+        seen_labels: set[str] = set()
+        for item in raw_items:
+            label = item.get("科目")
+            value = item.get("当期")
+            if not label or not isinstance(value, (int, float)):
+                continue
+            if label in seen_labels:
+                continue
+            # element name is no longer meaningful; keep empty string
+            result.append((label, "", value))
+            seen_labels.add(label)
+        return result
+
+    # Legacy format fallback.
     available: dict[str, int | float] = {}
     for item in raw_items:
         ctx = item.get("context", "")
@@ -149,9 +211,8 @@ def _extract_items(
         if label and isinstance(val, (int, float)):
             available[label] = val
 
-    # Pick items in display order
-    result: list[tuple[str, str, int | float]] = []
-    seen_labels: set[str] = set()
+    result = []
+    seen_labels = set()
 
     for elem_name in display_order:
         if elem_name in available:
@@ -160,8 +221,6 @@ def _extract_items(
                 result.append((jp_label, elem_name, available[elem_name]))
                 seen_labels.add(jp_label)
 
-    # Also include items not in display order but in the mapping,
-    # still restricted to canonical contexts.
     for item in raw_items:
         ctx = item.get("context", "")
         if not _is_canonical_context(ctx):
@@ -176,6 +235,33 @@ def _extract_items(
                 seen_labels.add(jp_label)
 
     return result
+
+
+def _extract_items_prev(
+    raw_items: list[dict[str, Any]] | None,
+) -> list[tuple[str, str, int | float]]:
+    """Extract prior-year values from the edinet-mcp >=0.4.x format.
+
+    Used by 2-period comparison builders that need 前期 values.
+    Returns ``[]`` for the legacy format or unavailable data.
+    """
+    if not raw_items:
+        return []
+    is_new = any("科目" in i for i in raw_items if isinstance(i, dict))
+    if not is_new:
+        return []
+    out: list[tuple[str, str, int | float]] = []
+    seen: set[str] = set()
+    for item in raw_items:
+        label = item.get("科目")
+        value = item.get("前期")
+        if not label or not isinstance(value, (int, float)):
+            continue
+        if label in seen:
+            continue
+        out.append((label, "", value))
+        seen.add(label)
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -317,6 +403,11 @@ def build_bs_summary(
     prev_labels = {jp: (elem, val) for jp, elem, val in items_prev}
     common = [jp for jp in curr_labels if jp in prev_labels]
 
+    # Track whether we have a 2-period comparison and the raw (pre-scaled)
+    # totals needed to determine direction in post_text.
+    asset_curr_raw: int | float | None = None
+    asset_prev_raw: int | float | None = None
+
     if len(common) < 4:
         # Fall back to current year only if no common items
         selected = items_curr[:18]
@@ -341,7 +432,7 @@ def build_bs_summary(
         period = period_curr
         headers = ["", f"{period_curr}", f"{period_prev}"]
         rows = []
-        raw_values: dict[str, float] = {}
+        raw_values = {}
         for jp_label in selected:
             val_curr = curr_labels[jp_label][1]
             val_prev = prev_labels[jp_label][1]
@@ -355,6 +446,19 @@ def build_bs_summary(
             raw_values[f"{jp_label}_{year_curr}"] = val_curr / divisor
             raw_values[f"{jp_label}_{year_prev}"] = val_prev / divisor
 
+        # Capture totals for direction analysis. Prefer the ``資産合計``
+        # label which is the canonical total-assets row; fall back to
+        # the first label that contains ``資産合計`` (defensive).
+        if "資産合計" in curr_labels and "資産合計" in prev_labels:
+            asset_curr_raw = curr_labels["資産合計"][1]
+            asset_prev_raw = prev_labels["資産合計"][1]
+
+    # Determine asset direction based on real year-over-year change.
+    # Use a 0.5% band for 横ばい to avoid asserting movement when the
+    # change is effectively noise. If we don't have prior-year totals
+    # (e.g., single-period fallback), fall back to a neutral phrasing.
+    asset_direction = _describe_direction(asset_curr_raw, asset_prev_raw)
+
     pre_text = _format_template(
         PRE_TEXT_TEMPLATES["bs_summary"][0],
         company_name=company["name"],
@@ -362,7 +466,7 @@ def build_bs_summary(
     )
     post_text = _format_template(
         POST_TEXT_TEMPLATES["bs_summary"][0],
-        asset_direction="で増加した" if len(items_curr) > 0 else "であった",
+        asset_direction=asset_direction,
     )
 
     return {

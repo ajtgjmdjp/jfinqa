@@ -14,6 +14,7 @@ Usage::
 
 from __future__ import annotations
 
+import asyncio
 import datetime
 import json
 import sys
@@ -26,12 +27,18 @@ from loguru import logger
 
 from scripts.pipeline.config import COMPANY_POOL, RAW_DIR, TARGET_YEARS
 
-# Filing windows: most Japanese companies file annual reports in these months.
-# March FY end (majority): file in June-July
-# December FY end: file in March-April
+# Filing windows cover the 3-month window after the main Japanese
+# fiscal year ends. Japanese annual reports are due within 3 months of
+# fiscal year end, so each window starts at the FY-end month and runs
+# through month+2. We keep March FY first because it dominates the
+# TSE-listed universe.
 _FILING_WINDOWS = [
-    (6, 1, 8, 31),  # June-August (March FY end)
-    (3, 1, 5, 31),  # March-May (December FY end)
+    (6, 1, 8, 31),  # June-August — March FY end (majority)
+    (3, 1, 5, 31),  # March-May — December FY end
+    (10, 1, 12, 31),  # October-December — August FY end (e.g. ファーストリテイリング)
+    (12, 1, 12, 31),  # December — September FY end
+    (4, 1, 6, 30),  # April-June — January FY end
+    (7, 1, 9, 30),  # July-September — April/May FY end
 ]
 
 
@@ -43,7 +50,7 @@ def _serialize_statement(stmt_data: Any) -> list[dict[str, Any]] | None:
     return result
 
 
-def _find_annual_report(
+async def _find_annual_report(
     client: Any,
     edinet_code: str,
     year: str,
@@ -59,7 +66,7 @@ def _find_annual_report(
         end = datetime.date(yr, m_end, d_end)
 
         try:
-            filings = client.get_filings(
+            filings = await client.get_filings(
                 start_date=start,
                 end_date=end,
                 edinet_code=edinet_code,
@@ -84,7 +91,7 @@ def _find_annual_report(
             )
 
             # Download and parse
-            zip_path = client.download_document(
+            zip_path = await client.download_document(
                 filing.doc_id, format="xbrl"
             )
             return client._parse_filing(filing, zip_path)
@@ -92,7 +99,7 @@ def _find_annual_report(
     return None
 
 
-def collect_company(
+async def collect_company(
     client: Any,
     company: dict[str, str],
     output_dir: Path,
@@ -112,7 +119,7 @@ def collect_company(
 
     for year in TARGET_YEARS:
         try:
-            stmt = _find_annual_report(client, edinet_code, year)
+            stmt = await _find_annual_report(client, edinet_code, year)
             if stmt is None:
                 logger.warning(f"  {edinet_code}/{year}: no filing found")
                 continue
@@ -156,7 +163,7 @@ def collect_company(
     return True
 
 
-def run(output_dir: Path | None = None) -> None:
+async def _run_async(output_dir: Path | None = None) -> None:
     """Run Stage 1: collect data for all companies in the pool."""
     try:
         from edinet_mcp import EdinetClient
@@ -181,13 +188,13 @@ def run(output_dir: Path | None = None) -> None:
     errors = 0
 
     # Use higher rate limit for batch collection
-    with EdinetClient(rate_limit=2.0) as client:
+    async with EdinetClient(rate_limit=1.0) as client:
         for i, company in enumerate(COMPANY_POOL, 1):
             name = company["name"]
             code = company["edinet_code"]
             logger.info(f"[{i}/{len(COMPANY_POOL)}] {name} ({code})")
             try:
-                if collect_company(client, company, out):
+                if await collect_company(client, company, out):
                     collected += 1
                 else:
                     skipped += 1
@@ -199,6 +206,11 @@ def run(output_dir: Path | None = None) -> None:
         f"Stage 1 complete: "
         f"{collected} collected, {skipped} skipped, {errors} errors"
     )
+
+
+def run(output_dir: Path | None = None) -> None:
+    """Synchronous entrypoint; wraps the async implementation."""
+    asyncio.run(_run_async(output_dir))
 
 
 if __name__ == "__main__":
