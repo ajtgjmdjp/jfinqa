@@ -84,6 +84,37 @@ def _format_number(value: int | float, divisor: int) -> str:
 # ---------------------------------------------------------------------------
 
 
+def _is_canonical_context(ctx: str) -> bool:
+    """Whether an XBRL context represents the consolidated current-period total.
+
+    EDINET XBRL filings report the same element many times across
+    different contexts: prior years, parent-only (``NonConsolidatedMember``),
+    and per-row breakdowns (``_RetainedEarningsMember`` etc.). The raw
+    pipeline previously kept whichever value happened to come last,
+    which mixed consolidated and parent-only figures inside a single
+    table. Accepting only the two canonical contexts fixes that.
+    """
+    if not ctx:
+        return False
+    # Reject prior-year variants (Prior1YearDuration, Prior2YearInstant, ...).
+    if ctx.startswith("Prior"):
+        return False
+    # Any dimensional breakdown has a ``_<X>Member`` suffix
+    # (e.g. ``CurrentYearDuration_NonConsolidatedMember`` for 単体,
+    # ``CurrentYearInstant_Row3Member`` for row-level details).
+    if "Member" in ctx:
+        return False
+    # Accept only CurrentYear{Duration,Instant} (and the
+    # ``CurrentYearConsolidatedDuration`` synonym used in some
+    # taxonomies).
+    return ctx in {
+        "CurrentYearDuration",
+        "CurrentYearInstant",
+        "CurrentYearConsolidatedDuration",
+        "CurrentYearConsolidatedInstant",
+    }
+
+
 def _extract_items(
     raw_items: list[dict[str, Any]] | None,
     element_map: dict[str, str],
@@ -92,18 +123,28 @@ def _extract_items(
     """Extract and order financial line items from raw data.
 
     Returns list of (japanese_label, element_name, raw_value).
+
+    Only elements reported in a canonical consolidated current-period
+    XBRL context are returned (see :func:`_is_canonical_context`). This
+    prevents the table from silently mixing 連結 and 単体 values, which
+    was the root cause of cross-element accounting-identity violations
+    in the v1 dataset.
     """
     if not raw_items:
         return []
 
-    # Build lookup: element_name -> value
+    # Build lookup: element_name -> value, restricted to canonical
+    # contexts. If the same element is reported multiple times in the
+    # same context, the last one wins (legacy behaviour).
     available: dict[str, int | float] = {}
     for item in raw_items:
+        ctx = item.get("context", "")
+        if not _is_canonical_context(ctx):
+            continue
         elem = item.get("element", "")
         val = item.get("value")
         if elem and isinstance(val, (int, float)):
             available[elem] = val
-        # Also try the label field (TSV files may have labels)
         label = item.get("label", "")
         if label and isinstance(val, (int, float)):
             available[label] = val
@@ -119,8 +160,12 @@ def _extract_items(
                 result.append((jp_label, elem_name, available[elem_name]))
                 seen_labels.add(jp_label)
 
-    # Also include items not in display order but in the mapping
+    # Also include items not in display order but in the mapping,
+    # still restricted to canonical contexts.
     for item in raw_items:
+        ctx = item.get("context", "")
+        if not _is_canonical_context(ctx):
+            continue
         elem = item.get("element", "")
         val = item.get("value")
         if elem and isinstance(val, (int, float)):
