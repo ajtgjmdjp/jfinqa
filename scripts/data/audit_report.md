@@ -2,7 +2,7 @@
 
 Source: `scripts/data/final/jfinqa_v1.json`
 Total questions: 1000
-Unique companies (EDINET code): 61
+Unique companies (EDINET code): 104
 
 ## Distribution
 
@@ -12,30 +12,29 @@ Unique companies (EDINET code): 61
 - `temporal_reasoning`: 250
 
 ### Accounting standard
-- `IFRS`: 332 (33.2%)
-- `J-GAAP`: 624 (62.4%)
-- `US-GAAP`: 44 (4.4%)
+- `IFRS`: 323 (32.3%)
+- `J-GAAP`: 656 (65.6%)
+- `US-GAAP`: 21 (2.1%)
 
 ### Filing year
-- `2023`: 10
-- `2024`: 990
+- `2024`: 1000
 
 ### Top 15 companies
-- マルハニチロ: 19
-- 味の素: 19
-- 日本ハム: 19
-- 大林組: 19
-- 丸紅: 19
-- 住友不動産: 19
-- 野村不動産ホールディングス: 19
-- 日本製鉄: 19
-- JFEホールディングス: 19
-- 日清食品ホールディングス: 19
-- ブリヂストン: 19
-- 住友ゴム工業: 19
-- AGC: 19
-- ライオン: 19
-- 花王: 19
+- マルハニチロ: 12
+- 三菱マテリアル: 12
+- INPEX: 12
+- 大和ハウス工業: 12
+- 清水建設: 12
+- 大林組: 11
+- 鹿島建設: 11
+- 日本ハム: 11
+- キリンホールディングス: 11
+- 味の素: 11
+- 日清食品ホールディングス: 11
+- 日本たばこ産業: 11
+- 王子ホールディングス: 11
+- ユニ・チャーム: 11
+- 信越化学工業: 11
 
 ## Findings
 
