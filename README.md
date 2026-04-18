@@ -64,7 +64,7 @@ Key findings:
 - **FinQA-compatible**: Same data format as [FinQA](https://github.com/czyssrs/FinQA) for cross-benchmark comparison
 - **Japan-specific**: Handles J-GAAP, IFRS, US-GAAP, and Japanese number formats (百万円, 億円, △)
 - **Dual evaluation**: Exact match and numerical match with tolerance
-- **lm-evaluation-harness integration**: Ready-to-use YAML task configs
+- **Multi-harness integration**: Merged into lm-evaluation-harness (PR #3570) and llm-jp-eval (PR #230)
 - **Source provenance**: Every question links back to its EDINET filing
 
 ## Quick Start
@@ -149,6 +149,46 @@ The mirror is not packaged into the published wheel; it is only
 available from a git checkout. Run
 [`scripts/sync_lm_eval.py`](scripts/sync_lm_eval.py) to diff the mirror
 against upstream.
+
+## llm-jp-eval
+
+jfinqa is also merged into llm-jp-eval via
+[PR #230](https://github.com/llm-jp/llm-jp-eval/pull/230)
+(2026-03-04, commit
+[`f1604e77`](https://github.com/llm-jp/llm-jp-eval/commit/f1604e77df638d43a8caf097680703fc85b0fa87)).
+Unlike the lm-evaluation-harness integration, **this repository does
+not mirror the llm-jp-eval task**. The upstream implementation at
+[`src/llm_jp_eval/jaster/jfinqa.py`](https://github.com/llm-jp/llm-jp-eval/blob/f1604e77df638d43a8caf097680703fc85b0fa87/src/llm_jp_eval/jaster/jfinqa.py)
+(pinned at the PR #230 merge commit) is the single source of truth.
+
+### Why no mirror here
+
+llm-jp-eval wraps jfinqa inside its own `BaseDatasetProcessor` pipeline,
+with a Japanese prompt (`質問：`) and a LaTeX-boxed answer format
+(`$\boxed{...}$`) scored by the internal `mathematical_equivalence`
+metric. None of that scoring logic depends on this repository's
+`jfinqa._metrics`, so there is nothing to keep in sync — mirroring it
+locally would only add maintenance cost.
+
+### Harness comparison
+
+The three harnesses therefore evaluate the same 1000 questions but
+report **different numbers**. Treat them as separate protocols:
+
+| Harness          | Source of truth              | Prompt style                   | Scoring                             | Local mirror?  |
+|------------------|------------------------------|--------------------------------|-------------------------------------|----------------|
+| `jfinqa` package | this repo                    | caller-supplied                | `jfinqa._metrics`                   | canonical      |
+| lm-evaluation-harness | upstream + pinned mirror | `Question: ... Answer:` (EN) | `exact_match` + `numerical_match`   | [`lm_eval_tasks/`](lm_eval_tasks/README.md) |
+| llm-jp-eval      | upstream only                | `質問：... $\boxed{...}$` (JP)  | `mathematical_equivalence`          | none           |
+
+### Running llm-jp-eval
+
+Install llm-jp-eval and the jfinqa task will be available under the
+name `jfinqa`; the dataset is fetched from Hugging Face automatically.
+See the [llm-jp-eval
+documentation](https://github.com/llm-jp/llm-jp-eval) for invocation
+details. Pin the llm-jp-eval commit in experiment configs if you need
+byte-level reproducibility.
 
 ## Data Format
 
