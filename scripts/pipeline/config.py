@@ -50,64 +50,64 @@ COMPANY_POOL: list[dict[str, str]] = [
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E02513",
+        "edinet_code": "E02778",
         "name": "ソフトバンクグループ",
         "industry": "情報・通信業",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E03432",
+        "edinet_code": "E03217",
         "name": "ファーストリテイリング",
         "industry": "小売業",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01624",
+        "edinet_code": "E01737",
         "name": "日立製作所",
         "industry": "電気機器",
         "gaap": "IFRS",
     },
-    {"edinet_code": "E00436", "name": "三菱商事", "industry": "卸売業", "gaap": "IFRS"},
-    {"edinet_code": "E00353", "name": "三井物産", "industry": "卸売業", "gaap": "IFRS"},
+    {"edinet_code": "E02529", "name": "三菱商事", "industry": "卸売業", "gaap": "IFRS"},
+    {"edinet_code": "E02513", "name": "三井物産", "industry": "卸売業", "gaap": "IFRS"},
     {
-        "edinet_code": "E01225",
+        "edinet_code": "E00919",
         "name": "武田薬品工業",
         "industry": "医薬品",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E02529",
+        "edinet_code": "E07801",
         "name": "リクルートホールディングス",
         "industry": "サービス業",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E00988",
+        "edinet_code": "E01975",
         "name": "日本電産",
         "industry": "電気機器",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E02142",
+        "edinet_code": "E02166",
         "name": "本田技研工業",
         "industry": "輸送用機器",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01737",
+        "edinet_code": "E01772",
         "name": "パナソニックホールディングス",
         "industry": "電気機器",
         "gaap": "IFRS",
     },
     # --- J-GAAP large-cap ---
     {
-        "edinet_code": "E01755",
+        "edinet_code": "E01967",
         "name": "キーエンス",
         "industry": "電気機器",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02726",
+        "edinet_code": "E02367",
         "name": "任天堂",
         "industry": "その他製品",
         "gaap": "J-GAAP",
@@ -119,113 +119,113 @@ COMPANY_POOL: list[dict[str, str]] = [
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E04837",
+        "edinet_code": "E04430",
         "name": "NTT",
         "industry": "情報・通信業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E01810",
+        "edinet_code": "E02652",
         "name": "東京エレクトロン",
         "industry": "電気機器",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E00748",
+        "edinet_code": "E00776",
         "name": "信越化学工業",
         "industry": "化学",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E00394",
+        "edinet_code": "E02497",
         "name": "伊藤忠商事",
         "industry": "卸売業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E01656",
+        "edinet_code": "E01570",
         "name": "ダイキン工業",
         "industry": "機械",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02101",
+        "edinet_code": "E01630",
         "name": "テルモ",
         "industry": "精密機器",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E01726",
+        "edinet_code": "E01755",
         "name": "オムロン",
         "industry": "電気機器",
         "gaap": "J-GAAP",
     },
     # --- J-GAAP mid-cap (diverse industries) ---
     {
-        "edinet_code": "E00334",
+        "edinet_code": "E00053",
         "name": "清水建設",
         "industry": "建設業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E00240",
+        "edinet_code": "E00048",
         "name": "大和ハウス工業",
         "industry": "建設業",
         "gaap": "J-GAAP",
     },
-    {"edinet_code": "E00030", "name": "味の素", "industry": "食料品", "gaap": "J-GAAP"},
+    {"edinet_code": "E00436", "name": "味の素", "industry": "食料品", "gaap": "J-GAAP"},
     {
-        "edinet_code": "E01019",
+        "edinet_code": "E00457",
         "name": "日清食品ホールディングス",
         "industry": "食料品",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02194",
+        "edinet_code": "E02167",
         "name": "スズキ",
         "industry": "輸送用機器",
         "gaap": "J-GAAP",
     },
-    {"edinet_code": "E01165", "name": "花王", "industry": "化学", "gaap": "J-GAAP"},
+    {"edinet_code": "E00883", "name": "花王", "industry": "化学", "gaap": "J-GAAP"},
     {
-        "edinet_code": "E00446",
+        "edinet_code": "E03907",
         "name": "住友不動産",
         "industry": "不動産業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E04430",
+        "edinet_code": "E03462",
         "name": "セブン&アイ・ホールディングス",
         "industry": "小売業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E03277",
+        "edinet_code": "E05080",
         "name": "楽天グループ",
         "industry": "サービス業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E05280",
+        "edinet_code": "E03497",
         "name": "MonotaRO",
         "industry": "小売業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02332",
+        "edinet_code": "E02168",
         "name": "ヤマハ発動機",
         "industry": "輸送用機器",
         "gaap": "J-GAAP",
     },
-    {"edinet_code": "E01110", "name": "旭化成", "industry": "化学", "gaap": "J-GAAP"},
+    {"edinet_code": "E00877", "name": "旭化成", "industry": "化学", "gaap": "J-GAAP"},
     {
-        "edinet_code": "E00690",
+        "edinet_code": "E01264",
         "name": "JFEホールディングス",
         "industry": "鉄鋼",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02160",
+        "edinet_code": "E04235",
         "name": "日本郵船",
         "industry": "海運業",
         "gaap": "J-GAAP",
@@ -238,39 +238,39 @@ COMPANY_POOL: list[dict[str, str]] = [
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E03618",
+        "edinet_code": "E03614",
         "name": "三井住友フィナンシャルグループ",
         "industry": "銀行業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E03789",
+        "edinet_code": "E03847",
         "name": "東京海上ホールディングス",
         "industry": "保険業",
         "gaap": "J-GAAP",
     },
     # --- US-GAAP filers ---
     {
-        "edinet_code": "E03814",
+        "edinet_code": "E03752",
         "name": "野村ホールディングス",
         "industry": "証券業",
         "gaap": "US-GAAP",
     },
     {
-        "edinet_code": "E01950",
+        "edinet_code": "E04762",
         "name": "オリックス",
         "industry": "その他金融業",
         "gaap": "US-GAAP",
     },
     {
-        "edinet_code": "E01627",
+        "edinet_code": "E02274",
         "name": "キヤノン",
         "industry": "電気機器",
         "gaap": "US-GAAP",
     },
     # --- Expansion: Electric & Gas (電気・ガス業) ---
     {
-        "edinet_code": "E04501",
+        "edinet_code": "E04498",
         "name": "東京電力ホールディングス",
         "industry": "電気・ガス業",
         "gaap": "J-GAAP",
@@ -282,381 +282,381 @@ COMPANY_POOL: list[dict[str, str]] = [
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E04513",
+        "edinet_code": "E04514",
         "name": "東京ガス",
         "industry": "電気・ガス業",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Land Transport (陸運業) ---
     {
-        "edinet_code": "E04084",
+        "edinet_code": "E04147",
         "name": "東日本旅客鉄道",
         "industry": "陸運業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E04080",
+        "edinet_code": "E04149",
         "name": "東海旅客鉄道",
         "industry": "陸運業",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Air Transport (空運業) ---
     {
-        "edinet_code": "E04318",
+        "edinet_code": "E04273",
         "name": "ANAホールディングス",
         "industry": "空運業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E04306",
+        "edinet_code": "E04272",
         "name": "日本航空",
         "industry": "空運業",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Textiles (繊維製品) ---
     {
-        "edinet_code": "E00535",
+        "edinet_code": "E00873",
         "name": "東レ",
         "industry": "繊維製品",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Oil & Coal (石油・石炭製品) ---
     {
-        "edinet_code": "E00817",
+        "edinet_code": "E24050",
         "name": "ENEOSホールディングス",
         "industry": "石油・石炭製品",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Rubber (ゴム製品) ---
     {
-        "edinet_code": "E01094",
+        "edinet_code": "E01086",
         "name": "ブリヂストン",
         "industry": "ゴム製品",
         "gaap": "IFRS",
     },
     # --- Expansion: Glass & Ceramics (ガラス・土石製品) ---
     {
-        "edinet_code": "E01139",
+        "edinet_code": "E01122",  # FIXME(consensus-only): CSV 照合のみ
         "name": "AGC",
         "industry": "ガラス・土石製品",
         "gaap": "IFRS",
     },
     # --- Expansion: Non-ferrous Metals (非鉄金属) ---
     {
-        "edinet_code": "E01220",
+        "edinet_code": "E01333",  # FIXME(consensus-only): CSV 照合のみ
         "name": "住友電気工業",
         "industry": "非鉄金属",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E01196",
+        "edinet_code": "E00021",  # FIXME(consensus-only): CSV 照合のみ
         "name": "三菱マテリアル",
         "industry": "非鉄金属",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Steel (鉄鋼) ---
     {
-        "edinet_code": "E00664",
+        "edinet_code": "E01225",  # FIXME(consensus-only): CSV 照合のみ
         "name": "日本製鉄",
         "industry": "鉄鋼",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E00676",
+        "edinet_code": "E01231",  # FIXME(consensus-only): CSV 照合のみ
         "name": "神戸製鋼所",
         "industry": "鉄鋼",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Pulp & Paper (パルプ・紙) ---
     {
-        "edinet_code": "E00602",
+        "edinet_code": "E00642",  # FIXME(consensus-only): CSV 照合のみ
         "name": "王子ホールディングス",
         "industry": "パルプ・紙",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Mining (鉱業) ---
     {
-        "edinet_code": "E00062",
+        "edinet_code": "E00043",
         "name": "INPEX",
         "industry": "鉱業",
         "gaap": "IFRS",
     },
     # --- Expansion: Pharmaceuticals (医薬品) ---
     {
-        "edinet_code": "E01476",
+        "edinet_code": "E00984",
         "name": "第一三共",
         "industry": "医薬品",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01477",
+        "edinet_code": "E00939",
         "name": "エーザイ",
         "industry": "医薬品",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01230",
+        "edinet_code": "E00920",  # FIXME(consensus-only): CSV 照合のみ
         "name": "アステラス製薬",
         "industry": "医薬品",
         "gaap": "IFRS",
     },
     # --- Expansion: Machinery (機械) ---
     {
-        "edinet_code": "E02302",
+        "edinet_code": "E01267",  # FIXME(consensus-only): CSV 照合のみ
         "name": "クボタ",
         "industry": "機械",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E01766",
+        "edinet_code": "E01946",  # FIXME(consensus-only): CSV 照合のみ
         "name": "ファナック",
         "industry": "電気機器",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02317",
+        "edinet_code": "E01532",  # FIXME(consensus-only): CSV 照合のみ
         "name": "小松製作所",
         "industry": "機械",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E02730",
+        "edinet_code": "E01502",  # FIXME(consensus-only): CSV 照合のみ
         "name": "DMG森精機",
         "industry": "機械",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01303",
+        "edinet_code": "E01673",  # FIXME(consensus-only): CSV 照合のみ
         "name": "SMC",
         "industry": "機械",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02375",
+        "edinet_code": "E02128",  # FIXME(consensus-only): CSV 照合のみ
         "name": "IHI",
         "industry": "機械",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02350",
+        "edinet_code": "E02127",  # FIXME(consensus-only): CSV 照合のみ
         "name": "川崎重工業",
         "industry": "輸送用機器",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Electrical Equipment (電気機器) ---
     {
-        "edinet_code": "E01781",
+        "edinet_code": "E01780",  # FIXME(consensus-only): CSV 照合のみ
         "name": "TDK",
         "industry": "電気機器",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01846",
+        "edinet_code": "E01953",  # FIXME(consensus-only): CSV 照合のみ
         "name": "ローム",
         "industry": "電気機器",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E01775",
+        "edinet_code": "E01766",  # FIXME(consensus-only): CSV 照合のみ
         "name": "富士通",
         "industry": "電気機器",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01786",
+        "edinet_code": "E01765",  # FIXME(consensus-only): CSV 照合のみ
         "name": "日本電気",
         "industry": "電気機器",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01811",
+        "edinet_code": "E01950",  # FIXME(consensus-only): CSV 照合のみ
         "name": "アドバンテスト",
         "industry": "電気機器",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01825",
+        "edinet_code": "E01914",  # FIXME(consensus-only): CSV 照合のみ
         "name": "村田製作所",
         "industry": "電気機器",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Chemicals (化学) ---
     {
-        "edinet_code": "E01379",
+        "edinet_code": "E00988",  # FIXME(consensus-only): CSV 照合のみ
         "name": "富士フイルムホールディングス",
         "industry": "化学",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01357",
+        "edinet_code": "E00990",  # FIXME(consensus-only): CSV 照合のみ
         "name": "資生堂",
         "industry": "化学",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01332",
+        "edinet_code": "E00678",  # FIXME(consensus-only): CSV 照合のみ
         "name": "ユニ・チャーム",
         "industry": "化学",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01164",
+        "edinet_code": "E00991",  # FIXME(consensus-only): CSV 照合のみ
         "name": "ライオン",
         "industry": "化学",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Food (食料品) ---
     {
-        "edinet_code": "E00045",
+        "edinet_code": "E00395",
         "name": "キリンホールディングス",
         "industry": "食料品",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E00064",
+        "edinet_code": "E00334",  # FIXME(consensus-only): CSV 照合のみ
         "name": "日本ハム",
         "industry": "食料品",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02274",
+        "edinet_code": "E00492",
         "name": "日本たばこ産業",
         "industry": "食料品",
         "gaap": "IFRS",
     },
     # --- Expansion: Retail (小売業) ---
     {
-        "edinet_code": "E03041",
+        "edinet_code": "E03144",  # FIXME(consensus-only): CSV 照合のみ
         "name": "ニトリホールディングス",
         "industry": "小売業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E03357",
+        "edinet_code": "E03248",  # FIXME(consensus-only): CSV 照合のみ
         "name": "良品計画",
         "industry": "小売業",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Transport Equipment (輸送用機器) ---
     {
-        "edinet_code": "E02178",
+        "edinet_code": "E02152",  # FIXME(consensus-only): CSV 照合のみ
         "name": "SUBARU",
         "industry": "輸送用機器",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02170",
+        "edinet_code": "E02163",  # FIXME(consensus-only): CSV 照合のみ
         "name": "マツダ",
         "industry": "輸送用機器",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E02168",
+        "edinet_code": "E02213",  # FIXME(consensus-only): CSV 照合のみ
         "name": "三菱自動車工業",
         "industry": "輸送用機器",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Construction (建設業) ---
     {
-        "edinet_code": "E00252",
+        "edinet_code": "E00055",  # FIXME(consensus-only): CSV 照合のみ
         "name": "大林組",
         "industry": "建設業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E00248",
+        "edinet_code": "E00058",  # FIXME(consensus-only): CSV 照合のみ
         "name": "鹿島建設",
         "industry": "建設業",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Real Estate (不動産業) ---
     {
-        "edinet_code": "E01960",
+        "edinet_code": "E03855",  # FIXME(consensus-only): CSV 照合のみ
         "name": "三井不動産",
         "industry": "不動産業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E00464",
+        "edinet_code": "E27633",  # FIXME(consensus-only): CSV 照合のみ
         "name": "東急不動産ホールディングス",
         "industry": "不動産業",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Services / IT ---
     {
-        "edinet_code": "E05070",
+        "edinet_code": "E05425",  # FIXME(consensus-only): CSV 照合のみ
         "name": "エムスリー",
         "industry": "サービス業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E04146",
+        "edinet_code": "E04773",
         "name": "セコム",
         "industry": "サービス業",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Logistics (陸運・倉庫) ---
     {
-        "edinet_code": "E01903",
+        "edinet_code": "E04187",  # FIXME(consensus-only): CSV 照合のみ
         "name": "ヤマトホールディングス",
         "industry": "陸運業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E04208",
+        "edinet_code": "E32292",  # FIXME(consensus-only): CSV 照合のみ
         "name": "SGホールディングス",
         "industry": "陸運業",
         "gaap": "J-GAAP",
     },
     {
-        "edinet_code": "E04193",
+        "edinet_code": "E04283",  # FIXME(consensus-only): CSV 照合のみ
         "name": "三菱倉庫",
         "industry": "倉庫・運輸関連業",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Precision (精密機器) ---
     {
-        "edinet_code": "E02113",
+        "edinet_code": "E02272",  # FIXME(consensus-only): CSV 照合のみ
         "name": "オリンパス",
         "industry": "精密機器",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01706",
+        "edinet_code": "E02015",  # FIXME(consensus-only): CSV 照合のみ
         "name": "シスメックス",
         "industry": "電気機器",
         "gaap": "IFRS",
     },
     {
-        "edinet_code": "E01792",
+        "edinet_code": "E01955",  # FIXME(consensus-only): CSV 照合のみ
         "name": "浜松ホトニクス",
         "industry": "電気機器",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Trading (卸売業) ---
     {
-        "edinet_code": "E00396",
+        "edinet_code": "E02498",  # FIXME(consensus-only): CSV 照合のみ
         "name": "丸紅",
         "industry": "卸売業",
         "gaap": "IFRS",
     },
     # --- Expansion: Rubber (ゴム製品) ---
     {
-        "edinet_code": "E01098",
+        "edinet_code": "E01110",  # FIXME(consensus-only): CSV 照合のみ
         "name": "住友ゴム工業",
         "industry": "ゴム製品",
         "gaap": "J-GAAP",
     },
     # --- Expansion: Metal Products (金属製品) ---
     {
-        "edinet_code": "E01294",
+        "edinet_code": "E01317",  # FIXME(consensus-only): CSV 照合のみ
         "name": "LIXIL",
         "industry": "金属製品",
         "gaap": "IFRS",
     },
     # --- Expansion: Real Estate (不動産業) ---
     {
-        "edinet_code": "E00453",
+        "edinet_code": "E04060",  # FIXME(consensus-only): CSV 照合のみ
         "name": "野村不動産ホールディングス",
         "industry": "不動産業",
         "gaap": "J-GAAP",

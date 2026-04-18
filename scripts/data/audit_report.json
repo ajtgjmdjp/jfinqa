@@ -1,0 +1,51 @@
+{
+  "total": 1000,
+  "distribution": {
+    "total": 1000,
+    "subtask": {
+      "numerical_reasoning": 550,
+      "consistency_checking": 200,
+      "temporal_reasoning": 250
+    },
+    "accounting_standard": {
+      "J-GAAP": 656,
+      "IFRS": 323,
+      "US-GAAP": 21
+    },
+    "filing_year": {
+      "2024": 1000
+    },
+    "unique_companies": 104,
+    "top_companies": {
+      "マルハニチロ": 12,
+      "三菱マテリアル": 12,
+      "INPEX": 12,
+      "大和ハウス工業": 12,
+      "清水建設": 12,
+      "大林組": 11,
+      "鹿島建設": 11,
+      "日本ハム": 11,
+      "キリンホールディングス": 11,
+      "味の素": 11,
+      "日清食品ホールディングス": 11,
+      "日本たばこ産業": 11,
+      "王子ホールディングス": 11,
+      "ユニ・チャーム": 11,
+      "信越化学工業": 11
+    }
+  },
+  "findings_count": {
+    "schema_missing": 0,
+    "dsl_unparsable": 0,
+    "dsl_mismatch": 0,
+    "exact_duplicates": 0,
+    "near_duplicates": 0
+  },
+  "findings": {
+    "schema_missing": [],
+    "dsl_unparsable": [],
+    "dsl_mismatch": [],
+    "exact_duplicates": [],
+    "near_duplicates": []
+  }
+}

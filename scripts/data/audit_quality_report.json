@@ -1,0 +1,2658 @@
+{
+  "totals": {
+    "rows": 1000
+  },
+  "findings": {
+    "impossible_cogs": [],
+    "gross_profit_mismatch": [
+      {
+        "id": "nr_006",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "nr_017",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      },
+      {
+        "id": "nr_110",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "nr_121",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      },
+      {
+        "id": "nr_214",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "nr_225",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      },
+      {
+        "id": "nr_318",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "nr_329",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      },
+      {
+        "id": "nr_422",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "nr_433",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      },
+      {
+        "id": "nr_526",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "nr_537",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      },
+      {
+        "id": "cc_006",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "cc_017",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      },
+      {
+        "id": "cc_104",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "cc_115",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      },
+      {
+        "id": "tr_006",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "tr_017",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      },
+      {
+        "id": "tr_110",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "tr_121",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      },
+      {
+        "id": "tr_214",
+        "company": "大林組",
+        "expected": 284204.0,
+        "reported": 219602.0
+      },
+      {
+        "id": "tr_225",
+        "company": "旭化成",
+        "expected": 879039.0,
+        "reported": 815969.0
+      }
+    ],
+    "op_income_mismatch": [
+      {
+        "id": "nr_003",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "nr_009",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "nr_011",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "nr_012",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "nr_016",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "nr_017",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "nr_018",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "nr_020",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "nr_021",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "nr_022",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "nr_024",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "nr_026",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "nr_027",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_029",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_031",
+        "company": "JFEホールディングス",
+        "expected": 247503.0,
+        "reported": 287003.0
+      },
+      {
+        "id": "nr_033",
+        "company": "LIXIL",
+        "expected": 23162.0,
+        "reported": 16351.0
+      },
+      {
+        "id": "nr_038",
+        "company": "テルモ",
+        "expected": 134195.0,
+        "reported": 140096.0
+      },
+      {
+        "id": "nr_043",
+        "company": "富士通",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_044",
+        "company": "パナソニックホールディングス",
+        "expected": 389999.0,
+        "reported": 360962.0
+      },
+      {
+        "id": "nr_046",
+        "company": "TDK",
+        "expected": 150498.0,
+        "reported": 172893.0
+      },
+      {
+        "id": "nr_047",
+        "company": "村田製作所",
+        "expected": 393604.0,
+        "reported": 215447.0
+      },
+      {
+        "id": "nr_049",
+        "company": "アドバンテスト",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_053",
+        "company": "日本電産",
+        "expected": 243854.0,
+        "reported": 162799.0
+      },
+      {
+        "id": "nr_054",
+        "company": "シスメックス",
+        "expected": 108699.0,
+        "reported": 78382.0
+      },
+      {
+        "id": "nr_056",
+        "company": "IHI",
+        "expected": -67982.0,
+        "reported": -70138.0
+      },
+      {
+        "id": "nr_058",
+        "company": "SUBARU",
+        "expected": 595562.0,
+        "reported": 468198.0
+      },
+      {
+        "id": "nr_064",
+        "company": "オリンパス",
+        "expected": 151892.0,
+        "reported": 43598.0
+      },
+      {
+        "id": "nr_074",
+        "company": "ファーストリテイリング",
+        "expected": 485358.0,
+        "reported": 500904.0
+      },
+      {
+        "id": "nr_076",
+        "company": "セブン&アイ・ホールディングス",
+        "expected": -1087034.0,
+        "reported": 534248.0
+      },
+      {
+        "id": "nr_092",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_101",
+        "company": "リクルートホールディングス",
+        "expected": 443175.0,
+        "reported": 402526.0
+      },
+      {
+        "id": "nr_102",
+        "company": "ENEOSホールディングス",
+        "expected": 388948.0,
+        "reported": 464946.0
+      },
+      {
+        "id": "nr_107",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "nr_113",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "nr_115",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "nr_116",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "nr_120",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "nr_121",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "nr_122",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "nr_124",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "nr_125",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "nr_126",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "nr_128",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "nr_130",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "nr_131",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_133",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_135",
+        "company": "JFEホールディングス",
+        "expected": 247503.0,
+        "reported": 287003.0
+      },
+      {
+        "id": "nr_137",
+        "company": "LIXIL",
+        "expected": 23162.0,
+        "reported": 16351.0
+      },
+      {
+        "id": "nr_142",
+        "company": "テルモ",
+        "expected": 134195.0,
+        "reported": 140096.0
+      },
+      {
+        "id": "nr_147",
+        "company": "富士通",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_148",
+        "company": "パナソニックホールディングス",
+        "expected": 389999.0,
+        "reported": 360962.0
+      },
+      {
+        "id": "nr_150",
+        "company": "TDK",
+        "expected": 150498.0,
+        "reported": 172893.0
+      },
+      {
+        "id": "nr_153",
+        "company": "アドバンテスト",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_157",
+        "company": "日本電産",
+        "expected": 243854.0,
+        "reported": 162799.0
+      },
+      {
+        "id": "nr_158",
+        "company": "シスメックス",
+        "expected": 108699.0,
+        "reported": 78382.0
+      },
+      {
+        "id": "nr_160",
+        "company": "IHI",
+        "expected": -67982.0,
+        "reported": -70138.0
+      },
+      {
+        "id": "nr_162",
+        "company": "SUBARU",
+        "expected": 595562.0,
+        "reported": 468198.0
+      },
+      {
+        "id": "nr_168",
+        "company": "オリンパス",
+        "expected": 151892.0,
+        "reported": 43598.0
+      },
+      {
+        "id": "nr_178",
+        "company": "ファーストリテイリング",
+        "expected": 485358.0,
+        "reported": 500904.0
+      },
+      {
+        "id": "nr_180",
+        "company": "セブン&アイ・ホールディングス",
+        "expected": -1087034.0,
+        "reported": 534248.0
+      },
+      {
+        "id": "nr_196",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_205",
+        "company": "リクルートホールディングス",
+        "expected": 443175.0,
+        "reported": 402526.0
+      },
+      {
+        "id": "nr_206",
+        "company": "ENEOSホールディングス",
+        "expected": 388948.0,
+        "reported": 464946.0
+      },
+      {
+        "id": "nr_211",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "nr_217",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "nr_219",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "nr_220",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "nr_224",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "nr_225",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "nr_226",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "nr_228",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "nr_229",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "nr_230",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "nr_232",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "nr_234",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "nr_235",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_237",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_239",
+        "company": "JFEホールディングス",
+        "expected": 247503.0,
+        "reported": 287003.0
+      },
+      {
+        "id": "nr_241",
+        "company": "LIXIL",
+        "expected": 23162.0,
+        "reported": 16351.0
+      },
+      {
+        "id": "nr_246",
+        "company": "テルモ",
+        "expected": 134195.0,
+        "reported": 140096.0
+      },
+      {
+        "id": "nr_251",
+        "company": "富士通",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_252",
+        "company": "パナソニックホールディングス",
+        "expected": 389999.0,
+        "reported": 360962.0
+      },
+      {
+        "id": "nr_254",
+        "company": "TDK",
+        "expected": 150498.0,
+        "reported": 172893.0
+      },
+      {
+        "id": "nr_257",
+        "company": "アドバンテスト",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_261",
+        "company": "日本電産",
+        "expected": 243854.0,
+        "reported": 162799.0
+      },
+      {
+        "id": "nr_262",
+        "company": "シスメックス",
+        "expected": 108699.0,
+        "reported": 78382.0
+      },
+      {
+        "id": "nr_264",
+        "company": "IHI",
+        "expected": -67982.0,
+        "reported": -70138.0
+      },
+      {
+        "id": "nr_266",
+        "company": "SUBARU",
+        "expected": 595562.0,
+        "reported": 468198.0
+      },
+      {
+        "id": "nr_272",
+        "company": "オリンパス",
+        "expected": 151892.0,
+        "reported": 43598.0
+      },
+      {
+        "id": "nr_282",
+        "company": "ファーストリテイリング",
+        "expected": 485358.0,
+        "reported": 500904.0
+      },
+      {
+        "id": "nr_284",
+        "company": "セブン&アイ・ホールディングス",
+        "expected": -1087034.0,
+        "reported": 534248.0
+      },
+      {
+        "id": "nr_300",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_309",
+        "company": "リクルートホールディングス",
+        "expected": 443175.0,
+        "reported": 402526.0
+      },
+      {
+        "id": "nr_310",
+        "company": "ENEOSホールディングス",
+        "expected": 388948.0,
+        "reported": 464946.0
+      },
+      {
+        "id": "nr_315",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "nr_321",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "nr_323",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "nr_324",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "nr_328",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "nr_329",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "nr_330",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "nr_332",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "nr_333",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "nr_334",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "nr_336",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "nr_338",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "nr_339",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_341",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_343",
+        "company": "JFEホールディングス",
+        "expected": 247503.0,
+        "reported": 287003.0
+      },
+      {
+        "id": "nr_345",
+        "company": "LIXIL",
+        "expected": 23162.0,
+        "reported": 16351.0
+      },
+      {
+        "id": "nr_350",
+        "company": "テルモ",
+        "expected": 134195.0,
+        "reported": 140096.0
+      },
+      {
+        "id": "nr_355",
+        "company": "富士通",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_356",
+        "company": "パナソニックホールディングス",
+        "expected": 389999.0,
+        "reported": 360962.0
+      },
+      {
+        "id": "nr_358",
+        "company": "TDK",
+        "expected": 150498.0,
+        "reported": 172893.0
+      },
+      {
+        "id": "nr_361",
+        "company": "アドバンテスト",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_365",
+        "company": "日本電産",
+        "expected": 243854.0,
+        "reported": 162799.0
+      },
+      {
+        "id": "nr_366",
+        "company": "シスメックス",
+        "expected": 108699.0,
+        "reported": 78382.0
+      },
+      {
+        "id": "nr_368",
+        "company": "IHI",
+        "expected": -67982.0,
+        "reported": -70138.0
+      },
+      {
+        "id": "nr_370",
+        "company": "SUBARU",
+        "expected": 595562.0,
+        "reported": 468198.0
+      },
+      {
+        "id": "nr_376",
+        "company": "オリンパス",
+        "expected": 151892.0,
+        "reported": 43598.0
+      },
+      {
+        "id": "nr_386",
+        "company": "ファーストリテイリング",
+        "expected": 485358.0,
+        "reported": 500904.0
+      },
+      {
+        "id": "nr_388",
+        "company": "セブン&アイ・ホールディングス",
+        "expected": -1087034.0,
+        "reported": 534248.0
+      },
+      {
+        "id": "nr_404",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_413",
+        "company": "リクルートホールディングス",
+        "expected": 443175.0,
+        "reported": 402526.0
+      },
+      {
+        "id": "nr_414",
+        "company": "ENEOSホールディングス",
+        "expected": 388948.0,
+        "reported": 464946.0
+      },
+      {
+        "id": "nr_419",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "nr_425",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "nr_427",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "nr_428",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "nr_432",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "nr_433",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "nr_434",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "nr_436",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "nr_437",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "nr_438",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "nr_440",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "nr_442",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "nr_443",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_445",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "nr_447",
+        "company": "JFEホールディングス",
+        "expected": 247503.0,
+        "reported": 287003.0
+      },
+      {
+        "id": "nr_449",
+        "company": "LIXIL",
+        "expected": 23162.0,
+        "reported": 16351.0
+      },
+      {
+        "id": "nr_454",
+        "company": "テルモ",
+        "expected": 134195.0,
+        "reported": 140096.0
+      },
+      {
+        "id": "nr_459",
+        "company": "富士通",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "nr_460",
+        "company": "パナソニックホールディングス",
+        "expected": 389999.0,
+        "reported": 360962.0
+      },
+      {
+        "id": "nr_462",
+        "company": "TDK",
+        "expected": 150498.0,
+        "reported": 172893.0
+      },
+      {
+        "id": "nr_465",
+        "company": "アドバンテスト",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "nr_469",
+        "company": "日本電産",
+        "expected": 243854.0,
+        "reported": 162799.0
+      },
+      {
+        "id": "nr_470",
+        "company": "シスメックス",
+        "expected": 108699.0,
+        "reported": 78382.0
+      },
+      {
+        "id": "nr_472",
+        "company": "IHI",
+        "expected": -67982.0,
+        "reported": -70138.0
+      },
+      {
+        "id": "nr_474",
+        "company": "SUBARU",
+        "expected": 595562.0,
+        "reported": 468198.0
+      },
+      {
+        "id": "nr_480",
+        "company": "オリンパス",
+        "expected": 151892.0,
+        "reported": 43598.0
+      },
+      {
+        "id": "nr_490",
+        "company": "ファーストリテイリング",
+        "expected": 485358.0,
+        "reported": 500904.0
+      },
+      {
+        "id": "nr_492",
+        "company": "セブン&アイ・ホールディングス",
+        "expected": -1087034.0,
+        "reported": 534248.0
+      },
+      {
+        "id": "nr_508",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "nr_517",
+        "company": "リクルートホールディングス",
+        "expected": 443175.0,
+        "reported": 402526.0
+      },
+      {
+        "id": "nr_518",
+        "company": "ENEOSホールディングス",
+        "expected": 388948.0,
+        "reported": 464946.0
+      },
+      {
+        "id": "nr_523",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "nr_529",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "nr_531",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "nr_532",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "nr_536",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "nr_537",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "nr_538",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "nr_540",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "nr_541",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "nr_542",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "nr_544",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "nr_546",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "nr_547",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "nr_549",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "cc_003",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "cc_009",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "cc_011",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "cc_012",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "cc_016",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "cc_017",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "cc_018",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "cc_020",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "cc_021",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "cc_022",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "cc_023",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "cc_025",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "cc_026",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "cc_028",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "cc_030",
+        "company": "JFEホールディングス",
+        "expected": 247503.0,
+        "reported": 287003.0
+      },
+      {
+        "id": "cc_032",
+        "company": "LIXIL",
+        "expected": 23162.0,
+        "reported": 16351.0
+      },
+      {
+        "id": "cc_036",
+        "company": "テルモ",
+        "expected": 134195.0,
+        "reported": 140096.0
+      },
+      {
+        "id": "cc_040",
+        "company": "富士通",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "cc_041",
+        "company": "パナソニックホールディングス",
+        "expected": 389999.0,
+        "reported": 360962.0
+      },
+      {
+        "id": "cc_043",
+        "company": "TDK",
+        "expected": 150498.0,
+        "reported": 172893.0
+      },
+      {
+        "id": "cc_046",
+        "company": "アドバンテスト",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "cc_050",
+        "company": "日本電産",
+        "expected": 243854.0,
+        "reported": 162799.0
+      },
+      {
+        "id": "cc_051",
+        "company": "シスメックス",
+        "expected": 108699.0,
+        "reported": 78382.0
+      },
+      {
+        "id": "cc_053",
+        "company": "IHI",
+        "expected": -67982.0,
+        "reported": -70138.0
+      },
+      {
+        "id": "cc_055",
+        "company": "SUBARU",
+        "expected": 595562.0,
+        "reported": 468198.0
+      },
+      {
+        "id": "cc_061",
+        "company": "オリンパス",
+        "expected": 151892.0,
+        "reported": 43598.0
+      },
+      {
+        "id": "cc_070",
+        "company": "ファーストリテイリング",
+        "expected": 485358.0,
+        "reported": 500904.0
+      },
+      {
+        "id": "cc_072",
+        "company": "セブン&アイ・ホールディングス",
+        "expected": -1087034.0,
+        "reported": 534248.0
+      },
+      {
+        "id": "cc_087",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "cc_095",
+        "company": "リクルートホールディングス",
+        "expected": 443175.0,
+        "reported": 402526.0
+      },
+      {
+        "id": "cc_096",
+        "company": "ENEOSホールディングス",
+        "expected": 388948.0,
+        "reported": 464946.0
+      },
+      {
+        "id": "cc_101",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "cc_107",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "cc_109",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "cc_110",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "cc_114",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "cc_115",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "cc_116",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "cc_118",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "cc_119",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "cc_120",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "cc_121",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "cc_123",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "cc_124",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "cc_126",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "cc_128",
+        "company": "JFEホールディングス",
+        "expected": 247503.0,
+        "reported": 287003.0
+      },
+      {
+        "id": "cc_130",
+        "company": "LIXIL",
+        "expected": 23162.0,
+        "reported": 16351.0
+      },
+      {
+        "id": "cc_134",
+        "company": "テルモ",
+        "expected": 134195.0,
+        "reported": 140096.0
+      },
+      {
+        "id": "cc_138",
+        "company": "富士通",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "cc_139",
+        "company": "パナソニックホールディングス",
+        "expected": 389999.0,
+        "reported": 360962.0
+      },
+      {
+        "id": "cc_141",
+        "company": "TDK",
+        "expected": 150498.0,
+        "reported": 172893.0
+      },
+      {
+        "id": "cc_144",
+        "company": "アドバンテスト",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "cc_148",
+        "company": "日本電産",
+        "expected": 243854.0,
+        "reported": 162799.0
+      },
+      {
+        "id": "cc_149",
+        "company": "シスメックス",
+        "expected": 108699.0,
+        "reported": 78382.0
+      },
+      {
+        "id": "cc_151",
+        "company": "IHI",
+        "expected": -67982.0,
+        "reported": -70138.0
+      },
+      {
+        "id": "cc_153",
+        "company": "SUBARU",
+        "expected": 595562.0,
+        "reported": 468198.0
+      },
+      {
+        "id": "cc_159",
+        "company": "オリンパス",
+        "expected": 151892.0,
+        "reported": 43598.0
+      },
+      {
+        "id": "cc_168",
+        "company": "ファーストリテイリング",
+        "expected": 485358.0,
+        "reported": 500904.0
+      },
+      {
+        "id": "cc_170",
+        "company": "セブン&アイ・ホールディングス",
+        "expected": -1087034.0,
+        "reported": 534248.0
+      },
+      {
+        "id": "cc_185",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "cc_192",
+        "company": "リクルートホールディングス",
+        "expected": 443175.0,
+        "reported": 402526.0
+      },
+      {
+        "id": "cc_193",
+        "company": "ENEOSホールディングス",
+        "expected": 388948.0,
+        "reported": 464946.0
+      },
+      {
+        "id": "tr_003",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "tr_009",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "tr_011",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "tr_012",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "tr_016",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "tr_017",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "tr_018",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "tr_020",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "tr_021",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "tr_022",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "tr_024",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "tr_026",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "tr_027",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "tr_029",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "tr_031",
+        "company": "JFEホールディングス",
+        "expected": 247503.0,
+        "reported": 287003.0
+      },
+      {
+        "id": "tr_033",
+        "company": "LIXIL",
+        "expected": 23162.0,
+        "reported": 16351.0
+      },
+      {
+        "id": "tr_038",
+        "company": "テルモ",
+        "expected": 134195.0,
+        "reported": 140096.0
+      },
+      {
+        "id": "tr_043",
+        "company": "富士通",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "tr_044",
+        "company": "パナソニックホールディングス",
+        "expected": 389999.0,
+        "reported": 360962.0
+      },
+      {
+        "id": "tr_046",
+        "company": "TDK",
+        "expected": 150498.0,
+        "reported": 172893.0
+      },
+      {
+        "id": "tr_049",
+        "company": "アドバンテスト",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "tr_053",
+        "company": "日本電産",
+        "expected": 243854.0,
+        "reported": 162799.0
+      },
+      {
+        "id": "tr_054",
+        "company": "シスメックス",
+        "expected": 108699.0,
+        "reported": 78382.0
+      },
+      {
+        "id": "tr_056",
+        "company": "IHI",
+        "expected": -67982.0,
+        "reported": -70138.0
+      },
+      {
+        "id": "tr_058",
+        "company": "SUBARU",
+        "expected": 595562.0,
+        "reported": 468198.0
+      },
+      {
+        "id": "tr_064",
+        "company": "オリンパス",
+        "expected": 151892.0,
+        "reported": 43598.0
+      },
+      {
+        "id": "tr_074",
+        "company": "ファーストリテイリング",
+        "expected": 485358.0,
+        "reported": 500904.0
+      },
+      {
+        "id": "tr_076",
+        "company": "セブン&アイ・ホールディングス",
+        "expected": -1087034.0,
+        "reported": 534248.0
+      },
+      {
+        "id": "tr_092",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "tr_101",
+        "company": "リクルートホールディングス",
+        "expected": 443175.0,
+        "reported": 402526.0
+      },
+      {
+        "id": "tr_102",
+        "company": "ENEOSホールディングス",
+        "expected": 388948.0,
+        "reported": 464946.0
+      },
+      {
+        "id": "tr_107",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "tr_113",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "tr_115",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "tr_116",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "tr_120",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "tr_121",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "tr_122",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "tr_124",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "tr_125",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "tr_126",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "tr_128",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "tr_130",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "tr_131",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "tr_133",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "tr_135",
+        "company": "JFEホールディングス",
+        "expected": 247503.0,
+        "reported": 287003.0
+      },
+      {
+        "id": "tr_137",
+        "company": "LIXIL",
+        "expected": 23162.0,
+        "reported": 16351.0
+      },
+      {
+        "id": "tr_142",
+        "company": "テルモ",
+        "expected": 134195.0,
+        "reported": 140096.0
+      },
+      {
+        "id": "tr_147",
+        "company": "富士通",
+        "expected": 260210.0,
+        "reported": 160260.0
+      },
+      {
+        "id": "tr_148",
+        "company": "パナソニックホールディングス",
+        "expected": 389999.0,
+        "reported": 360962.0
+      },
+      {
+        "id": "tr_150",
+        "company": "TDK",
+        "expected": 150498.0,
+        "reported": 172893.0
+      },
+      {
+        "id": "tr_153",
+        "company": "アドバンテスト",
+        "expected": 87067.0,
+        "reported": 81628.0
+      },
+      {
+        "id": "tr_157",
+        "company": "日本電産",
+        "expected": 243854.0,
+        "reported": 162799.0
+      },
+      {
+        "id": "tr_158",
+        "company": "シスメックス",
+        "expected": 108699.0,
+        "reported": 78382.0
+      },
+      {
+        "id": "tr_160",
+        "company": "IHI",
+        "expected": -67982.0,
+        "reported": -70138.0
+      },
+      {
+        "id": "tr_162",
+        "company": "SUBARU",
+        "expected": 595562.0,
+        "reported": 468198.0
+      },
+      {
+        "id": "tr_168",
+        "company": "オリンパス",
+        "expected": 151892.0,
+        "reported": 43598.0
+      },
+      {
+        "id": "tr_178",
+        "company": "ファーストリテイリング",
+        "expected": 485358.0,
+        "reported": 500904.0
+      },
+      {
+        "id": "tr_180",
+        "company": "セブン&アイ・ホールディングス",
+        "expected": -1087034.0,
+        "reported": 534248.0
+      },
+      {
+        "id": "tr_196",
+        "company": "KDDI",
+        "expected": 926853.0,
+        "reported": 961584.0
+      },
+      {
+        "id": "tr_205",
+        "company": "リクルートホールディングス",
+        "expected": 443175.0,
+        "reported": 402526.0
+      },
+      {
+        "id": "tr_206",
+        "company": "ENEOSホールディングス",
+        "expected": 388948.0,
+        "reported": 464946.0
+      },
+      {
+        "id": "tr_211",
+        "company": "INPEX",
+        "expected": 1220688.0,
+        "reported": 1114189.0
+      },
+      {
+        "id": "tr_217",
+        "company": "キリンホールディングス",
+        "expected": 201495.0,
+        "reported": 150294.0
+      },
+      {
+        "id": "tr_219",
+        "company": "日清食品ホールディングス",
+        "expected": 61378.0,
+        "reported": 73361.0
+      },
+      {
+        "id": "tr_220",
+        "company": "日本たばこ産業",
+        "expected": 634051.0,
+        "reported": 672410.0
+      },
+      {
+        "id": "tr_224",
+        "company": "東レ",
+        "expected": 97179.0,
+        "reported": 57651.0
+      },
+      {
+        "id": "tr_225",
+        "company": "旭化成",
+        "expected": 140746.0,
+        "reported": 177168.0
+      },
+      {
+        "id": "tr_226",
+        "company": "花王",
+        "expected": 93657.0,
+        "reported": 60035.0
+      },
+      {
+        "id": "tr_228",
+        "company": "アステラス製薬",
+        "expected": 571077.0,
+        "reported": 25518.0
+      },
+      {
+        "id": "tr_229",
+        "company": "エーザイ",
+        "expected": 211996.0,
+        "reported": 53408.0
+      },
+      {
+        "id": "tr_230",
+        "company": "第一三共",
+        "expected": 549369.0,
+        "reported": 211588.0
+      },
+      {
+        "id": "tr_232",
+        "company": "資生堂",
+        "expected": 16739.0,
+        "reported": 28133.0
+      },
+      {
+        "id": "tr_234",
+        "company": "ブリヂストン",
+        "expected": 471091.0,
+        "reported": 481775.0
+      },
+      {
+        "id": "tr_235",
+        "company": "住友ゴム工業",
+        "expected": 77670.0,
+        "reported": 64490.0
+      },
+      {
+        "id": "tr_237",
+        "company": "日本製鉄",
+        "expected": 656377.0,
+        "reported": 778662.0
+      },
+      {
+        "id": "tr_239",
+        "company": "JFEホールディングス",
+        "expected": 247503.0,
+        "reported": 287003.0
+      },
+      {
+        "id": "tr_241",
+        "company": "LIXIL",
+        "expected": 23162.0,
+        "reported": 16351.0
+      },
+      {
+        "id": "tr_246",
+        "company": "テルモ",
+        "expected": 134195.0,
+        "reported": 140096.0
+      }
+    ],
+    "ni_decomposition_mismatch": [],
+    "asset_total_mismatch": [
+      {
+        "id": "nr_017",
+        "company": "旭化成",
+        "current_asset": 1650037.0,
+        "fixed_asset": 2012693.0,
+        "expected_sum": 3662730.0,
+        "reported_total": 3551395.0
+      }
+    ],
+    "balance_sheet_mismatch": [],
+    "roe_convention_ambiguity": [
+      {
+        "id": "nr_001",
+        "company": "マルハニチロ",
+        "net_income": 24722.0,
+        "parent_ni": 20853.0,
+        "question": "マルハニチロの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_002",
+        "company": "三菱マテリアル",
+        "net_income": 37280.0,
+        "parent_ni": 29793.0,
+        "question": "三菱マテリアルの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_003",
+        "company": "INPEX",
+        "net_income": 332576.0,
+        "parent_ni": 321708.0,
+        "question": "INPEXの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_004",
+        "company": "大和ハウス工業",
+        "net_income": 300253.0,
+        "parent_ni": 298752.0,
+        "question": "大和ハウス工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_005",
+        "company": "清水建設",
+        "net_income": 20779.0,
+        "parent_ni": 17163.0,
+        "question": "清水建設の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_006",
+        "company": "大林組",
+        "net_income": 77179.0,
+        "parent_ni": 75059.0,
+        "question": "大林組の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_007",
+        "company": "鹿島建設",
+        "net_income": 116615.0,
+        "parent_ni": 115033.0,
+        "question": "鹿島建設の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_008",
+        "company": "日本ハム",
+        "net_income": 29448.0,
+        "parent_ni": 28078.0,
+        "question": "日本ハムの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_009",
+        "company": "キリンホールディングス",
+        "net_income": 150438.0,
+        "parent_ni": 112697.0,
+        "question": "キリンホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_010",
+        "company": "味の素",
+        "net_income": 102032.0,
+        "parent_ni": 87121.0,
+        "question": "味の素の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_011",
+        "company": "日清食品ホールディングス",
+        "net_income": 58717.0,
+        "parent_ni": 54170.0,
+        "question": "日清食品ホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_012",
+        "company": "日本たばこ産業",
+        "net_income": 485310.0,
+        "parent_ni": 482288.0,
+        "question": "日本たばこ産業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_013",
+        "company": "王子ホールディングス",
+        "net_income": 52317.0,
+        "parent_ni": 50812.0,
+        "question": "王子ホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_014",
+        "company": "ユニ・チャーム",
+        "net_income": 97982.0,
+        "parent_ni": 86053.0,
+        "question": "ユニ・チャームの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_015",
+        "company": "信越化学工業",
+        "net_income": 565160.0,
+        "parent_ni": 520140.0,
+        "question": "信越化学工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_016",
+        "company": "東レ",
+        "net_income": 30455.0,
+        "parent_ni": 21897.0,
+        "question": "東レの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_017",
+        "company": "旭化成",
+        "net_income": 46328.0,
+        "parent_ni": 43806.0,
+        "question": "旭化成の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_018",
+        "company": "花王",
+        "net_income": 46157.0,
+        "parent_ni": 43870.0,
+        "question": "花王の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_019",
+        "company": "武田薬品工業",
+        "net_income": 144197.0,
+        "parent_ni": 144067.0,
+        "question": "武田薬品工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_020",
+        "company": "アステラス製薬",
+        "net_income": 17045.0,
+        "parent_ni": 17045.0,
+        "question": "アステラス製薬の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_021",
+        "company": "エーザイ",
+        "net_income": 43784.0,
+        "parent_ni": 42406.0,
+        "question": "エーザイの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_022",
+        "company": "第一三共",
+        "net_income": 201016.0,
+        "parent_ni": 200731.0,
+        "question": "第一三共の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_024",
+        "company": "資生堂",
+        "net_income": 24177.0,
+        "parent_ni": 21749.0,
+        "question": "資生堂の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_025",
+        "company": "ライオン",
+        "net_income": 16687.0,
+        "parent_ni": 14624.0,
+        "question": "ライオンの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_026",
+        "company": "ブリヂストン",
+        "net_income": 337352.0,
+        "parent_ni": 331305.0,
+        "question": "ブリヂストンの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_027",
+        "company": "住友ゴム工業",
+        "net_income": 38506.0,
+        "parent_ni": 37048.0,
+        "question": "住友ゴム工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_028",
+        "company": "AGC",
+        "net_income": 82484.0,
+        "parent_ni": 65798.0,
+        "question": "AGCの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_029",
+        "company": "日本製鉄",
+        "net_income": 587898.0,
+        "parent_ni": 549372.0,
+        "question": "日本製鉄の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_030",
+        "company": "神戸製鋼所",
+        "net_income": 116483.0,
+        "parent_ni": 109552.0,
+        "question": "神戸製鋼所の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_031",
+        "company": "JFEホールディングス",
+        "net_income": 200971.0,
+        "parent_ni": 197421.0,
+        "question": "JFEホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_032",
+        "company": "クボタ",
+        "net_income": 259998.0,
+        "parent_ni": 238455.0,
+        "question": "クボタの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_033",
+        "company": "LIXIL",
+        "net_income": -14614.0,
+        "parent_ni": -13908.0,
+        "question": "LIXILの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_034",
+        "company": "住友電気工業",
+        "net_income": 168961.0,
+        "parent_ni": 149723.0,
+        "question": "住友電気工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_035",
+        "company": "DMG森精機",
+        "net_income": 34229.0,
+        "parent_ni": 33944.0,
+        "question": "DMG森精機の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_037",
+        "company": "ダイキン工業",
+        "net_income": 269835.0,
+        "parent_ni": 260311.0,
+        "question": "ダイキン工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_038",
+        "company": "テルモ",
+        "net_income": 106374.0,
+        "parent_ni": 106374.0,
+        "question": "テルモの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_039",
+        "company": "SMC",
+        "net_income": 178353.0,
+        "parent_ni": 178321.0,
+        "question": "SMCの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_040",
+        "company": "日立製作所",
+        "net_income": 626748.0,
+        "parent_ni": 589896.0,
+        "question": "日立製作所の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_042",
+        "company": "日本電気",
+        "net_income": 164752.0,
+        "parent_ni": 149521.0,
+        "question": "日本電気の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_043",
+        "company": "富士通",
+        "net_income": 266680.0,
+        "parent_ni": 254478.0,
+        "question": "富士通の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_044",
+        "company": "パナソニックホールディングス",
+        "net_income": 465443.0,
+        "parent_ni": 443994.0,
+        "question": "パナソニックホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_045",
+        "company": "ソニーグループ",
+        "net_income": 980494.0,
+        "parent_ni": 970573.0,
+        "question": "ソニーグループの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_046",
+        "company": "TDK",
+        "net_income": 126135.0,
+        "parent_ni": 124687.0,
+        "question": "TDKの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_047",
+        "company": "村田製作所",
+        "net_income": 180336.0,
+        "parent_ni": 180838.0,
+        "question": "村田製作所の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_048",
+        "company": "ファナック",
+        "net_income": 135487.0,
+        "parent_ni": 133159.0,
+        "question": "ファナックの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_049",
+        "company": "アドバンテスト",
+        "net_income": 62290.0,
+        "parent_ni": 62290.0,
+        "question": "アドバンテストの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_050",
+        "company": "ローム",
+        "net_income": 54007.0,
+        "parent_ni": 53965.0,
+        "question": "ロームの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_051",
+        "company": "浜松ホトニクス",
+        "net_income": 25401.0,
+        "parent_ni": 25145.0,
+        "question": "浜松ホトニクスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_052",
+        "company": "キーエンス",
+        "net_income": 369642.0,
+        "parent_ni": 369642.0,
+        "question": "キーエンスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_053",
+        "company": "日本電産",
+        "net_income": 126300.0,
+        "parent_ni": 125144.0,
+        "question": "日本電産の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_054",
+        "company": "シスメックス",
+        "net_income": 49774.0,
+        "parent_ni": 49639.0,
+        "question": "シスメックスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_055",
+        "company": "川崎重工業",
+        "net_income": 27310.0,
+        "parent_ni": 25377.0,
+        "question": "川崎重工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_056",
+        "company": "IHI",
+        "net_income": -64850.0,
+        "parent_ni": -68214.0,
+        "question": "IHIの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_057",
+        "company": "トヨタ自動車",
+        "net_income": 5071421.0,
+        "parent_ni": 4944933.0,
+        "question": "トヨタ自動車の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_058",
+        "company": "SUBARU",
+        "net_income": 384570.0,
+        "parent_ni": 385084.0,
+        "question": "SUBARUの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_059",
+        "company": "マツダ",
+        "net_income": 209416.0,
+        "parent_ni": 207696.0,
+        "question": "マツダの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_060",
+        "company": "本田技研工業",
+        "net_income": 1182590.0,
+        "parent_ni": 1107174.0,
+        "question": "本田技研工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_061",
+        "company": "スズキ",
+        "net_income": 344227.0,
+        "parent_ni": 267717.0,
+        "question": "スズキの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_062",
+        "company": "ヤマハ発動機",
+        "net_income": 178470.0,
+        "parent_ni": 164119.0,
+        "question": "ヤマハ発動機の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_063",
+        "company": "三菱自動車工業",
+        "net_income": 160562.0,
+        "parent_ni": 154709.0,
+        "question": "三菱自動車工業の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_064",
+        "company": "オリンパス",
+        "net_income": 242929.0,
+        "parent_ni": 242566.0,
+        "question": "オリンパスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_066",
+        "company": "任天堂",
+        "net_income": 490642.0,
+        "parent_ni": 490602.0,
+        "question": "任天堂の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_067",
+        "company": "伊藤忠商事",
+        "net_income": 851923.0,
+        "parent_ni": 801770.0,
+        "question": "伊藤忠商事の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_068",
+        "company": "丸紅",
+        "net_income": 482548.0,
+        "parent_ni": 471412.0,
+        "question": "丸紅の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_069",
+        "company": "三井物産",
+        "net_income": 1080479.0,
+        "parent_ni": 1063684.0,
+        "question": "三井物産の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_070",
+        "company": "三菱商事",
+        "net_income": 1024858.0,
+        "parent_ni": 964034.0,
+        "question": "三菱商事の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_071",
+        "company": "東京エレクトロン",
+        "net_income": 363963.0,
+        "parent_ni": 363963.0,
+        "question": "東京エレクトロンの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_072",
+        "company": "ソフトバンクグループ",
+        "net_income": 209217.0,
+        "parent_ni": -227646.0,
+        "question": "ソフトバンクグループの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_073",
+        "company": "ニトリホールディングス",
+        "net_income": 86523.0,
+        "parent_ni": 86523.0,
+        "question": "ニトリホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_074",
+        "company": "ファーストリテイリング",
+        "net_income": 393605.0,
+        "parent_ni": 371999.0,
+        "question": "ファーストリテイリングの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_076",
+        "company": "セブン&アイ・ホールディングス",
+        "net_income": 235203.0,
+        "parent_ni": 224623.0,
+        "question": "セブン&アイ・ホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_077",
+        "company": "MonotaRO",
+        "net_income": 21264.0,
+        "parent_ni": 21813.0,
+        "question": "MonotaROの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_082",
+        "company": "三井不動産",
+        "net_income": 227687.0,
+        "parent_ni": 224647.0,
+        "question": "三井不動産の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_083",
+        "company": "住友不動産",
+        "net_income": 177171.0,
+        "parent_ni": 177171.0,
+        "question": "住友不動産の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_084",
+        "company": "野村不動産ホールディングス",
+        "net_income": 68184.0,
+        "parent_ni": 68164.0,
+        "question": "野村不動産ホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_086",
+        "company": "東海旅客鉄道",
+        "net_income": 388761.0,
+        "parent_ni": 384411.0,
+        "question": "東海旅客鉄道の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_088",
+        "company": "日本郵船",
+        "net_income": 235263.0,
+        "parent_ni": 228603.0,
+        "question": "日本郵船の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_089",
+        "company": "日本航空",
+        "net_income": 95911.0,
+        "parent_ni": 95534.0,
+        "question": "日本航空の2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_090",
+        "company": "ANAホールディングス",
+        "net_income": 158327.0,
+        "parent_ni": 157097.0,
+        "question": "ANAホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_092",
+        "company": "KDDI",
+        "net_income": 656104.0,
+        "parent_ni": 637874.0,
+        "question": "KDDIの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_093",
+        "company": "NTT",
+        "net_income": 1345119.0,
+        "parent_ni": 1279521.0,
+        "question": "NTTの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_094",
+        "company": "東京電力ホールディングス",
+        "net_income": 269607.0,
+        "parent_ni": 267850.0,
+        "question": "東京電力ホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_096",
+        "company": "東京ガス",
+        "net_income": 170144.0,
+        "parent_ni": 169936.0,
+        "question": "東京ガスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_098",
+        "company": "セコム",
+        "net_income": 114204.0,
+        "parent_ni": 101951.0,
+        "question": "セコムの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_099",
+        "company": "楽天グループ",
+        "net_income": -329535.0,
+        "parent_ni": -339473.0,
+        "question": "楽天グループの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_100",
+        "company": "エムスリー",
+        "net_income": 48549.0,
+        "parent_ni": 45271.0,
+        "question": "エムスリーの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_101",
+        "company": "リクルートホールディングス",
+        "net_income": 354596.0,
+        "parent_ni": 353654.0,
+        "question": "リクルートホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_102",
+        "company": "ENEOSホールディングス",
+        "net_income": 345482.0,
+        "parent_ni": 288121.0,
+        "question": "ENEOSホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      },
+      {
+        "id": "nr_103",
+        "company": "東急不動産ホールディングス",
+        "net_income": 69506.0,
+        "parent_ni": 68545.0,
+        "question": "東急不動産ホールディングスの2024年3月期のROEをDuPont分解(純利益率×総資産回転率×財務レバレッジ)で求めると何%か。"
+      }
+    ],
+    "rounding_pedantry": []
+  },
+  "counts": {
+    "impossible_cogs": 0,
+    "gross_profit_mismatch": 22,
+    "op_income_mismatch": 311,
+    "ni_decomposition_mismatch": 0,
+    "asset_total_mismatch": 1,
+    "balance_sheet_mismatch": 0,
+    "roe_convention_ambiguity": 89,
+    "rounding_pedantry": 0
+  }
+}

@@ -1,34 +1,45 @@
 """Run LLM baseline evaluation on jfinqa.
 
-Usage:
-    # Set API keys in .env file, then:
-    uv run python scripts/run_baseline.py --model gpt-4o
-    uv run python scripts/run_baseline.py --model gpt-4o-mini
-    uv run python scripts/run_baseline.py --model gemini-2.0-flash
-    uv run python scripts/run_baseline.py --model claude-3-5-sonnet-20241022
+Regime selection (``--regime``):
 
-Outputs:
-    scripts/data/baselines/{model_name}_predictions.json
-    scripts/data/baselines/{model_name}_results.json
+- ``R0``: no extended reasoning. OpenAI ``reasoning_effort=none``,
+  Gemini ``thinking_budget=0``, Anthropic thinking disabled. Small
+  ``max_output`` (2048). Ablation baseline.
+- ``R1``: model-native moderate reasoning (default). OpenAI
+  ``reasoning_effort=medium``, Gemini dynamic thinking (``-1``),
+  Anthropic extended thinking with 4096 budget. Larger ``max_output``
+  (8192). Main baseline.
+
+Captured per question: raw response, extracted answer, correctness,
+input/output/thinking token counts, truncation flag, parse success,
+latency, cost (using the configured pricing table).
+
+Usage::
+
+    source ~/.tokens
+    uv run python scripts/run_baseline.py --model gemini-2.5-flash \\
+        --regime R1 --data scripts/data/final/jfinqa_lite_v1.json
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
 import sys
 import time
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
+from statistics import median, quantiles
+from typing import Any
 
 from dotenv import load_dotenv
 
-# Load API keys from .env (gitignored)
-load_dotenv(Path(__file__).parent.parent / ".env")
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "src"))
 
-# ---------------------------------------------------------------------------
-# Model adapters
-# ---------------------------------------------------------------------------
+load_dotenv(ROOT / ".env")
 
 SYSTEM_PROMPT = (
     "あなたは日本の企業の財務諸表を分析する金融アナリストです。"
@@ -39,319 +50,546 @@ SYSTEM_PROMPT = (
 )
 
 
-def _build_prompt(question_text: str, context: str) -> str:
+def _build_prompt(question: str, context: str) -> str:
     return (
-        f"以下の財務データを読み、質問に答えてください。\n\n"
-        f"{context}\n\n"
-        f"質問: {question_text}\n\n"
+        f"以下の財務データを読み、質問に答えてください。\n\n{context}\n\n"
+        f"質問: {question}\n\n"
         f"計算過程を示した後、最終行に「Answer: 値」の形式で答えを出力してください。"
     )
 
 
-def _extract_answer(response: str) -> str:
-    """Extract the answer from LLM response."""
-    # Look for "Answer: ..." pattern
+def _extract_answer(response: str) -> tuple[str, bool]:
+    """Return (predicted_answer, parse_success)."""
+    if not response:
+        return "", False
     match = re.search(r"Answer:\s*(.+?)(?:\n|$)", response, re.IGNORECASE)
     if match:
-        return match.group(1).strip()
-    # Fallback: last line
+        return match.group(1).strip(), True
     lines = [line.strip() for line in response.strip().splitlines() if line.strip()]
-    return lines[-1] if lines else ""
-
-
-def call_openai(model: str, question: str, context: str) -> str:
-    from openai import OpenAI
-
-    client = OpenAI()
-    resp = client.chat.completions.create(
-        model=model,
-        messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
-            {"role": "user", "content": _build_prompt(question, context)},
-        ],
-        temperature=0.0,
-        max_tokens=512,
-    )
-    return resp.choices[0].message.content or ""
-
-
-def call_anthropic(model: str, question: str, context: str) -> str:
-    from anthropic import Anthropic
-
-    client = Anthropic()
-    resp = client.messages.create(
-        model=model,
-        system=SYSTEM_PROMPT,
-        messages=[
-            {"role": "user", "content": _build_prompt(question, context)},
-        ],
-        temperature=0.0,
-        max_tokens=512,
-    )
-    return resp.content[0].text
-
-
-def call_gemini(model: str, question: str, context: str) -> str:
-    from google import genai
-
-    client = genai.Client()
-    resp = client.models.generate_content(
-        model=model,
-        contents=f"{SYSTEM_PROMPT}\n\n{_build_prompt(question, context)}",
-        config=genai.types.GenerateContentConfig(
-            temperature=0.0,
-            max_output_tokens=512,
-        ),
-    )
-    return resp.text or ""
+    return (lines[-1], False) if lines else ("", False)
 
 
 # ---------------------------------------------------------------------------
-# MLX local model adapter (Apple Silicon)
+# Pricing (USD per 1M tokens). Updated 2026-04-18.
+# When a provider charges differently for thinking tokens, the third
+# entry is their thinking-token rate per 1M tokens; otherwise it equals
+# the output rate.
 # ---------------------------------------------------------------------------
-
-_mlx_model_cache: dict[str, tuple] = {}
-
-# HuggingFace repo for each local model name
-MLX_MODEL_MAP: dict[str, str] = {
-    "qwen2.5-3b-instruct": "mlx-community/Qwen2.5-3B-Instruct-4bit",
-    "qwen2.5-7b-instruct": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+PRICING: dict[str, tuple[float, float, float]] = {
+    # OpenAI GPT-5 family
+    "gpt-5.4": (1.25, 10.0, 10.0),
+    "gpt-5.4-mini": (0.25, 2.0, 2.0),
+    "gpt-5.4-nano": (0.05, 0.40, 0.40),
+    "gpt-5.4-pro": (15.0, 120.0, 120.0),
+    "gpt-5.2": (1.25, 10.0, 10.0),
+    "gpt-5-mini": (0.25, 2.0, 2.0),
+    "gpt-4.1": (2.0, 8.0, 8.0),
+    "gpt-4.1-mini": (0.4, 1.6, 1.6),
+    "gpt-4o": (2.5, 10.0, 10.0),
+    "gpt-4o-mini": (0.15, 0.60, 0.60),
+    # Anthropic
+    "claude-sonnet-4-5": (3.0, 15.0, 15.0),
+    "claude-opus-4-6": (15.0, 75.0, 75.0),
+    "claude-opus-4-7": (15.0, 75.0, 75.0),
+    # Google
+    "gemini-2.5-pro": (1.25, 10.0, 10.0),
+    "gemini-2.5-flash": (0.075, 0.30, 0.30),
+    "gemini-2.5-flash-lite": (0.04, 0.15, 0.15),
+    "gemini-2.0-flash": (0.10, 0.40, 0.40),
 }
 
 
-def _get_mlx_model(model: str):
-    """Load and cache an MLX model."""
-    if model not in _mlx_model_cache:
-        from mlx_lm import load
-
-        hf_repo = MLX_MODEL_MAP[model]
-        print(f"Loading MLX model: {hf_repo} ...")
-        loaded_model, tokenizer = load(hf_repo)
-        _mlx_model_cache[model] = (loaded_model, tokenizer)
-        print("Model loaded.")
-    return _mlx_model_cache[model]
+def _price(model: str) -> tuple[float, float, float]:
+    if model in PRICING:
+        return PRICING[model]
+    # Fallback: assume moderate frontier cost to avoid crashing
+    return (2.0, 10.0, 10.0)
 
 
-def call_mlx(model: str, question: str, context: str) -> str:
-    import mlx.core as mx
-    from mlx_lm import generate
+@dataclass
+class Attempt:
+    id: str
+    subtask: str
+    accounting_standard: str
+    company_name: str
+    question: str
+    gold: str
+    predicted: str
+    raw_response: str
+    correct: bool
+    parse_success: bool
+    truncated: bool
+    input_tokens: int
+    output_tokens: int
+    thinking_tokens: int
+    latency_s: float
+    cost_usd: float
+    error: str | None = None
 
-    loaded_model, tokenizer = _get_mlx_model(model)
 
-    messages = [
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": _build_prompt(question, context)},
-    ]
-    prompt = tokenizer.apply_chat_template(
-        messages, tokenize=False, add_generation_prompt=True
+@dataclass
+class RegimeConfig:
+    name: str
+    max_output: int
+    openai_reasoning_effort: str | None
+    gemini_thinking_budget: int | None  # None = don't set (use default)
+    anthropic_thinking_budget: int | None  # None = disabled
+
+
+REGIMES: dict[str, RegimeConfig] = {
+    "R0": RegimeConfig(
+        name="R0",
+        max_output=2048,
+        openai_reasoning_effort="none",
+        gemini_thinking_budget=0,
+        anthropic_thinking_budget=None,
+    ),
+    "R1": RegimeConfig(
+        name="R1",
+        max_output=8192,
+        openai_reasoning_effort="medium",
+        gemini_thinking_budget=-1,  # dynamic
+        anthropic_thinking_budget=4096,
+    ),
+}
+
+
+# ---------------------------------------------------------------------------
+# Provider adapters
+# ---------------------------------------------------------------------------
+
+
+def call_openai(model: str, question: str, context: str, regime: RegimeConfig) -> dict[str, Any]:
+    from openai import OpenAI
+
+    client = OpenAI()
+    start = time.time()
+
+    kwargs: dict[str, Any] = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": _build_prompt(question, context)},
+        ],
+    }
+    # GPT-5 reasoning models use ``max_completion_tokens`` and ignore
+    # ``temperature``; older models take the classic args.
+    is_reasoning = any(model.startswith(p) for p in ("gpt-5", "o3", "o4"))
+    if is_reasoning:
+        kwargs["max_completion_tokens"] = regime.max_output
+        if regime.openai_reasoning_effort is not None:
+            kwargs["reasoning_effort"] = regime.openai_reasoning_effort
+    else:
+        kwargs["max_tokens"] = regime.max_output
+        kwargs["temperature"] = 0.0
+
+    resp = client.chat.completions.create(**kwargs)
+    latency = time.time() - start
+
+    choice = resp.choices[0]
+    text = choice.message.content or ""
+    usage = resp.usage
+    input_tok = usage.prompt_tokens if usage else 0
+    output_tok = usage.completion_tokens if usage else 0
+    thinking_tok = 0
+    if usage and hasattr(usage, "completion_tokens_details"):
+        details = usage.completion_tokens_details
+        if details and hasattr(details, "reasoning_tokens"):
+            thinking_tok = details.reasoning_tokens or 0
+    truncated = choice.finish_reason == "length"
+    return {
+        "text": text,
+        "input_tokens": input_tok,
+        "output_tokens": output_tok,
+        "thinking_tokens": thinking_tok,
+        "latency_s": latency,
+        "truncated": truncated,
+    }
+
+
+def call_gemini(model: str, question: str, context: str, regime: RegimeConfig) -> dict[str, Any]:
+    from google import genai
+    from google.genai import types
+
+    client = genai.Client()
+    start = time.time()
+
+    config_kwargs: dict[str, Any] = {
+        "temperature": 0.0,
+        "max_output_tokens": regime.max_output,
+    }
+    # Only 2.5 models support the thinking config.
+    if "2.5" in model and regime.gemini_thinking_budget is not None:
+        config_kwargs["thinking_config"] = types.ThinkingConfig(
+            thinking_budget=regime.gemini_thinking_budget
+        )
+
+    resp = client.models.generate_content(
+        model=model,
+        contents=f"{SYSTEM_PROMPT}\n\n{_build_prompt(question, context)}",
+        config=types.GenerateContentConfig(**config_kwargs),
     )
+    latency = time.time() - start
 
-    def _greedy(logits: mx.array) -> mx.array:
-        return mx.argmax(logits, axis=-1)
+    text = resp.text or ""
+    meta = resp.usage_metadata
+    input_tok = getattr(meta, "prompt_token_count", 0) or 0 if meta else 0
+    output_tok = getattr(meta, "candidates_token_count", 0) or 0 if meta else 0
+    thinking_tok = getattr(meta, "thoughts_token_count", 0) or 0 if meta else 0
+    candidate = resp.candidates[0] if resp.candidates else None
+    truncated = False
+    if candidate and hasattr(candidate, "finish_reason"):
+        truncated = str(candidate.finish_reason).endswith("MAX_TOKENS")
+    return {
+        "text": text,
+        "input_tokens": input_tok,
+        "output_tokens": output_tok,
+        "thinking_tokens": thinking_tok,
+        "latency_s": latency,
+        "truncated": truncated,
+    }
 
-    return generate(
-        loaded_model,
-        tokenizer,
-        prompt=prompt,
-        max_tokens=512,
-        sampler=_greedy,
-        verbose=False,
-    )
+
+def call_anthropic(model: str, question: str, context: str, regime: RegimeConfig) -> dict[str, Any]:
+    from anthropic import Anthropic
+
+    client = Anthropic()
+    start = time.time()
+
+    kwargs: dict[str, Any] = {
+        "model": model,
+        "system": SYSTEM_PROMPT,
+        "messages": [{"role": "user", "content": _build_prompt(question, context)}],
+        "max_tokens": regime.max_output,
+        "temperature": 0.0,
+    }
+    if regime.anthropic_thinking_budget is not None:
+        kwargs["thinking"] = {
+            "type": "enabled",
+            "budget_tokens": regime.anthropic_thinking_budget,
+        }
+
+    resp = client.messages.create(**kwargs)
+    latency = time.time() - start
+
+    text_parts: list[str] = []
+    thinking_tok_from_content = 0
+    for block in resp.content:
+        if getattr(block, "type", "") == "text":
+            text_parts.append(block.text)
+        elif getattr(block, "type", "") == "thinking":
+            thinking_tok_from_content += len(block.thinking or "")
+    text = "\n".join(text_parts)
+    usage = resp.usage
+    input_tok = usage.input_tokens if usage else 0
+    output_tok = usage.output_tokens if usage else 0
+    # Anthropic counts thinking tokens as output tokens; they are not
+    # separately reported, so we leave thinking_tokens at 0 unless we
+    # can derive it.
+    thinking_tok = 0
+    truncated = resp.stop_reason == "max_tokens"
+    return {
+        "text": text,
+        "input_tokens": input_tok,
+        "output_tokens": output_tok,
+        "thinking_tokens": thinking_tok,
+        "latency_s": latency,
+        "truncated": truncated,
+    }
 
 
-# Model name -> (call function, provider)
-MODEL_REGISTRY: dict[str, tuple] = {
+MODEL_REGISTRY: dict[str, tuple[Any, str]] = {
     # OpenAI
     "gpt-4o": (call_openai, "openai"),
     "gpt-4o-mini": (call_openai, "openai"),
     "gpt-4.1": (call_openai, "openai"),
     "gpt-4.1-mini": (call_openai, "openai"),
+    "gpt-5": (call_openai, "openai"),
+    "gpt-5-mini": (call_openai, "openai"),
+    "gpt-5.2": (call_openai, "openai"),
+    "gpt-5.4": (call_openai, "openai"),
+    "gpt-5.4-mini": (call_openai, "openai"),
+    "gpt-5.4-nano": (call_openai, "openai"),
     # Anthropic
-    "claude-3-5-sonnet-20241022": (call_anthropic, "anthropic"),
-    "claude-3-5-haiku-20241022": (call_anthropic, "anthropic"),
+    "claude-sonnet-4-5": (call_anthropic, "anthropic"),
+    "claude-opus-4-6": (call_anthropic, "anthropic"),
+    "claude-opus-4-7": (call_anthropic, "anthropic"),
     # Google
     "gemini-2.0-flash": (call_gemini, "google"),
-    "gemini-2.5-flash-preview-04-17": (call_gemini, "google"),
-    # Local (MLX on Apple Silicon)
-    "qwen2.5-3b-instruct": (call_mlx, "local"),
-    "qwen2.5-7b-instruct": (call_mlx, "local"),
+    "gemini-2.5-flash": (call_gemini, "google"),
+    "gemini-2.5-pro": (call_gemini, "google"),
+    "gemini-2.5-flash-lite": (call_gemini, "google"),
 }
 
 
-def main() -> None:
-    import argparse
+ENV_KEYS = {
+    "openai": "OPENAI_API_KEY",
+    "anthropic": "ANTHROPIC_API_KEY",
+    "google": "GOOGLE_API_KEY",
+}
 
-    parser = argparse.ArgumentParser(description="Run LLM baseline on jfinqa")
-    parser.add_argument(
-        "--model",
-        required=True,
-        choices=list(MODEL_REGISTRY.keys()),
-        help="Model to evaluate",
+
+def _cost(model: str, input_tok: int, output_tok: int, thinking_tok: int) -> float:
+    input_price, output_price, thinking_price = _price(model)
+    return (
+        input_tok * input_price / 1_000_000
+        + output_tok * output_price / 1_000_000
+        + thinking_tok * thinking_price / 1_000_000
     )
-    parser.add_argument(
-        "--limit", type=int, default=0, help="Limit number of questions (0=all)"
-    )
+
+
+def _summarize(attempts: list[Attempt]) -> dict[str, Any]:
+    from collections import Counter, defaultdict
+
+    def pct(x: float) -> float:
+        return round(x * 100, 2)
+
+    total = len(attempts)
+    if not total:
+        return {"total": 0}
+
+    correct = sum(1 for a in attempts if a.correct)
+    parsed = sum(1 for a in attempts if a.parse_success)
+    truncated = sum(1 for a in attempts if a.truncated)
+    errored = sum(1 for a in attempts if a.error)
+
+    out_toks = [a.output_tokens for a in attempts]
+    lats = [a.latency_s for a in attempts]
+    costs = [a.cost_usd for a in attempts]
+
+    def dist(xs: list[float]) -> dict[str, float]:
+        if not xs:
+            return {}
+        q = quantiles(xs, n=20) if len(xs) > 1 else [xs[0]] * 19
+        return {
+            "mean": round(sum(xs) / len(xs), 3),
+            "median": round(median(xs), 3),
+            "p90": round(q[17], 3) if len(q) >= 18 else round(xs[-1], 3),
+            "p95": round(q[18], 3) if len(q) >= 19 else round(xs[-1], 3),
+            "max": round(max(xs), 3),
+        }
+
+    by_subtask: dict[str, dict[str, Any]] = {}
+    subtask_counts: dict[str, Counter] = defaultdict(Counter)
+    for a in attempts:
+        c = subtask_counts[a.subtask]
+        c["total"] += 1
+        if a.correct:
+            c["correct"] += 1
+        if a.parse_success:
+            c["parsed"] += 1
+    for st, c in subtask_counts.items():
+        by_subtask[st] = {
+            "accuracy": pct(c["correct"] / c["total"]),
+            "parse_success": pct(c["parsed"] / c["total"]),
+            "total": c["total"],
+        }
+
+    by_accounting: dict[str, dict[str, Any]] = {}
+    acc_counts: dict[str, Counter] = defaultdict(Counter)
+    for a in attempts:
+        c = acc_counts[a.accounting_standard]
+        c["total"] += 1
+        if a.correct:
+            c["correct"] += 1
+    for acc, c in acc_counts.items():
+        by_accounting[acc] = {
+            "accuracy": pct(c["correct"] / c["total"]),
+            "total": c["total"],
+        }
+
+    return {
+        "total": total,
+        "accuracy_pct": pct(correct / total),
+        "parse_success_pct": pct(parsed / total),
+        "truncation_rate_pct": pct(truncated / total),
+        "error_rate_pct": pct(errored / total),
+        "output_tokens": dist(out_toks),
+        "latency_s": dist(lats),
+        "cost_total_usd": round(sum(costs), 4),
+        "cost_per_correct_usd": round(sum(costs) / correct, 4) if correct else None,
+        "by_subtask": by_subtask,
+        "by_accounting_standard": by_accounting,
+    }
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Run jfinqa baseline")
+    parser.add_argument("--model", required=True, choices=list(MODEL_REGISTRY.keys()))
+    parser.add_argument("--regime", required=True, choices=list(REGIMES.keys()))
     parser.add_argument(
         "--data",
-        default=str(Path(__file__).parent / "data" / "final" / "jfinqa_v1.json"),
-        help="Path to dataset JSON",
+        default=str(ROOT / "scripts" / "data" / "final" / "jfinqa_v1.json"),
+    )
+    parser.add_argument("--limit", type=int, default=0)
+    parser.add_argument(
+        "--out-dir",
+        default=str(ROOT / "scripts" / "data" / "baselines"),
     )
     args = parser.parse_args()
 
-    # Check API key (not needed for local models)
+    regime = REGIMES[args.regime]
     call_fn, provider = MODEL_REGISTRY[args.model]
-    env_keys = {
-        "openai": "OPENAI_API_KEY",
-        "anthropic": "ANTHROPIC_API_KEY",
-        "google": "GOOGLE_API_KEY",
-    }
-    if provider != "local":
-        key_name = env_keys[provider]
-        if not os.environ.get(key_name):
-            print(f"Error: {key_name} environment variable is required")
-            sys.exit(1)
+    key_name = ENV_KEYS[provider]
+    if not os.environ.get(key_name):
+        print(f"Error: {key_name} is not set. Run: source ~/.tokens")
+        sys.exit(1)
 
-    # Load data
     with open(args.data, encoding="utf-8") as f:
-        raw = json.load(f)
-
+        rows = json.load(f)
     if args.limit > 0:
-        raw = raw[: args.limit]
+        rows = rows[: args.limit]
 
-    print(f"Model: {args.model}")
-    print(f"Questions: {len(raw)}")
-    print()
-
-    # Output directory
-    out_dir = Path(__file__).parent / "data" / "baselines"
+    out_dir = Path(args.out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
+    run_id = f"{args.model}__{args.regime}"
+    pred_path = out_dir / f"{run_id}__predictions.json"
+    metrics_path = out_dir / f"{run_id}__metrics.json"
 
-    safe_name = args.model.replace("/", "_")
-    pred_path = out_dir / f"{safe_name}_predictions.json"
-    result_path = out_dir / f"{safe_name}_results.json"
-
-    # Load existing predictions (for resume)
-    predictions: dict[str, dict] = {}
+    attempts: dict[str, Attempt] = {}
     if pred_path.exists():
-        with open(pred_path, encoding="utf-8") as f:
-            predictions = json.load(f)
-        print(f"Resuming: {len(predictions)} existing predictions loaded")
+        saved = json.loads(pred_path.read_text(encoding="utf-8"))
+        for qid, record in saved.items():
+            attempts[qid] = Attempt(**record)
+        print(f"Resuming: {len(attempts)} existing attempts loaded")
 
-    # Run inference
-    sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
     from jfinqa._metrics import numerical_match
     from jfinqa.models import QAPair, Question, Subtask, Table
 
-    errors = 0
-    for i, q in enumerate(raw):
-        qid = q["id"]
-        if qid in predictions:
-            continue
+    print(f"Model: {args.model}  Regime: {regime.name}  Questions: {len(rows)}")
 
-        # Build context
+    consecutive_errors = 0
+    for i, row in enumerate(rows):
+        qid = row["id"]
+        if qid in attempts:
+            continue
         question_obj = Question(
             id=qid,
-            subtask=Subtask(q["subtask"]),
-            pre_text=q["pre_text"],
-            post_text=q["post_text"],
-            table=Table(headers=q["table"]["headers"], rows=q["table"]["rows"]),
+            subtask=Subtask(row["subtask"]),
+            pre_text=row["pre_text"],
+            post_text=row["post_text"],
+            table=Table(
+                headers=row["table"]["headers"], rows=row["table"]["rows"]
+            ),
             qa=QAPair(
-                question=q["qa"]["question"],
-                program=q["qa"]["program"],
-                answer=q["qa"]["answer"],
-                gold_evidence=q["qa"]["gold_evidence"],
+                question=row["qa"]["question"],
+                program=row["qa"]["program"],
+                answer=row["qa"]["answer"],
+                gold_evidence=row["qa"]["gold_evidence"],
             ),
         )
         context = question_obj.format_context()
-        gold = q["qa"]["answer"]
+        gold = row["qa"]["answer"]
 
+        attempt = Attempt(
+            id=qid,
+            subtask=row["subtask"],
+            accounting_standard=row.get("accounting_standard", ""),
+            company_name=row.get("company_name", ""),
+            question=row["qa"]["question"],
+            gold=gold,
+            predicted="",
+            raw_response="",
+            correct=False,
+            parse_success=False,
+            truncated=False,
+            input_tokens=0,
+            output_tokens=0,
+            thinking_tokens=0,
+            latency_s=0.0,
+            cost_usd=0.0,
+        )
         try:
-            raw_response = call_fn(args.model, q["qa"]["question"], context)
-            predicted = _extract_answer(raw_response)
-            correct = numerical_match(predicted, gold)
-
-            predictions[qid] = {
-                "id": qid,
-                "subtask": q["subtask"],
-                "question": q["qa"]["question"],
-                "gold": gold,
-                "predicted": predicted,
-                "raw_response": raw_response,
-                "correct": correct,
-            }
-
-            status = "OK" if correct else "NG"
-            print(
-                f"[{i+1}/{len(raw)}] {status} {qid}: "
-                f"pred={predicted!r} gold={gold!r}"
+            result = call_fn(args.model, row["qa"]["question"], context, regime)
+            predicted, parse_ok = _extract_answer(result["text"])
+            attempt.raw_response = result["text"]
+            attempt.predicted = predicted
+            attempt.parse_success = parse_ok
+            attempt.truncated = result["truncated"]
+            attempt.input_tokens = result["input_tokens"]
+            attempt.output_tokens = result["output_tokens"]
+            attempt.thinking_tokens = result["thinking_tokens"]
+            attempt.latency_s = round(result["latency_s"], 3)
+            attempt.cost_usd = round(
+                _cost(
+                    args.model,
+                    result["input_tokens"],
+                    result["output_tokens"],
+                    result["thinking_tokens"],
+                ),
+                6,
             )
-
-        except Exception as e:
-            errors += 1
-            print(f"[{i+1}/{len(raw)}] ERROR {qid}: {e}")
-            if errors > 10:
-                print("Too many errors, stopping.")
+            attempt.correct = bool(parse_ok) and numerical_match(predicted, gold)
+            consecutive_errors = 0
+            status = "OK" if attempt.correct else ("TR" if attempt.truncated else "NG")
+            print(
+                f"[{i+1}/{len(rows)}] {status} {qid}: "
+                f"pred={predicted!r} gold={gold!r} "
+                f"tok={attempt.output_tokens}+{attempt.thinking_tokens}th "
+                f"${attempt.cost_usd:.4f}"
+            )
+        except Exception as exc:
+            attempt.error = f"{type(exc).__name__}: {exc}"
+            consecutive_errors += 1
+            print(f"[{i+1}/{len(rows)}] ERR {qid}: {attempt.error}")
+            if consecutive_errors >= 5:
+                print("5 consecutive errors, stopping.")
                 break
             time.sleep(2)
-            continue
 
-        # Save periodically
-        if (i + 1) % 20 == 0:
-            with open(pred_path, "w", encoding="utf-8") as f:
-                json.dump(predictions, f, ensure_ascii=False, indent=2)
+        attempts[qid] = attempt
 
-        # Rate limit (skip for local models)
-        if provider != "local":
-            time.sleep(0.3)
+        # Persist every 10 items
+        if (i + 1) % 10 == 0:
+            pred_path.write_text(
+                json.dumps(
+                    {k: asdict(v) for k, v in attempts.items()},
+                    ensure_ascii=False,
+                    indent=2,
+                ),
+                encoding="utf-8",
+            )
+        # Gentle rate-limit
+        time.sleep(0.2)
 
-    # Final save
-    with open(pred_path, "w", encoding="utf-8") as f:
-        json.dump(predictions, f, ensure_ascii=False, indent=2)
-
-    # Compute results
-    total = len(predictions)
-    correct_count = sum(1 for p in predictions.values() if p["correct"])
-    accuracy = correct_count / total if total > 0 else 0.0
-
-    from collections import Counter
-
-    by_subtask: dict[str, dict] = {}
-    subtask_counts: dict[str, Counter] = {}
-    for p in predictions.values():
-        st = p["subtask"]
-        if st not in subtask_counts:
-            subtask_counts[st] = Counter()
-        subtask_counts[st]["total"] += 1
-        if p["correct"]:
-            subtask_counts[st]["correct"] += 1
-
-    for st, counts in sorted(subtask_counts.items()):
-        by_subtask[st] = {
-            "accuracy": counts["correct"] / counts["total"],
-            "correct": counts["correct"],
-            "total": counts["total"],
-        }
-
-    results = {
+    pred_path.write_text(
+        json.dumps(
+            {k: asdict(v) for k, v in attempts.items()},
+            ensure_ascii=False,
+            indent=2,
+        ),
+        encoding="utf-8",
+    )
+    data_path = Path(args.data).resolve()
+    try:
+        data_rel = str(data_path.relative_to(ROOT))
+    except ValueError:
+        data_rel = str(data_path)
+    metrics = {
         "model": args.model,
-        "overall_accuracy": accuracy,
-        "correct": correct_count,
-        "total": total,
-        "by_subtask": by_subtask,
+        "regime": regime.name,
+        "data": data_rel,
+        "n": len(attempts),
+        "summary": _summarize(list(attempts.values())),
     }
+    metrics_path.write_text(
+        json.dumps(metrics, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
 
-    with open(result_path, "w", encoding="utf-8") as f:
-        json.dump(results, f, ensure_ascii=False, indent=2)
-
-    # Print summary
     print()
-    print("=" * 50)
-    print(f"Model: {args.model}")
-    print(f"Overall: {accuracy:.1%} ({correct_count}/{total})")
-    for st, r in sorted(by_subtask.items()):
-        print(f"  {st}: {r['accuracy']:.1%} ({r['correct']}/{r['total']})")
-    print(f"\nPredictions: {pred_path}")
-    print(f"Results: {result_path}")
+    print("=" * 60)
+    s = metrics["summary"]
+    print(f"Model: {args.model}  Regime: {regime.name}")
+    print(f"Accuracy: {s['accuracy_pct']}%  Parse: {s['parse_success_pct']}%  "
+          f"Truncation: {s['truncation_rate_pct']}%")
+    print(f"Cost: ${s['cost_total_usd']:.4f}  "
+          f"Cost/correct: ${s['cost_per_correct_usd']}")
+    print(f"Output tok p50/p90/p95: "
+          f"{s['output_tokens'].get('median', 0)}/"
+          f"{s['output_tokens'].get('p90', 0)}/"
+          f"{s['output_tokens'].get('p95', 0)}")
+    print(f"Predictions: {pred_path.relative_to(ROOT)}")
+    print(f"Metrics:     {metrics_path.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
