@@ -211,7 +211,11 @@ def call_gemini(model: str, question: str, context: str, regime: RegimeConfig) -
     from google import genai
     from google.genai import types
 
-    client = genai.Client()
+    # http_options.timeout is in milliseconds. We cap each call at 120s
+    # so the runner cannot hang indefinitely on a stuck request.
+    client = genai.Client(
+        http_options=types.HttpOptions(timeout=120_000)
+    )
     start = time.time()
 
     config_kwargs: dict[str, Any] = {
@@ -588,8 +592,12 @@ def main() -> None:
           f"{s['output_tokens'].get('median', 0)}/"
           f"{s['output_tokens'].get('p90', 0)}/"
           f"{s['output_tokens'].get('p95', 0)}")
-    print(f"Predictions: {pred_path.relative_to(ROOT)}")
-    print(f"Metrics:     {metrics_path.relative_to(ROOT)}")
+    try:
+        print(f"Predictions: {pred_path.resolve().relative_to(ROOT)}")
+        print(f"Metrics:     {metrics_path.resolve().relative_to(ROOT)}")
+    except ValueError:
+        print(f"Predictions: {pred_path}")
+        print(f"Metrics:     {metrics_path}")
 
 
 if __name__ == "__main__":
