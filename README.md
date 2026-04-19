@@ -27,37 +27,64 @@ Japanese Financial Numerical Reasoning QA Benchmark.
 | | Total | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
 |---|---|---|---|---|
 | **Questions** | 1000 | 550 | 200 | 250 |
-| **Companies** | 68 | — | — | — |
-| **Accounting Standards** | J-GAAP 58%, IFRS 38%, US-GAAP 4% | — | — | — |
-| **Avg. program steps** | 2.59 | 2.84 | 2.00 | 2.54 |
+| **Companies** | 104 | — | — | — |
+| **Accounting Standards** | J-GAAP 65.6%, IFRS 32.3%, US-GAAP 2.1% | — | — | — |
+| **Avg. program steps** | 2.58 | 2.84 | 2.00 | 2.54 |
 | **Avg. table rows** | 13.3 | — | — | — |
 | **Max program steps** | 6 (DuPont) | — | — | — |
 
+### Evaluation Regimes
+
+Baseline runs are reported under two reasoning regimes so that thinking/non-thinking behaviour can be compared on the same prompts:
+
+- **R0** — thinking/reasoning disabled. The model produces a direct answer with no reasoning budget.
+- **R1** — native moderate reasoning enabled (provider-default thinking budget). No custom token limit is imposed; we rely on each provider's default "moderate" setting.
+
+All baseline numbers below are zero-shot, temperature=0, and evaluated over the full 1000-question dataset unless otherwise noted. Accuracy uses numerical matching with 1% tolerance on numerical subtasks and exact-match on categorical answers.
+
 ### Baseline Results
 
-| Model | Overall | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
-|-------|---------|--------------------|--------------------|-------------------|
-| GPT-4o | **87.0%** | 80.2% | **90.5%** | **99.2%** |
-| Gemini 2.0 Flash | 80.4% | **86.2%** | 83.5% | 65.2% |
-| GPT-4o-mini | 67.7% | 79.3% | 83.5% | 29.6% |
-| Qwen2.5-3B-Instruct | 39.6% | 46.4% | 51.0% | 15.6% |
+Full 1000-question run, sorted by overall accuracy:
 
-*1000 questions, zero-shot, temperature=0. Evaluation uses numerical matching with 1% tolerance. Qwen2.5-3B-Instruct run locally with MLX (4-bit quantization).*
+| Model | Regime | Accuracy | Num | Cons | Temp | Cost (USD) |
+|---|---|---:|---:|---:|---:|---:|
+| gpt-5.4-mini | R0 | **93.7%** | 89.5 | 97.5 | 100.0 | $0.36 |
+| gpt-5.4-mini | R1 | 92.4% | 87.1 | 97.5 | 100.0 | $1.18 |
+| gpt-5.4 (frontier) | R1 | 91.9% | 86.5 | 97.5 | 99.2 | $5.83 |
+| gpt-5.4 (frontier) | R0 | 90.6% | 83.8 | 97.5 | 100.0 | $1.98 |
+| gemini-2.5-pro | R1 | 89.87% (N=977) | 84.0 | 96.5 | 98.24 | $11.77 |
+| gemini-2.5-flash | R0 | 89.6% | 82.4 | 96.5 | 100.0 | $0.09 |
+| gemini-2.5-flash-lite | R1 | 88.3% | 81.8 | 94.0 | 98.0 | $0.18 |
+| gemini-2.5-flash-lite | R0 | 87.6% | 80.4 | 93.0 | 99.2 | $0.05 |
+| gemini-2.5-flash | R1 | 87.6% | 83.3 | 98.0 | 88.8 | $0.23 |
+| gpt-5.4-nano | R1 | 85.6% | 86.2 | 90.0 | 80.8 | $0.28 |
+| gpt-5.4-nano | R0 | 78.7% | 88.0 | 90.0 | 49.2 | $0.07 |
+
+*Num = Numerical Reasoning (n=550), Cons = Consistency Checking (n=200), Temp = Temporal Reasoning (n=250). gemini-2.5-pro R1 was evaluated on 977 of 1000 questions due to provider-side timeouts on 23 items; the remaining columns are over the scored subset.*
 
 **[View full leaderboard →](https://ajtgjmdjp.github.io/jfinqa-leaderboard/)**
 
-### Error Analysis
+### Key Findings
 
-Systematic error analysis revealed both benchmark design issues and genuine LLM failure patterns.
+1. **Non-monotonic scaling within the gpt-5.4 family.** `gpt-5.4-mini` R0 (93.7%) outperforms the frontier `gpt-5.4` under both regimes (91.9% R1 / 90.6% R0) at roughly one-sixteenth of the R1 cost. Parameter count is not a reliable predictor of jfinqa accuracy among current frontier models.
+2. **Thinking effect is strongly model-dependent.** Turning on native reasoning (R0 → R1) moves accuracy by +6.9 pt for `gpt-5.4-nano`, +1.3 pt for `gpt-5.4` (frontier), -1.3 pt for `gpt-5.4-mini`, and -2.0 pt for `gemini-2.5-flash`. Thinking helps weaker models but can hurt already-tuned ones — regime must be tuned per model, not applied blindly.
+3. **Temporal reasoning saturates in the top 7 models** (≥98% Temp), confirming that format-compliance on 増収/減収-style answers is essentially solved at frontier scale. The earlier TR gap observed on GPT-4o-class models has closed.
+4. **Numerical reasoning is now the discriminating subtask.** Num scores span 80.4% – 89.5% across top models while Cons and Temp are near-ceiling, so further differentiation between frontier systems on jfinqa comes almost entirely from multi-step arithmetic (growth rates, DuPont, cross-statement ratios), not from format-following.
 
-Key findings:
-- **Clear capability gradient**: GPT-4o (87%) > Gemini 2.0 Flash (80%) > GPT-4o-mini (68%) >> Qwen2.5-3B (40%), validating the benchmark discriminates across model sizes and capabilities.
-- **Temporal reasoning separates frontier models**: GPT-4o achieves 99.2% on TR, while Gemini drops to 65.2% and GPT-4o-mini to 29.6%. This subtask requires strict output format compliance ("増収"/"減収" rather than "はい"/"いいえ"), which strongly differentiates models.
-- **Gemini 2.0 Flash leads on numerical reasoning** (86.2% vs GPT-4o's 80.2%), suggesting strong arithmetic capabilities, but falls behind on consistency checking and temporal reasoning where format compliance matters more.
-- **DuPont decomposition is the hardest subtask**: 6-step ROE decomposition questions (56 questions) see significant accuracy drops even for frontier models, while 3B models rarely solve them correctly.
-- **GPT-4o-mini has a systematic prompt compliance issue in temporal reasoning.** It answers "はい" (yes) to questions like "増収か減収か？" despite correctly analyzing the direction in its reasoning chain (122 of 176 TR errors follow this pattern).
-- **J-GAAP balance sheet structure is a major error source.** Models confuse 純資産合計 (net assets) with 株主資本 (shareholders' equity), and decompose 総資産 into 4 sub-categories instead of the standard 2.
-- **Qwen2.5-3B-Instruct** struggles most with temporal reasoning (15.6%) and consistency checking (51.0%), suggesting that smaller models have difficulty with instruction-following and multi-step verification tasks in Japanese.
+Additional qualitative observations, including J-GAAP balance sheet confusion (純資産合計 vs. 株主資本) and the hardness of 6-step DuPont items, continue to hold from the pre-audit error analysis and are documented in the leaderboard notes.
+
+### Pre-audit baselines (deprecated)
+
+The numbers below were measured on the **pre-audit `v1.0-legacy-2026-02` dataset** before the 2026-04 EDINET-mapping fixes and the expansion to 104 companies. They are retained for historical comparison only and should **not** be compared directly to the current table — the underlying questions, company mix, and accounting-standard distribution have changed.
+
+| Model | Overall | Numerical Reasoning | Consistency Checking | Temporal Reasoning |
+|-------|---------|--------------------|--------------------|-------------------|
+| GPT-4o | 87.0% | 80.2% | 90.5% | 99.2% |
+| Gemini 2.0 Flash | 80.4% | 86.2% | 83.5% | 65.2% |
+| GPT-4o-mini | 67.7% | 79.3% | 83.5% | 29.6% |
+| Qwen2.5-3B-Instruct | 39.6% | 46.4% | 51.0% | 15.6% |
+
+*Measured on pre-audit v1.0-legacy-2026-02. Zero-shot, temperature=0, numerical matching with 1% tolerance. Qwen2.5-3B-Instruct run locally with MLX (4-bit quantization).*
 
 ### Key Features
 
