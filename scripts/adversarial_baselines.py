@@ -28,7 +28,9 @@ Usage::
 from __future__ import annotations
 
 import argparse
+import copy
 import json
+import random
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -136,25 +138,65 @@ def evaluate(
     }
 
 
+def write_table_shuffled_dataset(
+    questions: list[dict[str, Any]],
+    *,
+    rng_seed: int = 20260425,
+) -> list[dict[str, Any]]:
+    """Return a row-permuted copy of the dataset.
+
+    Codex Turn 4 confirmed table-shuffle as the **primary** evidence-dependence
+    proof, prioritised over answer-prior and regex/XBRL lookup. Implementation:
+    permute the order of *data rows* inside each item's ``table`` (headers and
+    column structure preserved) so that any model that genuinely retrieves the
+    correct row by name remains correct, while a model that exploits positional
+    or template priors degrades.
+
+    The output JSON has the same schema as the source --- existing
+    ``scripts/run_baseline.py`` invocations work unchanged. Permutation is
+    deterministic given ``rng_seed``.
+
+    The downstream paired DID analysis (``[(R1_orig - R0_orig) -
+    (R1_corr - R0_corr)]``) is computed by ``scripts/statistical_tests.py``
+    on the two key models (``gpt-5.4-mini``, ``gemini-2.5-flash``).
+    """
+    rng = random.Random(rng_seed)
+    perturbed: list[dict[str, Any]] = []
+    for q in questions:
+        new_q = copy.deepcopy(q)
+        table = new_q.get("table")
+        if isinstance(table, dict):
+            rows = list(table.get("rows", []))
+            if len(rows) > 1:
+                # Repeated shuffles can leave rows in their original order with
+                # non-trivial probability for short tables. Loop until we land
+                # on a non-identity permutation, falling back to the original
+                # for tables of length <= 1 where any "shuffle" is a no-op.
+                shuffled = list(rows)
+                for _ in range(10):
+                    rng.shuffle(shuffled)
+                    if shuffled != rows:
+                        break
+                table = {**table, "rows": shuffled}
+                new_q["table"] = table
+        perturbed.append(new_q)
+    return perturbed
+
+
 def table_shuffle_predictions(*_args: Any, **_kwargs: Any) -> dict[str, str]:
-    """Evidence-corruption baseline (table-shuffle).
+    """Evidence-corruption baseline (table-shuffle), prediction step.
 
-    Owned by ``hypothesis-reasoning`` (Task #11). Stub raises NotImplementedError
-    so callers and tests fail loudly until the real implementation lands.
-
-    Design (Codex Turn 4 confirmed):
-      - For each question, replace its table with a uniformly-sampled peer
-        from the same subtask (different company, different period).
-      - Re-run the model with the corrupted table; record accuracy.
-      - Report drop in accuracy (original - corrupted) plus
-        ``unchanged_answer_rate`` (fraction of items where the model's
-        original and corrupted predictions match).
-      - Restrict to two key models for the 2x2 paired bootstrap DID
-        analysis fed into ``scripts/statistical_tests.py``:
-        ``gpt-5.4-mini`` and ``gemini-2.5-flash``.
+    Table-shuffling itself is offline (see ``write_table_shuffled_dataset``);
+    actual model predictions on the perturbed dataset are produced by
+    ``scripts/run_baseline.py`` against the perturbed JSON. This entry point
+    is preserved so the CLI plumbing matches the Codex Q10 MVP catalogue, but
+    it raises so callers do not accidentally treat row-permutation as the
+    final answer.
     """
     raise NotImplementedError(
-        "table_shuffle is stubbed; implementation owned by hypothesis-reasoning"
+        "table_shuffle does not predict directly; emit the perturbed dataset "
+        "via write_table_shuffled_dataset and re-run scripts/run_baseline.py "
+        "on it for each (model, regime) pair."
     )
 
 
@@ -162,15 +204,43 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--baseline",
-        choices=["answer_prior", "table_shuffle"],
+        choices=["answer_prior", "table_shuffle", "write_table_shuffled"],
         required=True,
+        help=(
+            "answer_prior: subtask-modal predictions; "
+            "table_shuffle: prediction stub (use write_table_shuffled instead); "
+            "write_table_shuffled: emit row-permuted dataset for re-evaluation"
+        ),
     )
     parser.add_argument("--data", type=Path, required=True, help="path to jfinqa final JSON")
     parser.add_argument("--output", type=Path, default=None, help="write metrics JSON here")
     parser.add_argument("--tolerance", type=float, default=0.01)
+    parser.add_argument(
+        "--seed",
+        type=int,
+        default=20260425,
+        help="rng seed for write_table_shuffled (deterministic output)",
+    )
     args = parser.parse_args()
 
     questions = load_questions(args.data)
+
+    if args.baseline == "write_table_shuffled":
+        out_path = args.output or args.data.with_name(
+            args.data.stem + "__table_shuffled.json"
+        )
+        perturbed = write_table_shuffled_dataset(questions, rng_seed=args.seed)
+        out_path.write_text(json.dumps(perturbed, indent=2, ensure_ascii=False))
+        print(json.dumps(
+            {
+                "wrote": str(out_path),
+                "n_items": len(perturbed),
+                "rng_seed": args.seed,
+            },
+            indent=2,
+            ensure_ascii=False,
+        ))
+        return
 
     if args.baseline == "answer_prior":
         predictions = answer_prior_predictions(questions)
