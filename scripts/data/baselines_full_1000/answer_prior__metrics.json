@@ -1,0 +1,42 @@
+{
+  "baseline": "answer_prior",
+  "data": "scripts/data/final/jfinqa_v1.json",
+  "summary": {
+    "overall_pct": 7.7,
+    "n": 1000,
+    "by_subtask": {
+      "numerical_reasoning": {
+        "accuracy_pct": 1.09,
+        "correct": 6,
+        "total": 550
+      },
+      "consistency_checking": {
+        "accuracy_pct": 4.0,
+        "correct": 8,
+        "total": 200
+      },
+      "temporal_reasoning": {
+        "accuracy_pct": 25.2,
+        "correct": 63,
+        "total": 250
+      }
+    },
+    "by_accounting_standard": {
+      "J-GAAP": {
+        "correct": 49,
+        "total": 656,
+        "accuracy_pct": 7.47
+      },
+      "IFRS": {
+        "correct": 25,
+        "total": 323,
+        "accuracy_pct": 7.74
+      },
+      "US-GAAP": {
+        "correct": 3,
+        "total": 21,
+        "accuracy_pct": 14.29
+      }
+    }
+  }
+}
