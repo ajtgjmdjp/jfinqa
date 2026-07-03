@@ -85,6 +85,11 @@ select = [
     "TC",
 ]
 
+[tool.ruff.lint.per-file-ignores]
+# Research/pipeline scripts: long lines are mostly tabular data and
+# f-string reports; not worth churning. src/ and tests/ stay strict.
+"scripts/**" = ["E501"]
+
 [tool.mypy]
 python_version = "3.10"
 strict = true

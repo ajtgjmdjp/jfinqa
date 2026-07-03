@@ -37,12 +37,14 @@ import math
 import random
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, Sequence
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Sequence
 
 # numerical_match is the canonical jfinqa accuracy judge (1% relative tolerance
 # on numeric / percentage answers, exact match after normalisation otherwise).
 from jfinqa._metrics import numerical_match  # type: ignore[import-not-found]
-
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 BASELINE_DIR = REPO_ROOT / "scripts" / "data" / "baselines_full_1000"
@@ -367,7 +369,13 @@ def bootstrap_did(
         else:
             indices = [rng.randrange(n) for _ in range(n)]
 
-        def acc(items: Sequence[ItemOutcome]) -> float:
+        def acc(
+            items: Sequence[ItemOutcome],
+            # Bind the loop variable at definition time (B023): without
+            # this, a later refactor that defers the call could silently
+            # evaluate every closure against the *last* bootstrap sample.
+            indices: list[int] = indices,
+        ) -> float:
             kept = [items[i] for i in indices if items[i].parse_ok]
             return (sum(1 for o in kept if o.correct) / len(kept)) if kept else 0.0
 

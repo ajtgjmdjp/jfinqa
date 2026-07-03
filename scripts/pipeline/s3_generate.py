@@ -1,7 +1,9 @@
 """Stage 3: Generate QA pairs from table contexts.
 
 Creates template-based QA pairs with verified DSL programs.
-Each question requires at least 2 computation steps.
+The minimum number of computation steps per question is enforced by
+``MIN_PROGRAM_STEPS`` in :mod:`scripts.pipeline.config` (currently 1;
+single-step questions such as simple differences are allowed).
 
 Usage::
 

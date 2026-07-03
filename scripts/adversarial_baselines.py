@@ -122,12 +122,12 @@ def evaluate(
         total_c += c
 
     by_standard: dict[str, dict[str, Any]] = {}
-    for sub, flags in correct_flags.items():
+    for flags in correct_flags.values():
         for std, ok in flags:
             slot = by_standard.setdefault(std, {"correct": 0, "total": 0})
             slot["total"] += 1
             slot["correct"] += int(ok)
-    for std, slot in by_standard.items():
+    for slot in by_standard.values():
         slot["accuracy_pct"] = round(100 * slot["correct"] / slot["total"], 2)
 
     return {

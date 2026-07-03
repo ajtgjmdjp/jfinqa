@@ -2,7 +2,7 @@
 
 Stratification rules (from Codex review 2026-04-18):
 
-- Primary stratum: ``subtask × accounting_standard``.
+- Primary stratum: ``subtask x accounting_standard``.
 - Proportions: keep subtask ratios close to the full 1000-question split
   (≈ 83 / 30 / 37 for numerical / consistency / temporal), but give
   US-GAAP a minimum quota of 8 rows so the scarce class is still
