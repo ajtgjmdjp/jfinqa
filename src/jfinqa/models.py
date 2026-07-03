@@ -152,10 +152,12 @@ class Question(BaseModel):
         post_text: Paragraphs following the table.
         table: The financial data table.
         qa: The question-answer pair.
+        company_name: Source company's display name, if applicable.
         edinet_code: Source company's EDINET code, if applicable.
         filing_year: Source fiscal year, if applicable.
         accounting_standard: Accounting standard (J-GAAP/IFRS/US-GAAP).
         source_doc_id: EDINET document ID for provenance.
+        scale: Table unit scale (e.g. ``"百万円"``), if applicable.
     """
 
     id: str
@@ -164,10 +166,12 @@ class Question(BaseModel):
     post_text: list[str] = Field(default_factory=list)
     table: Table
     qa: QAPair
+    company_name: str | None = None
     edinet_code: str | None = None
     filing_year: str | None = None
     accounting_standard: str | None = None
     source_doc_id: str | None = None
+    scale: str | None = None
 
     model_config = {"frozen": True}
 
@@ -231,10 +235,12 @@ class Question(BaseModel):
                 answer=qa_data.get("answer", ""),
                 gold_evidence=qa_data.get("gold_evidence", []),
             ),
+            company_name=data.get("company_name"),
             edinet_code=data.get("edinet_code"),
             filing_year=data.get("filing_year"),
             accounting_standard=data.get("accounting_standard"),
             source_doc_id=data.get("source_doc_id"),
+            scale=data.get("scale"),
         )
 
 

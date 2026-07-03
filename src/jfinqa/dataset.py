@@ -140,10 +140,12 @@ def _row_to_question(row: Any, subtask: Subtask) -> Question:
         post_text=list(row.get("post_text", [])),
         table=table,
         qa=qa,
+        company_name=row.get("company_name"),
         edinet_code=row.get("edinet_code"),
         filing_year=row.get("filing_year"),
         accounting_standard=row.get("accounting_standard"),
         source_doc_id=row.get("source_doc_id"),
+        scale=row.get("scale"),
     )
 
 
@@ -164,10 +166,12 @@ def _dict_to_question(data: dict[str, Any]) -> Question:
         post_text=data.get("post_text", []),
         table=_parse_table(table_raw),
         qa=_parse_qa(data.get("qa", {})),
+        company_name=data.get("company_name"),
         edinet_code=data.get("edinet_code"),
         filing_year=data.get("filing_year"),
         accounting_standard=data.get("accounting_standard"),
         source_doc_id=data.get("source_doc_id"),
+        scale=data.get("scale"),
     )
 
 
