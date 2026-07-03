@@ -23,3 +23,22 @@ scripts/data/baselines/v*_backup/
 
 # Paper (arXiv only)
 paper/
+
+# Raw EDINET extracts (not for distribution)
+raw/
+
+# Superseded / intermediate pipeline artifacts (kept locally only)
+scripts/data/baselines_corrupted/
+scripts/data/baselines_pre_context_fix/
+scripts/data/contexts_rejected/
+scripts/data/generated_pre_fix/
+scripts/data/final/*_pre_context_fix.json
+scripts/data_edinet_fix_20260418_181020/
+
+# Large per-question prediction dumps (summary *__metrics.json are committed)
+scripts/data/baselines_full_1000/*__predictions.json
+
+# One-off baseline runner variants
+scripts/run_baseline_retry.py
+scripts/run_baseline_slow.py
+scripts/run_baseline_slower.py

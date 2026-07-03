@@ -1,0 +1,60 @@
+{
+  "model": "gemini-2.5-pro",
+  "regime": "R1",
+  "data": "scripts/data/final/jfinqa_v1.json",
+  "n": 977,
+  "summary": {
+    "total": 977,
+    "accuracy_pct": 89.87,
+    "parse_success_pct": 99.59,
+    "truncation_rate_pct": 0.0,
+    "error_rate_pct": 0.41,
+    "output_tokens": {
+      "mean": 232.393,
+      "median": 205,
+      "p90": 360.0,
+      "p95": 462.0,
+      "max": 646
+    },
+    "latency_s": {
+      "mean": 9.537,
+      "median": 8.406,
+      "p90": 14.161,
+      "p95": 17.14,
+      "max": 33.309
+    },
+    "cost_total_usd": 11.7715,
+    "cost_per_correct_usd": 0.0134,
+    "by_subtask": {
+      "numerical_reasoning": {
+        "accuracy": 84.0,
+        "parse_success": 100.0,
+        "total": 550
+      },
+      "consistency_checking": {
+        "accuracy": 96.5,
+        "parse_success": 100.0,
+        "total": 200
+      },
+      "temporal_reasoning": {
+        "accuracy": 98.24,
+        "parse_success": 98.24,
+        "total": 227
+      }
+    },
+    "by_accounting_standard": {
+      "J-GAAP": {
+        "accuracy": 88.37,
+        "total": 645
+      },
+      "IFRS": {
+        "accuracy": 92.28,
+        "total": 311
+      },
+      "US-GAAP": {
+        "accuracy": 100.0,
+        "total": 21
+      }
+    }
+  }
+}
