@@ -31,16 +31,18 @@ in the format "Answer: <value>".
 Question: {question}"""
 
 CONSISTENCY_CHECKING_PROMPT = """\
-Read the following financial data and check whether the stated figures \
-are internally consistent.
+Read the following financial data and answer the question by \
+cross-checking the stated figures.
 
 {context}
 
 Question: {question}
 
-Answer with one of:
-- "Consistent" if the figures are internally consistent
-- "Inconsistent: <explanation>" if there is a discrepancy
+Answer format:
+- If the question asks for a value, answer with the numeric value only \
+(e.g. "133,818").
+- If the question asks whether figures agree (〜と一致するか), answer \
+"はい" or "いいえ".
 
 Answer:"""
 
