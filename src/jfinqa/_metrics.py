@@ -47,9 +47,14 @@ def normalize_answer(answer: str) -> str:
     2. Normalize unicode (NFKC: fullwidth → halfwidth)
     3. Handle Japanese negative marker (△ / ▲)
     4. Remove commas from numbers
-    5. Strip currency/unit suffixes
-    6. Normalize percentage representation
-    7. Convert to lowercase
+    5. Strip Japanese verb endings for categorical answers
+       (e.g. "改善した" → "改善")
+    6. Convert to lowercase
+
+    Unit suffixes (百万円, %, etc.) are **not** stripped here; they are
+    preserved so exact-match comparison stays strict. Suffix handling
+    lives in :func:`extract_number`, which strips units and expands
+    kanji multipliers when parsing numeric values.
 
     Args:
         answer: Raw answer string from model or gold standard.

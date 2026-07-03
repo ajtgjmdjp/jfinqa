@@ -21,6 +21,12 @@ if TYPE_CHECKING:
 
 from loguru import logger
 
+# Canonical answer scorer. The validation oracle MUST use the same
+# number extraction as the published metrics, otherwise the pipeline
+# could accept questions that the scorer would mark incorrect
+# (e.g. kanji multipliers like 100億, which the previous local copy
+# did not expand).
+from jfinqa._metrics import extract_number, normalize_answer
 from scripts.pipeline.config import (
     ANSWER_TOLERANCE,
     FINAL_DIR,
@@ -32,46 +38,28 @@ from scripts.pipeline.config import (
 from scripts.pipeline.dsl import DSLError, execute_program
 
 # ---------------------------------------------------------------------------
-# Answer matching (mirrors jfinqa._metrics logic)
+# Answer matching (delegates to jfinqa._metrics)
 # ---------------------------------------------------------------------------
 
 
 def _normalize(s: str) -> str:
     """Normalize an answer string for comparison."""
-    import unicodedata
-
-    s = s.strip()
-    s = unicodedata.normalize("NFKC", s)
-    s = s.replace("\u25b3", "-").replace("\u25b2", "-")  # △▲ → -
-    s = s.replace(",", "")
-    return s.lower()
-
-
-def _extract_number(s: str) -> float | None:
-    """Extract the first numeric value from a string."""
-    import re
-
-    s = _normalize(s)
-    # Remove common suffixes
-    for suffix in ["%", "円", "百万円", "千円", "億円", "兆円", "倍", "ポイント"]:
-        s = s.replace(suffix, "")
-    s = s.strip()
-
-    match = re.search(r"-?\d+\.?\d*", s)
-    if match:
-        try:
-            return float(match.group())
-        except ValueError:
-            return None
-    return None
+    return normalize_answer(s)
 
 
 def _numerical_match(
     predicted: str, gold: str, tolerance: float = ANSWER_TOLERANCE
 ) -> bool:
-    """Check if two answers match numerically within tolerance."""
-    pred_num = _extract_number(predicted)
-    gold_num = _extract_number(gold)
+    """Check if two answers match numerically within tolerance.
+
+    Number extraction is delegated to
+    :func:`jfinqa._metrics.extract_number` so validation and final
+    scoring can never diverge. ``extract_number`` also covers
+    "倍"-suffixed values (its final strip of non-numeric characters
+    removes the suffix), so no extra handling is needed here.
+    """
+    pred_num = extract_number(predicted)
+    gold_num = extract_number(gold)
 
     if pred_num is None or gold_num is None:
         return _normalize(predicted) == _normalize(gold)
